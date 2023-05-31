@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="ca.quantum.quants.it.housefy.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_air_conditioner"
+        android:name="ca.quantum.quants.it.housefy.ui.air_conditioner.AirConditionerFragment"
+        android:label="@string/menu_air_conditioner"
+        tools:layout="@layout/fragment_air_conditioner" />
+
+    <fragment
+        android:id="@+id/nav_air_quality"
+        android:name="ca.quantum.quants.it.housefy.ui.air_quality.AirQualityFragment"
+        android:label="@string/menu_air_quality"
+        tools:layout="@layout/fragment_air_quality" />
+
+    <fragment
+        android:id="@+id/nav_smart_light"
+        android:name="ca.quantum.quants.it.housefy.ui.smart_light.SmartLightFragment"
+        android:label="@string/menu_smart_light"
+        tools:layout="@layout/fragment_smart_light" />
+
+    <fragment
+        android:id="@+id/nav_energy_consumption"
+        android:name="ca.quantum.quants.it.housefy.ui.energy_consumption.EnergyConsumptionFragment"
+        android:label="@string/menu_energy_consumption"
+        tools:layout="@layout/fragment_energy_consumption" />
+
+</navigation>
