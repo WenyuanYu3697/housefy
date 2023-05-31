@@ -1,13 +1,15 @@
 <resources>
     <string name="app_name">Housefy</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Ouvrir le tiroir de navigation</string>
+    <string name="navigation_drawer_close">Fermer le tiroir de navigation</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="nav_header_desc">En-tête de navigation</string>
+    <string name="action_settings">Paramètres</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_home">Accueil</string>
+    <string name="menu_air_conditioner">Climatiseur</string>
+    <string name="menu_air_quality">Qualité de l\'air</string>
+    <string name="menu_smart_light">Lumière intelligente</string>
+    <string name="menu_energy_consumption">Consommation d\'énergie</string>
 </resources>
