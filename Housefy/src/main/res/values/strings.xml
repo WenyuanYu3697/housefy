@@ -1,3 +1,9 @@
+<!--
+    Artem Tsurkan, 01414146
+    Wenyuan Yu, N01403697
+    Kyrylo Lvov, n01414058
+    Software Project - CENG-322-0NA
+-->
 <resources>
     <string name="app_name">Housefy</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -12,4 +18,14 @@
     <string name="menu_air_quality">Air Quality</string>
     <string name="menu_smart_light">Smart Light</string>
     <string name="menu_energy_consumption">Energy Consumption</string>
+
+    <string name="screen_text_home">This is home fragment</string>
+    <string name="screen_text_air_conditioner">This is air conditioner fragment</string>
+    <string name="screen_text_air_quality">This is air quality fragment</string>
+    <string name="screen_text_smart_light">This is smart light fragment</string>
+    <string name="screen_text_energy_consumption">This is energy consumption fragment</string>
+
+
+    <string name="exit_dialog_title">Exit?</string>
+    <string name="exit_dialog_text">Are you sure you want to exit the application?</string>
 </resources>

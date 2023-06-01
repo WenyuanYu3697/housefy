@@ -1,4 +1,4 @@
-package ca.quantum.quants.it.housefy.ui.smart_light;
+package ca.quantum.quants.it.housefy.ui.air_quality;
 
 /*
  * @author Artem Tsurkan, 01414146
@@ -13,13 +13,13 @@ import androidx.lifecycle.ViewModel;
 
 import ca.quantum.quants.it.housefy.R;
 
-public class SmartLightViewModel extends ViewModel {
+public class AirQualityViewModel extends ViewModel {
 
     private final MutableLiveData<Integer> mText;
 
-    public SmartLightViewModel() {
+    public AirQualityViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue(R.string.screen_text_smart_light);
+        mText.setValue(R.string.screen_text_air_quality);
     }
 
     public LiveData<Integer> getText() {
