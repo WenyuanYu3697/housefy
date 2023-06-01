@@ -1,5 +1,13 @@
 package ca.quantum.quants.it.housefy;
 
+/*
+ * @author Artem Tsurkan, 01414146
+ * @author Wenyuan Yu, N01403697
+ * @author Kyrylo Lvov, n01414058
+ * @course Software Project - CENG-322-0NA
+ */
+
+
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
