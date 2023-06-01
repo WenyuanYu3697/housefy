@@ -4,16 +4,18 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import ca.quantum.quants.it.housefy.R;
+
 public class SmartLightViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<Integer> mText;
 
     public SmartLightViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is smart light fragment");
+        mText.setValue(R.string.screen_text_smart_light);
     }
 
-    public LiveData<String> getText() {
+    public LiveData<Integer> getText() {
         return mText;
     }
 }

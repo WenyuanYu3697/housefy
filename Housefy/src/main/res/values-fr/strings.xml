@@ -12,4 +12,13 @@
     <string name="menu_air_quality">Qualité de l\'air</string>
     <string name="menu_smart_light">Lumière intelligente</string>
     <string name="menu_energy_consumption">Consommation d\'énergie</string>
+
+    <string name="screen_text_home">Ceci est un fragment de maison</string>
+    <string name="screen_text_air_conditioner">Il s\'agit d\'un fragment de climatiseur</string>
+    <string name="screen_text_air_quality">Il s\'agit d\'un fragment de qualité de l\'air</string>
+    <string name="screen_text_smart_light">Il s\'agit d\'un fragment de lumière intelligente</string>
+    <string name="screen_text_energy_consumption">Il s\'agit d\'un fragment de consommation d\'énergie</string>
+
+    <string name="exit_dialog_title">Sortie?</string>
+    <string name="exit_dialog_text">Êtes-vous sûr de vouloir quitter l\'application?</string>
 </resources>
