@@ -1,8 +1,8 @@
 package ca.quantum.quants.it.housefy.ui.air_conditioner;
 
 /*
- * @author Artem Tsurkan, 01414146
- * @author Wenyuan Yu, N01403697
+ * @author Artem Tsurkan, n01414146
+ * @author Wenyuan Yu, n01403697
  * @author Kyrylo Lvov, n01414058
  * @course Software Project - CENG-322-0NA
  */
