@@ -7,8 +7,7 @@
 <resources>
   <string name="app_name">Housefy</string>
   <string name="app_description">Système intelligent de surveillance de l\'environnement et de l\'énergie à domicile</string>
-  <string name="nav_header_title">Android Studio</string>
-  <string name="nav_header_subtitle">android.studio@android.com</string>
+  <string name="nav_header_title">Bienvenue!</string>
   <string name="nav_header_desc">En-tête de navigation</string>
   <string name="action_settings">Paramètres</string>
 
