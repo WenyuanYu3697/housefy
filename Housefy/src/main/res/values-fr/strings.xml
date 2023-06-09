@@ -12,9 +12,9 @@
   <string name="action_settings">Paramètres</string>
 
   <string name="menu_home">Accueil</string>
-  <string name="menu_air_conditioner">Climatiseur</string>
-  <string name="menu_air_quality">Qualité de l\'air</string>
-  <string name="menu_smart_light">Lumière intelligente</string>
+  <string name="menu_air_conditioner">Responsable Climat</string>
+  <string name="menu_air_quality">Moniteur de la qualité de l\'air</string>
+  <string name="menu_smart_light">Contrôle de la lumière</string>
   <string name="menu_energy_consumption">Consommation d\'énergie</string>
 
   <string name="screen_text_home">Ceci est un fragment de maison</string>

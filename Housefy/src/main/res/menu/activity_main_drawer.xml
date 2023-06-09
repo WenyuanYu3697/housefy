@@ -6,18 +6,28 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:title="@string/menu_home" />
+            android:title="@string/menu_home"
+            android:fontFamily="monospace"
+            android:icon="@drawable/home"/>
         <item
             android:id="@+id/nav_air_conditioner"
-            android:title="@string/menu_air_conditioner" />
+            android:title="@string/menu_air_conditioner"
+            android:fontFamily="monospace"
+            android:icon="@drawable/climate_change"/>
         <item
             android:id="@+id/nav_air_quality"
-            android:title="@string/menu_air_quality" />
+            android:title="@string/menu_air_quality"
+            android:fontFamily="monospace"
+            android:icon="@drawable/air_quality"/>
         <item
             android:id="@+id/nav_smart_light"
-            android:title="@string/menu_smart_light" />
+            android:title="@string/menu_smart_light"
+            android:fontFamily="monospace"
+            android:icon="@drawable/light"/>
         <item
             android:id="@+id/nav_energy_consumption"
-            android:title="@string/menu_energy_consumption" />
+            android:title="@string/menu_energy_consumption"
+            android:fontFamily="monospace"
+            android:icon="@drawable/energy"/>
     </group>
 </menu>
