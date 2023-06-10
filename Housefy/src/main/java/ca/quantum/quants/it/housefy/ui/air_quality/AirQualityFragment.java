@@ -143,33 +143,33 @@ public class AirQualityFragment extends Fragment {
         int airQualityIndex = 30; // This value can be replaced with the actual air quality index
         if (airQualityIndex < 30) {
             pieEntries.clear();
-            pieEntries.add(new PieEntry(33.3f,"Good"));
-            pieEntries.add(new PieEntry(33.3f,"Fair"));
-            pieEntries.add(new PieEntry(33.3f,"Terrible"));
+            pieEntries.add(new PieEntry(33.3f,"Good \uD83D\uDE00"));
+            pieEntries.add(new PieEntry(33.3f,"Fair \uD83D\uDE42"));
+            pieEntries.add(new PieEntry(33.3f,"Terrible \uD83D\uDE41"));
             color.add(green);
             color.add(lightYellow);
             color.add(lightRed);
         } else if (airQualityIndex < 40) {
             pieEntries.clear();
-            pieEntries.add(new PieEntry(33.3f,"Good"));
-            pieEntries.add(new PieEntry(33.3f,"Fair"));
-            pieEntries.add(new PieEntry(33.3f,"Terrible"));
+            pieEntries.add(new PieEntry(33.3f,"Good \uD83D\uDE00"));
+            pieEntries.add(new PieEntry(33.3f,"Fair \uD83D\uDE42"));
+            pieEntries.add(new PieEntry(33.3f,"Terrible \uD83D\uDE41"));
             color.add(lightGreen);
             color.add(yellow);
             color.add(lightRed);
         } else if (airQualityIndex <= 50) {
             pieEntries.clear();
-            pieEntries.add(new PieEntry(33.3f,"Good"));
-            pieEntries.add(new PieEntry(33.3f,"Fair"));
-            pieEntries.add(new PieEntry(33.3f,"Terrible"));
+            pieEntries.add(new PieEntry(33.3f,"Good \uD83D\uDE00"));
+            pieEntries.add(new PieEntry(33.3f,"Fair \uD83D\uDE42"));
+            pieEntries.add(new PieEntry(33.3f,"Terrible \uD83D\uDE41"));
             color.add(lightGreen);
             color.add(lightYellow);
             color.add(red);
         } else {
             pieEntries.clear();
-            pieEntries.add(new PieEntry(33.3f,"Good"));
-            pieEntries.add(new PieEntry(33.3f,"Fair"));
-            pieEntries.add(new PieEntry(33.3f,"Terrible"));
+            pieEntries.add(new PieEntry(33.3f,"Good \uD83D\uDE00"));
+            pieEntries.add(new PieEntry(33.3f,"Fair \uD83D\uDE42"));
+            pieEntries.add(new PieEntry(33.3f,"Terrible \uD83D\uDE41"));
             color.add(lightGreen);
             color.add(lightYellow);
             color.add(red);
