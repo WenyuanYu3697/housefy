@@ -20,11 +20,23 @@
         android:shadowDx="0"
         android:shadowDy="2"
         android:shadowRadius="4"
-        android:text="80"
+        android:text="30"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/airQualityPieChart"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="145dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="126dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +45,7 @@
         android:layout_width="413dp"
         android:layout_height="202dp"
         android:layout_centerInParent="true"
-        android:layout_marginTop="556dp"
+        android:layout_marginTop="496dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,10 +55,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="181dp"
-        android:layout_marginTop="312dp"
+        android:layout_marginTop="308dp"
         android:layout_marginEnd="172dp"
         android:text="Air Quality Index"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.518"
@@ -54,15 +66,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/air_quality_index_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="192dp"
-        android:layout_marginTop="140dp"
-        android:layout_marginEnd="161dp"
-        android:text="Current Air Quality"
+        android:id="@+id/textView2"
+        android:layout_width="358dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="456dp"
+        android:layout_marginEnd="284dp"
+        android:text="Last Week's Average Air Quality Index"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.589"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
