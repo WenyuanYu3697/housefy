@@ -7,17 +7,77 @@
     tools:context=".ui.air_quality.AirQualityFragment">
 
     <TextView
-        android:id="@+id/text_air_quality"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/air_quality_index"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="145dp"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="126dp"
+        android:background="@drawable/circle_background"
+        android:elevation="4dp"
+        android:gravity="center"
+        android:shadowColor="#7F000000"
+        android:shadowDx="0"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:text="30"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/airQualityPieChart"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="145dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="126dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/air_quality_barChart_history"
+        android:layout_width="413dp"
+        android:layout_height="202dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="496dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/air_quality_index_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="181dp"
+        android:layout_marginTop="308dp"
+        android:layout_marginEnd="172dp"
+        android:text="Air Quality Index"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.518"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="358dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="456dp"
+        android:layout_marginEnd="284dp"
+        android:text="Last Week's Average Air Quality Index"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
