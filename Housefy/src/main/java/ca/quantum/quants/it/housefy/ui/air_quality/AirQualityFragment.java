@@ -44,14 +44,17 @@ public class AirQualityFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        AirQualityViewModel airQuialityViewModel =
+        AirQualityViewModel airQualityViewModel =
                 new ViewModelProvider(this).get(AirQualityViewModel.class);
 
         binding = FragmentAirQualityBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textView;
         BarChart chart = binding.airQualityBarChartHistory;
+        chart.getDescription().setEnabled(false); // Remove description
+        chart.getAxisLeft().setDrawGridLines(false); // Remove left axis grid lines
+        chart.getAxisRight().setDrawGridLines(false); // Remove right axis grid lines
+        chart.getXAxis().setDrawGridLines(false); // Remove X axis grid lines
 
         ArrayList<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(0f, 10));
@@ -60,26 +63,41 @@ public class AirQualityFragment extends Fragment {
         entries.add(new BarEntry(3f, 40));
         entries.add(new BarEntry(4f, 50));
 
-        String[] dates = new String[]{"Date 1", "Date 2", "Date 3", "Date 4", "Date 5"};
+        String[] weekdays = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
 
-        BarDataSet dataSet = new BarDataSet(entries, "Air Quality History");
+        BarDataSet dataSet = new BarDataSet(entries, "");
+        ArrayList<Integer> colors = new ArrayList<>();
+        for (int i = 0; i < entries.size(); i++) {
+            float value = entries.get(i).getY();
+            if (value < 30) {
+                colors.add(Color.rgb(102, 187, 106));  // Green A700
+            } else if (value < 40) {
+                colors.add(Color.rgb(255, 238, 88));   // Yellow A700
+            } else if (value <= 50) {
+                colors.add(Color.rgb(239, 83, 80));    // Red A700
+            }
+        }
+        dataSet.setColors(colors);
+        dataSet.setDrawValues(false); // Do not draw values on the bars
+
         BarData barData = new BarData(dataSet);
-
-// Set custom value formatter for the x-axis labels (dates)
-        XAxis xAxis = chart.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(dates));
-
-// Set custom value formatter for the values on top of each column
-        dataSet.setValueFormatter(new CustomValueFormatter(dates));
-
         chart.setData(barData);
+
+        // Set weekdays for the x-axis labels
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(weekdays));
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // Set labels to appear at the bottom
+        xAxis.setLabelCount(entries.size()); // Set the count of labels to match entries size
+        xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
+
+
         chart.invalidate(); // Refresh the chart
 
-        airQuialityViewModel.getText().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+        airQualityViewModel.getText().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer stringId) {
                 if (stringId != null) {
-                    textView.setText(getString(stringId));
+                    binding.airQualityIndexDescription.setText(getString(stringId));
                 }
             }
         });
@@ -92,4 +110,3 @@ public class AirQualityFragment extends Fragment {
         binding = null;
     }
 }
-
