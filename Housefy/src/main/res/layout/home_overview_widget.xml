@@ -11,15 +11,15 @@
         android:layout_height="wrap_content"
         android:weightSum="1" >
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="0.5"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:fontFamily="@font/inter_semibold"
-        android:text="Today's date:"
-        android:textColor="#000000"
-        android:textSize="16sp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:fontFamily="@font/inter_semibold"
+            android:gravity="start"
+            android:text="Today's date:"
+            android:textColor="#000000"
+            android:textSize="16sp" />
 
     <TextView
         android:layout_width="0dp"
