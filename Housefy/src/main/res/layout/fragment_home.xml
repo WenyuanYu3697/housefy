@@ -7,36 +7,64 @@
 
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/home_fragment_imageview"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
+        android:contentDescription="User Avatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@mipmap/home_fragment_avatar" />
+        app:srcCompat="@drawable/user_avatar" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/home_fragment_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
+        android:fontFamily="monospace"
         android:text="Welcome!"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/home_fragment_imageview"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/home_fragment_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
+        android:fontFamily="monospace"
         android:text="John Doe"
-        android:textSize="18sp"
         android:textFontWeight="600"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/home_fragment_imageview"
+        app:layout_constraintTop_toBottomOf="@+id/home_fragment_welcome" />
+
+    <ImageButton
+        android:id="@+id/home_fragment_notifications"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="24dp"
+        android:background="@color/main_blue"
+        android:src="@drawable/notification_icon"
+        app:circularflow_radiusInDP="20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="124dp"
+        android:layout_marginTop="56dp"
+        android:orientation="horizontal"
+        android:paddingHorizontal="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_fragment_imageview">
+        <include layout="@layout/home_overview_widget" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

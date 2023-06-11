@@ -33,13 +33,10 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer stringId) {
-                if (stringId != null) {
-                    textView.setText(getString(stringId));
-                }
+
             }
         });
         return root;
