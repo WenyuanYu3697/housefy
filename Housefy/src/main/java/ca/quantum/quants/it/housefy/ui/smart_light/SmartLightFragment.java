@@ -33,13 +33,9 @@ public class SmartLightFragment extends Fragment {
         binding = FragmentSmartLightBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSmartLight;
         smartLightViewModel.getText().observe(getViewLifecycleOwner(), new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer stringId) {
-                if (stringId != null) {
-                    textView.setText(getString(stringId));
-                }
             }
         });        return root;
     }
