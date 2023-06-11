@@ -25,4 +25,22 @@
 
   <string name="exit_dialog_title">Sortie?</string>
   <string name="exit_dialog_text">Êtes-vous sûr de vouloir quitter l\'application?</string>
+    <string name="API_Index">30</string>
+  <string name="aqi_label">AQI</string>
+  <string name="aqi_history_label">Indice moyen de la qualité de l\'air de la semaine dernière</string>
+  <string name="air_quality_bar_chart_label">Historique de la qualité de l\'air</string>
+  <string name="AQI_level_good">Bien</string>
+  <string name="AQI_level_fair">Équitable</string>
+  <string name="AQI_level_terrible">Terrible</string>
+  <string name="AQI_Bar_Chart_Data_Statstics">Remplir</string>
+  <string name="AQI_Bar_Chart_Data_Statstics1">Réelle</string>
+  <array name="Days_of_Week">
+    <item>Lundi</item>
+    <item>Mardi</item>
+    <item>Mercredi</item>
+    <item>Jeudi</item>
+    <item>Vendredi</item>
+    <item>Samedi</item>
+    <item>Dimanche</item>
+  </array>
 </resources>

@@ -34,6 +34,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.quantum.quants.it.housefy.R;
 import ca.quantum.quants.it.housefy.databinding.FragmentAirQualityBinding;
 
 public class AirQualityFragment extends Fragment {
@@ -60,9 +61,9 @@ public class AirQualityFragment extends Fragment {
         entries.add(new BarEntry(5f, new float[]{BAR_HEIGHT - 35, 35}));
         entries.add(new BarEntry(6f, new float[]{BAR_HEIGHT - 45, 45}));
 
-        String[] weekdays = new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+        String[] weekdays = getResources().getStringArray(R.array.Days_of_Week);
 
-        BarDataSet dataSet = new BarDataSet(entries, "Air Quality History");
+        BarDataSet dataSet = new BarDataSet(entries, getString(R.string.air_quality_bar_chart_label));
 
         ArrayList<Integer> colors = new ArrayList<>();
         for (int i = 0; i < entries.size(); i++) {
@@ -79,7 +80,7 @@ public class AirQualityFragment extends Fragment {
             }
         }
         dataSet.setColors(colors);
-        dataSet.setStackLabels(new String[]{"Fill", "Actual"});
+        dataSet.setStackLabels(new String[]{getString(R.string.AQI_Bar_Chart_Data_Statstics), getString(R.string.AQI_Bar_Chart_Data_Statstics1)});
         dataSet.setValueTextColor(Color.TRANSPARENT); // Hide values
 
         BarData barData = new BarData(dataSet);
@@ -143,33 +144,33 @@ public class AirQualityFragment extends Fragment {
         int airQualityIndex = 30; // This value can be replaced with the actual air quality index
         if (airQualityIndex < 30) {
             pieEntries.clear();
-            pieEntries.add(new PieEntry(33.3f,"Good \uD83D\uDE00"));
-            pieEntries.add(new PieEntry(33.3f,"Fair \uD83D\uDE42"));
-            pieEntries.add(new PieEntry(33.3f,"Terrible \uD83D\uDE41"));
+            pieEntries.add(new PieEntry(33.3f,getString(R.string.AQI_level_good) + "\uD83D\uDE00"));
+            pieEntries.add(new PieEntry(33.3f,getString(R.string.AQI_level_fair) + "\uD83D\uDE42"));
+            pieEntries.add(new PieEntry(33.3f,getString(R.string.AQI_level_terrible) + "\uD83D\uDE41"));
             color.add(green);
             color.add(lightYellow);
             color.add(lightRed);
         } else if (airQualityIndex < 40) {
             pieEntries.clear();
-            pieEntries.add(new PieEntry(33.3f,"Good \uD83D\uDE00"));
-            pieEntries.add(new PieEntry(33.3f,"Fair \uD83D\uDE42"));
-            pieEntries.add(new PieEntry(33.3f,"Terrible \uD83D\uDE41"));
+            pieEntries.add(new PieEntry(33.3f,getString(R.string.AQI_level_good) + "\uD83D\uDE00"));
+            pieEntries.add(new PieEntry(33.3f,getString(R.string.AQI_level_fair) + "\uD83D\uDE42"));
+            pieEntries.add(new PieEntry(33.3f,getString(R.string.AQI_level_terrible) + "\uD83D\uDE41"));
             color.add(lightGreen);
             color.add(yellow);
             color.add(lightRed);
         } else if (airQualityIndex <= 50) {
             pieEntries.clear();
-            pieEntries.add(new PieEntry(33.3f,"Good \uD83D\uDE00"));
-            pieEntries.add(new PieEntry(33.3f,"Fair \uD83D\uDE42"));
-            pieEntries.add(new PieEntry(33.3f,"Terrible \uD83D\uDE41"));
+            pieEntries.add(new PieEntry(33.3f,getString(R.string.AQI_level_good) + "\uD83D\uDE00"));
+            pieEntries.add(new PieEntry(33.3f,getString(R.string.AQI_level_fair) + "\uD83D\uDE42"));
+            pieEntries.add(new PieEntry(33.3f,getString(R.string.AQI_level_terrible) + "\uD83D\uDE41"));
             color.add(lightGreen);
             color.add(lightYellow);
             color.add(red);
         } else {
             pieEntries.clear();
-            pieEntries.add(new PieEntry(33.3f,"Good \uD83D\uDE00"));
-            pieEntries.add(new PieEntry(33.3f,"Fair \uD83D\uDE42"));
-            pieEntries.add(new PieEntry(33.3f,"Terrible \uD83D\uDE41"));
+            pieEntries.add(new PieEntry(33.3f,getString(R.string.AQI_level_good) + "\uD83D\uDE00"));
+            pieEntries.add(new PieEntry(33.3f,getString(R.string.AQI_level_fair) + "\uD83D\uDE42"));
+            pieEntries.add(new PieEntry(33.3f,getString(R.string.AQI_level_terrible) + "\uD83D\uDE41"));
             color.add(lightGreen);
             color.add(lightYellow);
             color.add(red);
