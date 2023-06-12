@@ -15,7 +15,7 @@
             android:id="@+id/home_fragment_imageview"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:contentDescription="Bulb Icon"
+            android:contentDescription="@string/bulb_icon"
             android:gravity="start"
             android:src="@drawable/snowflake_"
             app:tint="@color/main_blue" />
@@ -41,7 +41,7 @@
             android:layout_marginTop="96dp"
             android:fontFamily="@font/inter_semibold"
             android:gravity="start"
-            android:text="Smart AC"
+            android:text="@string/smart_ac"
             android:textColor="#000000"
             android:textSize="16sp" />
 

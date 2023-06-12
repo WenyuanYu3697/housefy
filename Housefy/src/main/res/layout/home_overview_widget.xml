@@ -17,7 +17,7 @@
             android:layout_weight="0.5"
             android:fontFamily="@font/inter_semibold"
             android:gravity="start"
-            android:text="Today's date:"
+            android:text="@string/today_s_date"
             android:textColor="#000000"
             android:textSize="16sp" />
 
@@ -46,7 +46,7 @@
             android:layout_weight="0.5"
             android:fontFamily="@font/inter_bold"
             android:gravity="start"
-            android:text="Room Temperature"
+            android:text="@string/room_temperature"
             android:textColor="#C0C0C3"
             android:textSize="16sp" />
 

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
             android:gravity="start"
-            android:text="Smart Light"
+            android:text="@string/smart_light"
             android:textColor="#000000"
             android:textSize="24sp" />
 
@@ -39,7 +39,7 @@
         android:layout_width="256dp"
         android:layout_height="256dp"
         android:layout_marginTop="96dp"
-        android:contentDescription="Light Bumb Image"
+        android:contentDescription="@string/light_bulb_image"
         android:src="@drawable/light_bulb"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
             android:gravity="start"
-            android:text="Brightness"
+            android:text="@string/brightness"
             android:textColor="#000000"
             android:textSize="16sp" />
 

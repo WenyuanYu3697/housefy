@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/inter_semibold"
         android:gravity="start"
-        android:text="Horizontal Orientation"
+        android:text="@string/horizontal_orientation"
         android:textColor="#000000"
         android:textSize="16sp" />
 
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
             android:gravity="start"
-            android:text="Enable Notifications"
+            android:text="@string/enable_notifications"
             android:textColor="#000000"
             android:textSize="16sp" />
 
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
             android:gravity="start"
-            android:text="Temperature Threshold"
+            android:text="@string/temperature_threshold"
             android:textColor="#000000"
             android:textSize="16sp" />
 
@@ -113,7 +113,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
             android:gravity="start"
-            android:text="Air Quality Threshold"
+            android:text="@string/air_quality_threshold"
             android:textColor="#000000"
             android:textSize="16sp" />
 
@@ -135,7 +135,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Request permission"
+        android:text="@string/request_permission"
         />
 
     <ImageView

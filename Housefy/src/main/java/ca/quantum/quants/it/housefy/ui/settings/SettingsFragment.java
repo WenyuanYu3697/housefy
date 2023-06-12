@@ -76,7 +76,7 @@ public class SettingsFragment extends Fragment {
         if (ContextCompat.checkSelfPermission(getActivity(), permission) == PackageManager.PERMISSION_DENIED) {
             requestPermissions(new String[]{permission}, requestCode);
         } else {
-            Snackbar.make(root.getRootView(), "Permission already granted", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(root.getRootView(), R.string.permission_already_granted, Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -86,9 +86,9 @@ public class SettingsFragment extends Fragment {
 
         if (requestCode == 112) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Snackbar.make(root.getRootView(), "Permission granted", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(root.getRootView(), R.string.permission_granted, Snackbar.LENGTH_SHORT).show();
             } else {
-                Snackbar.make(root.getRootView(), "Permission rejected", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(root.getRootView(), R.string.permission_rejected, Snackbar.LENGTH_LONG).show();
             }
         }
     }

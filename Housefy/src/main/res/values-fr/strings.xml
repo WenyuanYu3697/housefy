@@ -34,6 +34,28 @@
   <string name="AQI_level_terrible">Terrible</string>
   <string name="AQI_Bar_Chart_Data_Statstics">Remplir</string>
   <string name="AQI_Bar_Chart_Data_Statstics1">Réelle</string>
+  <string name="user_avatar">Avatar de l\'utilisateur</string>
+  <string name="welcome">Bienvenue!</string>
+  <string name="horizontal_orientation">Orientation horizontale</string>
+  <string name="enable_notifications">Activer les notifications</string>
+  <string name="temperature_threshold">Seuil de température</string>
+  <string name="air_quality_threshold">Seuil de qualité de l\'air</string>
+  <string name="request_permission">Demander l\'autorisation</string>
+  <string name="smart_light">Lumière intelligente</string>
+  <string name="light_bulb_image">Image d\'ampoule</string>
+  <string name="brightness">Luminosité</string>
+  <string name="bulb_icon">Icône d\'ampoule</string>
+  <string name="smart_ac">AC intelligent</string>
+  <string name="today_s_date">Date d\'aujourd\'hui:</string>
+  <string name="room_temperature">Température de la pièce</string>
+  <string name="settings">Paramètres</string>
+  <string name="quick_guide">Guide rapide</string>
+  <string name="feedback">Retour d\'information</string>
+  <string name="about">À propos</string>
+  <string name="permission_granted">Permission accordée</string>
+  <string name="permission_rejected">Permission refusée</string>
+  <string name="permission_already_granted">Permission déjà accordée</string>
+  <string name="smart_home_control">Contrôle de la maison intelligente</string>
   <array name="Days_of_Week">
     <item>Lundi</item>
     <item>Mardi</item>

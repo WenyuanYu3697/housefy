@@ -35,6 +35,28 @@
     <string name="AQI_level_terrible">Terrible</string>
     <string name="AQI_Bar_Chart_Data_Statstics">Fill</string>
     <string name="AQI_Bar_Chart_Data_Statstics1">Actual</string>
+    <string name="user_avatar">User Avatar</string>
+    <string name="welcome">Welcome!</string>
+    <string name="horizontal_orientation">Horizontal Orientation</string>
+    <string name="enable_notifications">Enable Notifications</string>
+    <string name="temperature_threshold">Temperature Threshold</string>
+    <string name="air_quality_threshold">Air Quality Threshold</string>
+    <string name="request_permission">Request permission</string>
+    <string name="smart_light">Smart Light</string>
+    <string name="light_bulb_image">Light Bulb Image</string>
+    <string name="brightness">Brightness</string>
+    <string name="bulb_icon">Bulb Icon</string>
+    <string name="smart_ac">Smart AC</string>
+    <string name="today_s_date">Today\'s date:</string>
+    <string name="room_temperature">Room Temperature</string>
+    <string name="settings">Settings</string>
+    <string name="quick_guide">Quick Guide</string>
+    <string name="feedback">Feedback</string>
+    <string name="about">About</string>
+    <string name="permission_granted">Permission granted</string>
+    <string name="permission_rejected">Permission rejected</string>
+    <string name="permission_already_granted">Permission already granted</string>
+    <string name="smart_home_control">Smart Home Control</string>
     <string-array name="Days_of_Week">
         <item>Monday</item>
         <item>Tuesday</item>

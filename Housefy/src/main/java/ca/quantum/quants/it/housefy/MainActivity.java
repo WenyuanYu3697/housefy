@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(this).setIcon(R.drawable.settings)
                 .setTitle(R.string.exit_dialog_title).setMessage(R.string.exit_dialog_text)
                 .setNegativeButton(android.R.string.no, null)
                 .setPositiveButton(android.R.string.yes, (arg0, arg1) -> System.exit(0)).create().show();
