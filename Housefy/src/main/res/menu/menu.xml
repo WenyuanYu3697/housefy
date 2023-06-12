@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_item"
+        android:title="Settings"
+        android:icon="@drawable/settings"
+        app:showAsAction="always"
+        app:actionLayout="@layout/menu_item_settings" />
+
+    <item
+        android:id="@+id/menu_guide"
+        android:orderInCategory="100"
+        android:title="Quick Guide"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_feedback"
+        android:orderInCategory="100"
+        android:title="Feedback"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_about"
+        android:orderInCategory="100"
+        android:title="About"
+        app:showAsAction="never" />
+</menu>
