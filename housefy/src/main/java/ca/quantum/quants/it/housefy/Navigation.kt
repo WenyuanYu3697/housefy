@@ -9,7 +9,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -21,6 +23,7 @@ import ca.quantum.quants.it.housefy.pages.AirQualityPage
 import ca.quantum.quants.it.housefy.pages.EnergyConsumptionPage
 import ca.quantum.quants.it.housefy.pages.HomePage
 import ca.quantum.quants.it.housefy.pages.SmartLightPage
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,35 +40,14 @@ fun Navigation() {
         Scaffold(topBar = {
             val textColor = MaterialTheme.colorScheme.secondary
 
-            CenterAlignedTopAppBar(title = {
-                Text(
-                    text = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
-                        "AirConditionerPage" -> "Air Conditioner"
-                        "AirQualityPage" -> "Air Quality"
-                        "SmartLightPage" -> "Smart Light"
-                        "EnergyConsumptionPage" -> "Energy Consumption"
-                        else -> "Home"
-                    },
-                    style = MaterialTheme.typography.bodyLarge
-                        .copy(fontWeight = FontWeight.SemiBold)
-                        .copy(color = textColor)
-                )
-            }, navigationIcon = {
-                IconButton(onClick = {
-                    if (drawerState.isClosed) {
-                        coroutineScope.launch {
-                            drawerState.open()
-                        }
-                    } else {
-                        coroutineScope.launch {
-                            drawerState.close()
-                        }
-                    }
-                }) {
-                    Icon(Icons.Filled.Menu, contentDescription = "Drawer Menu.")
-                }
-
-            })
+            CenterAlignedTopAppBar(
+                title = { TopBarTitle(navController, textColor) },
+                navigationIcon = {
+                    TopBarNavigationIcon(
+                        coroutineScope = coroutineScope,
+                        drawerState = drawerState
+                    )
+                })
         }) {
             Box(modifier = Modifier.padding(it)) {
                 NavHost(navController = navController, startDestination = "HomePage") {
@@ -77,5 +59,41 @@ fun Navigation() {
                 }
             }
         }
+    }
+}
+
+@Composable
+fun TopBarTitle(navController: NavController, textColor: Color) {
+    val title = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
+        "AirConditionerPage" -> "Air Conditioner"
+        "AirQualityPage" -> "Air Quality"
+        "SmartLightPage" -> "Smart Light"
+        "EnergyConsumptionPage" -> "Energy Consumption"
+        else -> "Home"
+    }
+
+    Text(
+        text = title,
+        style = MaterialTheme.typography.titleMedium
+            .copy(fontWeight = FontWeight.SemiBold)
+            .copy(color = textColor)
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopBarNavigationIcon(coroutineScope: CoroutineScope, drawerState: DrawerState) {
+    IconButton(onClick = {
+        if (drawerState.isClosed) {
+            coroutineScope.launch {
+                drawerState.open()
+            }
+        } else {
+            coroutineScope.launch {
+                drawerState.close()
+            }
+        }
+    }) {
+        Icon(Icons.Filled.Menu, contentDescription = "Drawer Menu.")
     }
 }
