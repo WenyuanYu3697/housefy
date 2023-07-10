@@ -23,6 +23,8 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -62,6 +64,8 @@ fun DevicesList() {
 
 @Composable
 fun DeviceCard(icon: ImageVector, text: String, modifier: Modifier = Modifier) {
+    val switchState = remember { mutableStateOf(true) }
+
     Column(
         modifier = modifier
             .background(
@@ -83,11 +87,9 @@ fun DeviceCard(icon: ImageVector, text: String, modifier: Modifier = Modifier) {
                 tint = Color(0xFF7468E4)
             )
             Switch(
-                checked = true,
-                colors = SwitchDefaults.colors(
-                    checkedTrackColor = Color(0xFF7468E4)
-                ),
-                onCheckedChange = { /* Handle switch state change */ },
+                checked = switchState.value,
+                colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
+                onCheckedChange = { switchState.value = it },
                 modifier = Modifier
                     .semantics { contentDescription = "Demo" }
             )
