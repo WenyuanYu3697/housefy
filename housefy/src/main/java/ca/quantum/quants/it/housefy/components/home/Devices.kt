@@ -1,6 +1,7 @@
 package ca.quantum.quants.it.housefy.components.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,21 +34,35 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.navOptions
 
 @Composable
-fun DevicesList() {
+fun DevicesList(navController: NavHostController) {
     Column() {
         Row(modifier = Modifier.fillMaxWidth()) {
             DeviceCard(
                 icon = Icons.Rounded.AcUnit,
                 text = "Air Conditioner",
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                onClick = {
+                    navController.navigate("AirConditionerPage", navOptions {
+                        launchSingleTop = true
+                        restoreState = true
+                    })
+                }
             )
             Spacer(modifier = Modifier.width(16.dp))
             DeviceCard(
                 icon = Icons.Rounded.Air,
                 text = "Air Quality",
-                modifier = Modifier.weight(1f) // Changed from 0.3f to 1f to match width with items in first row
+                modifier = Modifier.weight(1f),
+                onClick = {
+                    navController.navigate("AirQualityPage", navOptions {
+                        launchSingleTop = true
+                        restoreState = true
+                    })
+                }
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -55,7 +70,13 @@ fun DevicesList() {
             DeviceCard(
                 icon = Icons.Rounded.EmojiObjects,
                 text = "Smart Light",
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                onClick = {
+                    navController.navigate("SmartLightPage", navOptions {
+                        launchSingleTop = true
+                        restoreState = true
+                    })
+                }
             )
             Spacer(modifier = Modifier.weight(1.2f))
         }
@@ -63,7 +84,12 @@ fun DevicesList() {
 }
 
 @Composable
-fun DeviceCard(icon: ImageVector, text: String, modifier: Modifier = Modifier) {
+fun DeviceCard(
+    icon: ImageVector,
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val switchState = remember { mutableStateOf(true) }
 
     Column(
@@ -74,6 +100,7 @@ fun DeviceCard(icon: ImageVector, text: String, modifier: Modifier = Modifier) {
             )
             .padding(12.dp)
             .fillMaxWidth()
+            .clickable(onClick = onClick)
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,

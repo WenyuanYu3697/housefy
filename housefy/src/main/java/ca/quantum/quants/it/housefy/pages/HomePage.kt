@@ -14,12 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import ca.quantum.quants.it.housefy.components.home.DevicesList
 import ca.quantum.quants.it.housefy.components.home.EnergyUsageCard
 import ca.quantum.quants.it.housefy.components.home.TemperatureCard
 
 @Composable
-fun HomePage() {
+fun HomePage(navController: NavHostController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -39,7 +40,7 @@ fun HomePage() {
         item { Spacer(modifier = Modifier.height(24.dp)) }
 
         item {
-            DevicesList()
+            DevicesList(navController)
         }
     }
 }

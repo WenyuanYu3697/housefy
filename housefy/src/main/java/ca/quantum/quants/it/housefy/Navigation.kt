@@ -61,7 +61,7 @@ fun Navigation() {
         }) {
             Box(modifier = Modifier.padding(it)) {
                 NavHost(navController = navController, startDestination = "HomePage") {
-                    composable("HomePage") { HomePage() }
+                    composable("HomePage") { HomePage(navController) }
                     composable("AirConditionerPage") { AirConditionerPage() }
                     composable("AirQualityPage") { AirQualityPage() }
                     composable("SmartLightPage") { SmartLightPage() }
