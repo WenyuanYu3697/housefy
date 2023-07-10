@@ -4,9 +4,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AcUnit
 import androidx.compose.material.icons.outlined.Air
 import androidx.compose.material.icons.outlined.Thermostat
 import androidx.compose.material.icons.rounded.Bolt
+import androidx.compose.material.icons.rounded.EmojiObjects
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.WbIncandescent
 import androidx.compose.material3.DrawerState
@@ -48,7 +50,7 @@ fun DrawerItems(navController: NavHostController, drawerState: DrawerState) {
     Spacer(modifier = Modifier.height(12.dp))
 
     NavigationDrawerItem(
-        icon = { Icon(Icons.Outlined.Thermostat, "Air Conditioner") },
+        icon = { Icon(Icons.Outlined.AcUnit, "Air Conditioner") },
         label = { Text(text = "Air Conditioner") },
         selected = destination?.route == "AirConditionerPage",
 
@@ -88,7 +90,7 @@ fun DrawerItems(navController: NavHostController, drawerState: DrawerState) {
     Spacer(modifier = Modifier.height(12.dp))
 
     NavigationDrawerItem(
-        icon = { Icon(Icons.Rounded.WbIncandescent, "Smart Light") },
+        icon = { Icon(Icons.Rounded.EmojiObjects, "Smart Light") },
         label = { Text(text = "Smart Light") },
         selected = destination?.route == "SmartLightPage",
 
