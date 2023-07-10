@@ -4,12 +4,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Air
-import androidx.compose.material.icons.filled.Bolt
-import androidx.compose.material.icons.filled.EmojiObjects
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Thermostat
-import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Air
+import androidx.compose.material.icons.outlined.Thermostat
+import androidx.compose.material.icons.rounded.Bolt
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.WbIncandescent
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -28,12 +27,12 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DrawerItems(navController: NavHostController, drawerState: DrawerState) {
-    var scope = rememberCoroutineScope()
-    var currentBackStackEntryAsState = navController.currentBackStackEntryAsState()
-    var destination = currentBackStackEntryAsState.value?.destination
+    val scope = rememberCoroutineScope()
+    val currentBackStackEntryAsState = navController.currentBackStackEntryAsState()
+    val destination = currentBackStackEntryAsState.value?.destination
 
     NavigationDrawerItem(
-        icon = { Icon(Icons.Filled.Home, contentDescription = "Home") },
+        icon = { Icon(Icons.Rounded.Home, contentDescription = "Home") },
         label = { Text(text = "Home") },
         selected = destination?.route == "HomePage",
         onClick = {
@@ -49,7 +48,7 @@ fun DrawerItems(navController: NavHostController, drawerState: DrawerState) {
     Spacer(modifier = Modifier.height(12.dp))
 
     NavigationDrawerItem(
-        icon = { Icon(Icons.Filled.Thermostat, "Air Conditioner") },
+        icon = { Icon(Icons.Outlined.Thermostat, "Air Conditioner") },
         label = { Text(text = "Air Conditioner") },
         selected = destination?.route == "AirConditionerPage",
 
@@ -69,7 +68,7 @@ fun DrawerItems(navController: NavHostController, drawerState: DrawerState) {
     Spacer(modifier = Modifier.height(12.dp))
 
     NavigationDrawerItem(
-        icon = { Icon(Icons.Filled.Air, "Air Quality") },
+        icon = { Icon(Icons.Outlined.Air, "Air Quality") },
         label = { Text(text = "Air Quality") },
         selected = destination?.route == "AirQualityPage",
 
@@ -89,7 +88,7 @@ fun DrawerItems(navController: NavHostController, drawerState: DrawerState) {
     Spacer(modifier = Modifier.height(12.dp))
 
     NavigationDrawerItem(
-        icon = { Icon(Icons.Filled.EmojiObjects, "Smart Light") },
+        icon = { Icon(Icons.Rounded.WbIncandescent, "Smart Light") },
         label = { Text(text = "Smart Light") },
         selected = destination?.route == "SmartLightPage",
 
@@ -109,7 +108,7 @@ fun DrawerItems(navController: NavHostController, drawerState: DrawerState) {
     Spacer(modifier = Modifier.height(12.dp))
 
     NavigationDrawerItem(
-        icon = { Icon(Icons.Filled.Bolt, "Energy Consumption") },
+        icon = { Icon(Icons.Rounded.Bolt, "Energy Consumption") },
         label = { Text(text = "Energy Consumption") },
         selected = destination?.route == "EnergyConsumptionPage",
 
