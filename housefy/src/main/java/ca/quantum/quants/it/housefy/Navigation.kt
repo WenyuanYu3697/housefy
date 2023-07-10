@@ -53,7 +53,11 @@ fun Navigation() {
                         drawerState = drawerState
                     )
                 },
-                actions = { TopBarMenu() })
+                actions = { TopBarMenu() },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color(0xFFF0F2F1)
+                )
+            )
         }) {
             Box(modifier = Modifier.padding(it)) {
                 NavHost(navController = navController, startDestination = "HomePage") {
@@ -116,9 +120,8 @@ fun TopBarMenu() {
         expanded = showMenu,
         onDismissRequest = { showMenu = false }
     ) {
-        DropdownMenuItem(text = { Text("Guide" ) }, onClick = { /* Handle item click */ })
-        DropdownMenuItem(text = { Text("Feedback" ) }, onClick = { /* Handle item click */ })
-        DropdownMenuItem(text = { Text("About" ) }, onClick = { /* Handle item click */ })
-
+        DropdownMenuItem(text = { Text("Guide") }, onClick = { /* Handle item click */ })
+        DropdownMenuItem(text = { Text("Feedback") }, onClick = { /* Handle item click */ })
+        DropdownMenuItem(text = { Text("About") }, onClick = { /* Handle item click */ })
     }
 }

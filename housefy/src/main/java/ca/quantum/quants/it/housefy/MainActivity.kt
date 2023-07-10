@@ -17,7 +17,6 @@ class MainActivity : ComponentActivity() {
             HousefyTheme() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = Color.Black
                 ) {
                     Navigation()
                 }
