@@ -19,9 +19,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun EnergyUsageCard() {
+    val today = LocalDate.now()
+    val formatter = DateTimeFormatter.ofPattern("MMM d, yyyy")
+    val formattedDate = today.format(formatter)
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -58,7 +64,7 @@ fun EnergyUsageCard() {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Jul 10, 2023",
+                    text = formattedDate,
                     style = MaterialTheme.typography.bodySmall
                         .copy(fontWeight = FontWeight.Medium)
                         .copy(color = Color(0xFF353336)),

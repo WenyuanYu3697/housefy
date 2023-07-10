@@ -24,7 +24,7 @@ fun HomePage() {
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color(0xFFF0F2F1))
-            .padding(16.dp),
+            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
     ) {
         item {
             TemperatureCard()
