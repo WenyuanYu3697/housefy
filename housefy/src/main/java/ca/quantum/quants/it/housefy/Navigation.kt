@@ -1,5 +1,6 @@
 package ca.quantum.quants.it.housefy
 
+import FeedbackPage
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -26,6 +27,7 @@ import ca.quantum.quants.it.housefy.components.navigation.DrawerContent
 import ca.quantum.quants.it.housefy.pages.AirConditionerPage
 import ca.quantum.quants.it.housefy.pages.AirQualityPage
 import ca.quantum.quants.it.housefy.pages.EnergyConsumptionPage
+//import ca.quantum.quants.it.housefy.pages.FeedbackPage
 import ca.quantum.quants.it.housefy.pages.HomePage
 import ca.quantum.quants.it.housefy.pages.SmartLightPage
 import kotlinx.coroutines.CoroutineScope
@@ -53,7 +55,7 @@ fun Navigation() {
                         drawerState = drawerState
                     )
                 },
-                actions = { TopBarMenu() },
+                actions = { TopBarMenu(navController) },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = Color(0xFFF0F2F1)
                 )
@@ -66,6 +68,8 @@ fun Navigation() {
                     composable("AirQualityPage") { AirQualityPage() }
                     composable("SmartLightPage") { SmartLightPage() }
                     composable("EnergyConsumptionPage") { EnergyConsumptionPage() }
+                    composable("FeedbackPage") { FeedbackPage() }
+
                 }
             }
         }
@@ -79,6 +83,7 @@ fun TopBarTitle(navController: NavController, textColor: Color) {
         "AirQualityPage" -> "Air Quality"
         "SmartLightPage" -> "Smart Light"
         "EnergyConsumptionPage" -> "Energy Consumption"
+        "FeedbackPage" -> "Feedback"
         else -> "Home"
     }
 
@@ -109,7 +114,7 @@ fun TopBarNavigationIcon(coroutineScope: CoroutineScope, drawerState: DrawerStat
 }
 
 @Composable
-fun TopBarMenu() {
+fun TopBarMenu(navController: NavController) {
     var showMenu by remember { mutableStateOf(false) }
 
     IconButton(onClick = { showMenu = true }) {
@@ -121,7 +126,15 @@ fun TopBarMenu() {
         onDismissRequest = { showMenu = false }
     ) {
         DropdownMenuItem(text = { Text("Guide") }, onClick = { /* Handle item click */ })
-        DropdownMenuItem(text = { Text("Feedback") }, onClick = { /* Handle item click */ })
+        //DropdownMenuItem(text = { Text("Feedback") }, onClick = { /* Handle item click */ })
+        DropdownMenuItem(
+            text = { Text("Feedback") },
+            onClick = {
+                showMenu = false
+                navController.navigate("FeedbackPage")
+            }
+        )
+
         DropdownMenuItem(text = { Text("About") }, onClick = { /* Handle item click */ })
     }
 }
