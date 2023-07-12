@@ -40,7 +40,7 @@ import androidx.compose.ui.zIndex
 
 @Composable
 fun EnergyConsumptionPage() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier = Modifier.fillMaxSize().background(color = Color(0xFFF0F2F1)), contentAlignment = Alignment.Center) {
         //Text(text = "Energy Consumption Page Content")
         Chart(
             data = listOf(
@@ -66,7 +66,9 @@ fun Chart(
         modifier = Modifier
             .padding(30.dp, 60.dp, 30.dp, 180.dp)
             .clip(RoundedCornerShape(5))
-            .background(Color(0xFF333340))
+            //.background(Color(0xFF333340))
+            //.background(Color(0xFFA3A3A5))
+              .background(Color(0xFFFFFFFF))
         //.background(Color.Red)
     ) {
         Column() {
@@ -74,7 +76,7 @@ fun Chart(
 
                 text = "Usage, KWh",
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF707DB2),
+                color = Color(0xFF7468E4),
                 fontSize = 30.sp,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
@@ -91,7 +93,7 @@ fun Chart(
                 Text(
                     text = "July 2023 - Week 1",
                     fontWeight = FontWeight.Normal,
-                    color = Color(0xFFFFFFFF),
+                    color = Color(0xFF858585),
                     fontSize = 20.sp,
                     textAlign = TextAlign.Start
                 )
@@ -163,9 +165,9 @@ fun Chart(
                 text = "Total: 254 KWh",
                 fontWeight = FontWeight.Bold,
                 //color = Color(0xFFFFFFFF),
-                color = Color(0xFF858AE7),
+                color = Color(0xFF7C7A7A),
                 //color = Color.Black,
-                fontSize = 27.sp,
+                fontSize = 30.sp,
                 textAlign = TextAlign.Start,
 
                 )
@@ -188,7 +190,7 @@ fun YAxis(maxValue: Int) {
             modifier = Modifier.fillMaxHeight(),
             verticalArrangement = Arrangement.Bottom
         ) {
-            Text(text = maxValue.toString(), color = Color(0xFFFFFFFF),)
+            Text(text = maxValue.toString(), color = Color(0xFF858585))
             Spacer(modifier = Modifier.fillMaxHeight())
         }
 
@@ -198,7 +200,7 @@ fun YAxis(maxValue: Int) {
         ) {
             Text(
                 text = (maxValue / 4).toString(),
-                color = Color(0xFFFFFFFF),
+                color = Color(0xFF858585),
             )
             Spacer(modifier = Modifier.fillMaxHeight(0f))
         }
@@ -209,7 +211,7 @@ fun YAxis(maxValue: Int) {
         ) {
             Text(
                 text = (maxValue / 2).toString(),
-                color = Color(0xFFFFFFFF),
+                color = Color(0xFF858585),
             )
             Spacer(modifier = Modifier.fillMaxHeight(0.5f))
         }
@@ -231,7 +233,7 @@ fun Bar(height: Float, onClick: () -> Unit) {
             .clip(RoundedCornerShape(10.dp))
             .width(15.dp)
             .fillMaxHeight(height)
-            .background(Color(0xFF187BD3))
+            .background(Color(0xFF7468E4))
             .clickable { onClick() }
     )
 }
@@ -251,7 +253,7 @@ fun XAxis(data: List<Pair<Float, Int>>) {
                 modifier = Modifier.width(20.dp),
                 text = it.second.toString(),
                 textAlign = TextAlign.Center,
-                color = Color(0xFFFFFFFF),
+                color = Color(0xFF858585),
             )
         }
     }
