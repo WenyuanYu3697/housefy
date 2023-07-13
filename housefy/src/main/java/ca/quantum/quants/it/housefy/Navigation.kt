@@ -27,6 +27,7 @@ import ca.quantum.quants.it.housefy.components.navigation.DrawerContent
 import ca.quantum.quants.it.housefy.pages.AirConditionerPage
 import ca.quantum.quants.it.housefy.pages.AirQualityPage
 import ca.quantum.quants.it.housefy.pages.EnergyConsumptionPage
+import ca.quantum.quants.it.housefy.pages.GuidePage
 //import ca.quantum.quants.it.housefy.pages.FeedbackPage
 import ca.quantum.quants.it.housefy.pages.HomePage
 import ca.quantum.quants.it.housefy.pages.SmartLightPage
@@ -69,6 +70,7 @@ fun Navigation() {
                     composable("SmartLightPage") { SmartLightPage() }
                     composable("EnergyConsumptionPage") { EnergyConsumptionPage() }
                     composable("FeedbackPage") { FeedbackPage() }
+                    composable("GuidePage") { GuidePage() }
 
                 }
             }
@@ -84,6 +86,7 @@ fun TopBarTitle(navController: NavController, textColor: Color) {
         "SmartLightPage" -> "Smart Light"
         "EnergyConsumptionPage" -> "Energy Consumption"
         "FeedbackPage" -> "Feedback"
+        "GuidePage" -> "Guide"
         else -> "Home"
     }
 
@@ -125,7 +128,12 @@ fun TopBarMenu(navController: NavController) {
         expanded = showMenu,
         onDismissRequest = { showMenu = false }
     ) {
-        DropdownMenuItem(text = { Text("Guide") }, onClick = { /* Handle item click */ })
+        DropdownMenuItem(text = { Text("Guide") },
+            onClick = {
+            /* Handle item click */
+                showMenu = false
+                navController.navigate("GuidePage")
+            })
         //DropdownMenuItem(text = { Text("Feedback") }, onClick = { /* Handle item click */ })
         DropdownMenuItem(
             text = { Text("Feedback") },
