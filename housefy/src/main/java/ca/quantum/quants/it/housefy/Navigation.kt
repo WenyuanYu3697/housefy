@@ -24,6 +24,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
 import ca.quantum.quants.it.housefy.components.navigation.DrawerContent
+import ca.quantum.quants.it.housefy.pages.AboutPage
 import ca.quantum.quants.it.housefy.pages.AirConditionerPage
 import ca.quantum.quants.it.housefy.pages.AirQualityPage
 import ca.quantum.quants.it.housefy.pages.EnergyConsumptionPage
@@ -71,6 +72,7 @@ fun Navigation() {
                     composable("EnergyConsumptionPage") { EnergyConsumptionPage() }
                     composable("FeedbackPage") { FeedbackPage() }
                     composable("GuidePage") { GuidePage() }
+                    composable("AboutPage") { AboutPage() }
 
                 }
             }
@@ -87,6 +89,7 @@ fun TopBarTitle(navController: NavController, textColor: Color) {
         "EnergyConsumptionPage" -> "Energy Consumption"
         "FeedbackPage" -> "Feedback"
         "GuidePage" -> "Guide"
+        "AboutPage" -> "About"
         else -> "Home"
     }
 
@@ -143,6 +146,10 @@ fun TopBarMenu(navController: NavController) {
             }
         )
 
-        DropdownMenuItem(text = { Text("About") }, onClick = { /* Handle item click */ })
+        DropdownMenuItem(text = { Text("About") },
+            onClick = {
+                showMenu = false
+                navController.navigate("AboutPage")
+            })
     }
 }
