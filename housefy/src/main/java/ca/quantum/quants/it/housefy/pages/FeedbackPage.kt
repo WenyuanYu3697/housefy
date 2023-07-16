@@ -1,3 +1,4 @@
+import android.os.Build
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -8,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.ktor.client.*
@@ -17,6 +19,7 @@ import io.ktor.http.*
 import io.ktor.http.content.TextContent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -24,8 +27,10 @@ import kotlinx.serialization.json.Json
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeedbackPage() {
+    val context = LocalContext.current
+
     var fullName by remember { mutableStateOf("") }
-    var phoneModel by remember { mutableStateOf("") }
+    var phoneModel by remember { mutableStateOf(Build.MODEL) }  // automatically get phone model
     var phoneNumber by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var rating by remember { mutableStateOf(1) }  // rating as Int
@@ -42,24 +47,13 @@ fun FeedbackPage() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                .padding(16.dp, 50.dp, 16.dp, 16.dp),
+            verticalArrangement = Arrangement.Top
         ) {
             OutlinedTextField(
                 value = fullName,
                 onValueChange = { fullName = it },
                 label = { Text("Full Name") },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OutlinedTextField(
-                value = phoneModel,
-                onValueChange = { phoneModel = it },
-                label = { Text("Phone Model") },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -86,14 +80,6 @@ fun FeedbackPage() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Text("Rating")
-
-            RatingBar(current = rating, onValueChange = { newRating ->
-                rating = newRating
-            })
-
-            Spacer(modifier = Modifier.height(16.dp))
-
             OutlinedTextField(
                 value = comment,
                 onValueChange = { comment = it },
@@ -104,21 +90,31 @@ fun FeedbackPage() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(onClick = {
-                coroutineScope.launch(Dispatchers.IO) {
-                    try {
-                        val user = User(fullName, email, phoneModel, phoneNumber)
-                        val feedback = Feedback(rating, comment, user)
-                        val result = postFeedback(feedback)
-                        dialogMessage = result.second
-                        dialogVisible = true
-                    } catch (e: Exception) {
-                        dialogMessage = "Error: ${e.localizedMessage}"
-                        dialogVisible = true
+            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                RatingBar(current = rating, onValueChange = { newRating ->
+                    rating = newRating
+                })
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                Button(onClick = {
+                    coroutineScope.launch(Dispatchers.IO) {
+                        try {
+                            val user = User(fullName, email, phoneModel, phoneNumber)
+                            val feedback = Feedback(rating, comment, user)
+                            val result = postFeedback(feedback)
+                            dialogMessage = result.second
+                            dialogVisible = true
+                        } catch (e: Exception) {
+                            dialogMessage = "Error: ${e.localizedMessage}"
+                            dialogVisible = true
+                        }
                     }
+                }) {
+                    Text("Submit Feedback")
                 }
-            }) {
-                Text("Submit Feedback")
             }
         }
     }
@@ -180,7 +176,6 @@ fun RatingBar(current: Int, onValueChange: (Int) -> Unit) {
     var rating by remember { mutableStateOf(current) }
 
     Row(
-        modifier = Modifier.padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         repeat(5) { index ->
@@ -190,7 +185,7 @@ fun RatingBar(current: Int, onValueChange: (Int) -> Unit) {
                 imageVector = if (isFilled) Icons.Default.Star else Icons.Default.StarBorder,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(28.dp)
+                    .size(48.dp)  // increased size
                     .clickable {
                         rating = index + 1
                         onValueChange(rating)
