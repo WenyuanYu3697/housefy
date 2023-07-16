@@ -117,8 +117,6 @@ fun DeviceCard(
                 checked = switchState.value,
                 colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
                 onCheckedChange = { switchState.value = it },
-                modifier = Modifier
-                    .semantics { contentDescription = "Demo" }
             )
         }
 
