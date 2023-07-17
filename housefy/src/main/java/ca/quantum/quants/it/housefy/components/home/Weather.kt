@@ -116,7 +116,18 @@ fun PermissionGranted(temp: String, feelsLike: String, icon: String) {
                 contentDescription = null,
                 modifier = Modifier
                     .width(64.dp)
-                    .absoluteOffset(y = (-30).dp, x = (-4).dp)
+                    .absoluteOffset(
+                        y = if (mapWeatherIconToAppIcon(icon) == R.drawable.weather_rainy) {
+                            (-20).dp
+                        } else {
+                            (-30).dp
+                        },
+                        x = if (mapWeatherIconToAppIcon(icon) == R.drawable.weather_rainy) {
+                            (-10).dp
+                        } else {
+                            (-4).dp
+                        },
+                    )
             )
         }
         Column(
