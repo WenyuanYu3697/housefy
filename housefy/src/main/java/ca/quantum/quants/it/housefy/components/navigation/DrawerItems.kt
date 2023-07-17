@@ -20,10 +20,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navOptions
+import ca.quantum.quants.it.housefy.R
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,8 +36,8 @@ fun DrawerItems(navController: NavHostController, drawerState: DrawerState) {
     val destination = currentBackStackEntryAsState.value?.destination
 
     NavigationDrawerItem(
-        icon = { Icon(Icons.Rounded.Home, contentDescription = "Home") },
-        label = { Text(text = "Home") },
+        icon = { Icon(Icons.Rounded.Home, contentDescription = stringResource(R.string.home)) },
+        label = { Text(text = stringResource(R.string.home)) },
         selected = destination?.route == "HomePage",
         onClick = {
             navController.navigate("HomePage", navOptions {
@@ -50,8 +52,8 @@ fun DrawerItems(navController: NavHostController, drawerState: DrawerState) {
     Spacer(modifier = Modifier.height(12.dp))
 
     NavigationDrawerItem(
-        icon = { Icon(Icons.Outlined.AcUnit, "Air Conditioner") },
-        label = { Text(text = "Air Conditioner") },
+        icon = { Icon(Icons.Outlined.AcUnit, stringResource(R.string.air_conditioner)) },
+        label = { Text(text = stringResource(R.string.air_conditioner)) },
         selected = destination?.route == "AirConditionerPage",
 
         onClick = {
@@ -70,8 +72,8 @@ fun DrawerItems(navController: NavHostController, drawerState: DrawerState) {
     Spacer(modifier = Modifier.height(12.dp))
 
     NavigationDrawerItem(
-        icon = { Icon(Icons.Outlined.Air, "Air Quality") },
-        label = { Text(text = "Air Quality") },
+        icon = { Icon(Icons.Outlined.Air, stringResource(R.string.air_quality)) },
+        label = { Text(text = stringResource(R.string.air_quality)) },
         selected = destination?.route == "AirQualityPage",
 
         onClick = {
@@ -90,8 +92,8 @@ fun DrawerItems(navController: NavHostController, drawerState: DrawerState) {
     Spacer(modifier = Modifier.height(12.dp))
 
     NavigationDrawerItem(
-        icon = { Icon(Icons.Rounded.EmojiObjects, "Smart Light") },
-        label = { Text(text = "Smart Light") },
+        icon = { Icon(Icons.Rounded.EmojiObjects, stringResource(R.string.smart_light)) },
+        label = { Text(text = stringResource(R.string.smart_light)) },
         selected = destination?.route == "SmartLightPage",
 
         onClick = {
@@ -110,8 +112,8 @@ fun DrawerItems(navController: NavHostController, drawerState: DrawerState) {
     Spacer(modifier = Modifier.height(12.dp))
 
     NavigationDrawerItem(
-        icon = { Icon(Icons.Rounded.Bolt, "Energy Consumption") },
-        label = { Text(text = "Energy Consumption") },
+        icon = { Icon(Icons.Rounded.Bolt, stringResource(R.string.energy_consumption)) },
+        label = { Text(text = stringResource(R.string.energy_consumption)) },
         selected = destination?.route == "EnergyConsumptionPage",
 
         onClick = {

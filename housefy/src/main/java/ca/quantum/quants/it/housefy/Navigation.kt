@@ -18,6 +18,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -88,15 +89,15 @@ fun Navigation() {
 @Composable
 fun TopBarTitle(navController: NavController, textColor: Color) {
     val title = when (navController.currentBackStackEntryAsState().value?.destination?.route) {
-        "AirConditionerPage" -> "Air Conditioner"
-        "AirQualityPage" -> "Air Quality"
-        "SmartLightPage" -> "Smart Light"
-        "EnergyConsumptionPage" -> "Energy Consumption"
-        "SettingsPage" -> "Settings"
-        "FeedbackPage" -> "Feedback"
-        "GuidePage" -> "Guide"
-        "AboutPage" -> "About"
-        else -> "Home"
+        "AirConditionerPage" -> stringResource(R.string.air_conditioner)
+        "AirQualityPage" -> stringResource(R.string.air_quality)
+        "SmartLightPage" -> stringResource(R.string.smart_light)
+        "EnergyConsumptionPage" -> stringResource(R.string.energy_consumption)
+        "SettingsPage" -> stringResource(R.string.settings)
+        "FeedbackPage" -> stringResource(R.string.feedback)
+        "GuidePage" -> stringResource(R.string.guide)
+        "AboutPage" -> stringResource(R.string.about)
+        else -> stringResource(R.string.home)
     }
 
     Text(
@@ -131,14 +132,14 @@ fun TopBarMenu(navController: NavController) {
 
     val menuItems = listOf<ActionMenuItem>(
         ActionMenuItem.IconMenuItem.AlwaysShown(
-            title = "Settings",
-            contentDescription = "Settings",
+            title = stringResource(R.string.settings),
+            contentDescription = stringResource(R.string.settings),
             onClick = { navController.navigate("SettingsPage") },
             icon = Icons.Rounded.Settings,
         ),
         ActionMenuItem.IconMenuItem.ShownIfRoom(
-            title = "Guide",
-            contentDescription = "Guide",
+            title = stringResource(R.string.guide),
+            contentDescription = stringResource(R.string.guide),
             onClick = {
                 isOpen = false;
                 navController.navigate("GuidePage")
@@ -146,14 +147,14 @@ fun TopBarMenu(navController: NavController) {
             icon = Icons.Filled.QuestionAnswer,
         ),
         ActionMenuItem.NeverShown(
-            title = "Feedback",
+            title = stringResource(R.string.feedback),
             onClick = {
                 isOpen = false;
                 navController.navigate("FeedbackPage")
             },
         ),
         ActionMenuItem.NeverShown(
-            title = "About",
+            title = stringResource(R.string.about),
             onClick = {
                 isOpen = false;
                 navController.navigate("AboutPage")

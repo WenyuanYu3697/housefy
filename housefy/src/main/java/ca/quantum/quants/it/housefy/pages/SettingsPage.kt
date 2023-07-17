@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -49,7 +49,8 @@ fun SettingsPage() {
                             } else {
                                 ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
                             }
-                        }
+                        },
+                        colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
                     )
                 }
             )
@@ -59,7 +60,8 @@ fun SettingsPage() {
                 control = {
                     Switch(
                         checked = enableNotifications.value,
-                        onCheckedChange = { enableNotifications.value = it }
+                        onCheckedChange = { enableNotifications.value = it },
+                        colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
                     )
                 }
             )
