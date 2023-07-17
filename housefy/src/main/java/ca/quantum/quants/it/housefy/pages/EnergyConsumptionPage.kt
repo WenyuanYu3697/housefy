@@ -254,6 +254,9 @@ fun Bar(height: Float, threshold: Float, maxValue: Float, onClick: () -> Unit) {
     val excessHeightInDp = maxOf(0f, heightInDp - thresholdInDp)
     val belowThresholdHeightInDp = minOf(heightInDp, thresholdInDp)
 
+    val aboveThresholdShape = RoundedCornerShape(topStartPercent = 50, topEndPercent = 50)
+    val belowThresholdShape = RoundedCornerShape(bottomStartPercent = 50, bottomEndPercent = 50)
+
     Column(
         Modifier
             .padding(start = 15.dp)
@@ -266,17 +269,19 @@ fun Bar(height: Float, threshold: Float, maxValue: Float, onClick: () -> Unit) {
             modifier = Modifier
                 .height(excessHeightInDp.dp)
                 .fillMaxWidth()
+                .clip(aboveThresholdShape)
                 .background(Color.Red)
-                .clip(RoundedCornerShape(topStart = 70.dp, topEnd = 70.dp))
         )
+
+        Spacer(modifier = Modifier.height(1.dp))
 
         // Part of the bar below the threshold
         Box(
             modifier = Modifier
                 .height(belowThresholdHeightInDp.dp)
                 .fillMaxWidth()
+                .clip(belowThresholdShape)
                 .background(Color(0xFF7468E4))
-                .clip(RoundedCornerShape(bottomStart = 70.dp, bottomEnd = 70.dp))
         )
     }
 }
