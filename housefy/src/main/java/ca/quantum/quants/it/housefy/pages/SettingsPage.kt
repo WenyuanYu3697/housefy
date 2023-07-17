@@ -1,13 +1,19 @@
 package ca.quantum.quants.it.housefy.pages
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.ActivityInfo
+import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,8 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.settings.SettingsRow
 
+@SuppressLint("MissingPermission")
 @Composable
 fun SettingsPage() {
     val context = LocalContext.current
@@ -42,8 +52,14 @@ fun SettingsPage() {
                 control = {
                     Switch(
                         checked = lockPortrait.value,
+                        colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
                         onCheckedChange = { newValue ->
                             lockPortrait.value = newValue
+
+                            val toastMessage =
+                                if (newValue) "Portrait mode locked" else "Portrait mode unlocked"
+                            Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+
                             activity?.requestedOrientation = if (newValue) {
                                 ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                             } else {
@@ -59,7 +75,26 @@ fun SettingsPage() {
                 control = {
                     Switch(
                         checked = enableNotifications.value,
-                        onCheckedChange = { enableNotifications.value = it }
+                        colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
+                        onCheckedChange = { newValue ->
+                            enableNotifications.value = newValue
+
+                            if (newValue) {
+                                val builder = NotificationCompat.Builder(
+                                    context,
+                                    "housefy_notification_channel"
+                                )
+                                    .setSmallIcon(R.drawable.housefy_logo) // replace with your own notification icon
+                                    .setContentTitle("Housefy")
+                                    .setContentText("Notifications Enabled")
+                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                    .setAutoCancel(true)
+
+                                with(NotificationManagerCompat.from(context)) {
+                                    notify(1, builder.build())
+                                }
+                            }
+                        }
                     )
                 }
             )
