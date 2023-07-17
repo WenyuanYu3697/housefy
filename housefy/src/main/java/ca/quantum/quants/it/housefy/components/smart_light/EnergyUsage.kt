@@ -28,8 +28,8 @@ fun EnergyUsage(modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "4kWh ($3/h)",
-                style = MaterialTheme.typography.bodyLarge
+                text = "0.01kWh  ($0.1/h)",
+                style = MaterialTheme.typography.bodyMedium
                     .copy(color = Color(0xFF353336))
                     .copy(fontWeight = FontWeight.Medium),
                 modifier = Modifier.padding(bottom = 12.dp, top = 12.dp)
