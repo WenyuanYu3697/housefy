@@ -11,12 +11,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwitchDefaults
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import ca.quantum.quants.it.housefy.LightOnAmbient
 
 @Composable
-fun StateSwitcher(switchState: MutableState<Boolean>, modifier: Modifier = Modifier) {
+fun StateSwitcher(modifier: Modifier = Modifier) {
+    val isLightOn = LightOnAmbient.current
+
     Box(
         modifier = modifier
             .background(
@@ -31,8 +33,8 @@ fun StateSwitcher(switchState: MutableState<Boolean>, modifier: Modifier = Modif
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Switch(
-                checked = switchState.value,
-                onCheckedChange = { switchState.value = it },
+                checked = isLightOn.value,
+                onCheckedChange = { isChecked -> isLightOn.value = isChecked },
                 colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
             )
             Text(
