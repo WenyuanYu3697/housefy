@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">housefy</string>
+    <string name="app_name">Housefy</string>
     <string name="air_conditioner">Air Conditioner</string>
     <string name="air_quality">Air Quality</string>
     <string name="smart_light">Smart Light</string>
