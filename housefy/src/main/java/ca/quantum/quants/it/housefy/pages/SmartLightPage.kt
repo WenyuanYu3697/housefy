@@ -12,8 +12,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import ca.quantum.quants.it.housefy.LightOnAmbient
 import ca.quantum.quants.it.housefy.R
-import ca.quantum.quants.it.housefy.components.smart_light.EnergyUsage
-import ca.quantum.quants.it.housefy.components.smart_light.StateSwitcher
+import ca.quantum.quants.it.housefy.components.common.EnergyUsage
+import ca.quantum.quants.it.housefy.components.common.StateSwitcher
 
 @Composable
 fun SmartLightPage() {
@@ -48,15 +48,17 @@ fun SmartLightPage() {
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             EnergyUsage(
-                modifier = Modifier
-                    .weight(1f)
+                text = "0.01kWh  ($0.13/h)",
+                modifier = Modifier.weight(1f)
             )
 
             Spacer(modifier = Modifier.width(24.dp))
 
             StateSwitcher(
-                modifier = Modifier
-                    .weight(1f)
+                text = "Toggle on/off",
+                checked = isLightOn.value,
+                onCheckedChange = { isChecked -> isLightOn.value = isChecked },
+                modifier = Modifier.weight(1f)
             )
         }
     }

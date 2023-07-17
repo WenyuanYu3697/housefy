@@ -1,4 +1,4 @@
-package ca.quantum.quants.it.housefy.components.smart_light
+package ca.quantum.quants.it.housefy.components.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 
 @Composable
-fun EnergyUsage(modifier: Modifier = Modifier) {
+fun EnergyUsage(text: String, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .background(
@@ -28,7 +28,7 @@ fun EnergyUsage(modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "0.01kWh  ($0.13/h)",
+                text = text,
                 style = MaterialTheme.typography.bodyMedium
                     .copy(color = Color(0xFF353336))
                     .copy(fontWeight = FontWeight.Medium),
