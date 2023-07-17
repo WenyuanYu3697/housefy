@@ -82,8 +82,8 @@ fun CustomComponent(
 //    indicatorStrokeCap: StrokeCap = StrokeCap.Round,
     bigTextFontSize: TextUnit = MaterialTheme.typography.titleLarge.fontSize,
     bigTextColor: Color = MaterialTheme.colorScheme.onSurface,
-    bigTextSuffix: String = "GB",
-    smallText: String = "Remaining",
+    bigTextSuffix: String = "AQI",
+    smallText: String = "Air Quality Index",
     smallTextFontSize: TextUnit = MaterialTheme.typography.titleLarge.fontSize,
     smallTextColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
 ) {
@@ -220,7 +220,7 @@ fun EmbeddedElements(
         textAlign = TextAlign.Center
     )
     Text(
-        text = "$bigText ${bigTextSuffix.take(2)}",
+        text = "$bigText ${bigTextSuffix.take(3)}",
         color = bigTextColor,
         fontSize = bigTextFontSize,
         textAlign = TextAlign.Center,
