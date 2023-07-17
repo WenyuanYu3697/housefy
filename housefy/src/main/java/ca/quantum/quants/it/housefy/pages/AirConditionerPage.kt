@@ -2,22 +2,17 @@ package ca.quantum.quants.it.housefy.pages
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.NetworkWifi1Bar
-import androidx.compose.material.icons.rounded.NetworkWifi2Bar
 import androidx.compose.material.icons.rounded.SignalCellularAlt
 import androidx.compose.material.icons.rounded.SignalCellularAlt1Bar
 import androidx.compose.material.icons.rounded.SignalCellularAlt2Bar
-import androidx.compose.material.icons.rounded.SignalWifi4Bar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,21 +53,27 @@ fun AirConditionerPage() {
                 icon = Icons.Rounded.SignalCellularAlt1Bar,
                 text = "Low speed",
                 modifier = Modifier.weight(1f),
-                onClick = { energyUsageText.value = "0.8 kWh  ($0.10/h)" } // Update energy usage text on click
+                onClick = {
+                    energyUsageText.value = "0.8 kWh  ($0.10/h)"
+                } // Update energy usage text on click
             )
             Spacer(modifier = Modifier.width(16.dp))
             FanSpeedCard(
                 icon = Icons.Rounded.SignalCellularAlt2Bar,
                 text = "Medium speed",
                 modifier = Modifier.weight(1f),
-                onClick = { energyUsageText.value = "1.2 kWh  ($0.14/h)" } // Update energy usage text on click
+                onClick = {
+                    energyUsageText.value = "1.2 kWh  ($0.14/h)"
+                } // Update energy usage text on click
             )
             Spacer(modifier = Modifier.width(16.dp))
             FanSpeedCard(
                 icon = Icons.Rounded.SignalCellularAlt,
                 text = "High speed",
                 modifier = Modifier.weight(1f),
-                onClick = { energyUsageText.value = "1.5 kWh  ($0.18/h)" } // Update energy usage text on click
+                onClick = {
+                    energyUsageText.value = "1.5 kWh  ($0.18/h)"
+                } // Update energy usage text on click
             )
         }
 

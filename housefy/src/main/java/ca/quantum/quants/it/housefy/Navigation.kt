@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.QuestionAnswer
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +24,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import ca.quantum.quants.it.housefy.components.navigation.ActionMenuItem
+import ca.quantum.quants.it.housefy.components.navigation.ActionsMenu
 
 import ca.quantum.quants.it.housefy.components.navigation.DrawerContent
 import ca.quantum.quants.it.housefy.pages.AboutPage
@@ -123,35 +127,44 @@ fun TopBarNavigationIcon(coroutineScope: CoroutineScope, drawerState: DrawerStat
 
 @Composable
 fun TopBarMenu(navController: NavController) {
-    var showMenu by remember { mutableStateOf(false) }
+    var isOpen by remember { mutableStateOf(false) }
 
-    IconButton(onClick = { showMenu = true }) {
-        Icon(Icons.Filled.MoreVert, contentDescription = "More")
-    }
-
-    DropdownMenu(
-        expanded = showMenu,
-        onDismissRequest = { showMenu = false }
-    ) {
-        DropdownMenuItem(text = { Text("Guide") },
+    val menuItems = listOf<ActionMenuItem>(
+        ActionMenuItem.IconMenuItem.AlwaysShown(
+            title = "Settings",
+            contentDescription = "Settings",
+            onClick = { navController.navigate("SettingsPage") },
+            icon = Icons.Rounded.Settings,
+        ),
+        ActionMenuItem.IconMenuItem.ShownIfRoom(
+            title = "Guide",
+            contentDescription = "Guide",
             onClick = {
-            /* Handle item click */
-                showMenu = false
+                isOpen = false;
                 navController.navigate("GuidePage")
-            })
-        //DropdownMenuItem(text = { Text("Feedback") }, onClick = { /* Handle item click */ })
-        DropdownMenuItem(
-            text = { Text("Feedback") },
+            },
+            icon = Icons.Filled.QuestionAnswer,
+        ),
+        ActionMenuItem.NeverShown(
+            title = "Feedback",
             onClick = {
-                showMenu = false
+                isOpen = false;
                 navController.navigate("FeedbackPage")
-            }
-        )
-
-        DropdownMenuItem(text = { Text("About") },
+            },
+        ),
+        ActionMenuItem.NeverShown(
+            title = "About",
             onClick = {
-                showMenu = false
+                isOpen = false;
                 navController.navigate("AboutPage")
-            })
-    }
+            },
+        )
+    )
+
+    ActionsMenu(
+        items = menuItems,
+        isOpen = isOpen,
+        onToggleOverflow = { isOpen = !isOpen },
+        maxVisibleItems = 1
+    )
 }
