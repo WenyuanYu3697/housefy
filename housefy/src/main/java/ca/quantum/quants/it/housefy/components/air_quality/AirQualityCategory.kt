@@ -44,10 +44,11 @@ fun AQICategoryCard(category: AQICategory) {
                 Text(
                     text = category.title,
                     color = category.color,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 8.dp)
                 )
-                Text(text = category.description, fontSize = 14.sp)
+                Text(text = category.description, fontSize = 14.sp, color = Color(0xFF353336))
             }
         }
     }
