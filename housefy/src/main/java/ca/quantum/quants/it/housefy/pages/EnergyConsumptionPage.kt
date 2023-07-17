@@ -135,7 +135,7 @@ fun Chart(
                     Icon(
                         imageVector = Icons.Filled.MoreVert,
                         contentDescription = "Options",
-                        tint = Color.White,
+                        tint = Color(0xFF919191),
                     )
                 }
             }
@@ -184,7 +184,7 @@ fun Chart(
             Text(
                 text = "Total: 254 KWh",
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF7C7A7A),
+                color = Color(0xFF6D6C6C),
                 fontSize = 30.sp,
                 textAlign = TextAlign.Start,
             )
