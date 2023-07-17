@@ -1,4 +1,5 @@
 import android.os.Build
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -8,6 +9,7 @@ import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,7 +44,7 @@ fun FeedbackPage() {
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = Color(0xFFF0F2F1)
     ) {
         Column(
             modifier = Modifier
@@ -84,7 +86,9 @@ fun FeedbackPage() {
                 value = comment,
                 onValueChange = { comment = it },
                 label = { Text("Comment") },
-                modifier = Modifier.fillMaxWidth().height(150.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp),
                 maxLines = 10
             )
 
@@ -98,7 +102,11 @@ fun FeedbackPage() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
                 Button(onClick = {
                     coroutineScope.launch(Dispatchers.IO) {
                         try {
@@ -155,9 +163,10 @@ suspend fun postFeedback(feedback: Feedback): Pair<Boolean, String> {
     val jsonData = json.encodeToString(feedback)
 
     return try {
-        val response: HttpResponse = client.post("https://housefybackend.azurewebsites.net/api/feedback") {
-            body = TextContent(jsonData, ContentType.Application.Json)
-        }
+        val response: HttpResponse =
+            client.post("https://housefybackend.azurewebsites.net/api/feedback") {
+                body = TextContent(jsonData, ContentType.Application.Json)
+            }
 
         if (response.status == HttpStatusCode.OK) {
             Pair(true, "Feedback submitted successfully.")
