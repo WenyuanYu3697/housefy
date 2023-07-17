@@ -16,8 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AcUnit
 import androidx.compose.material.icons.rounded.Air
 import androidx.compose.material.icons.rounded.EmojiObjects
-import androidx.compose.material.icons.rounded.Thermostat
-import androidx.compose.material.icons.rounded.WbIncandescent
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -30,12 +28,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.navOptions
+import ca.quantum.quants.it.housefy.LightOnAmbient
 
 @Composable
 fun DevicesList(navController: NavHostController) {
@@ -88,9 +85,10 @@ fun DeviceCard(
     icon: ImageVector,
     text: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val switchState = remember { mutableStateOf(true) }
+    val isLightOn =
+        if (text == "Smart Light") LightOnAmbient.current else remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -114,11 +112,9 @@ fun DeviceCard(
                 tint = Color(0xFF7468E4)
             )
             Switch(
-                checked = switchState.value,
+                checked = isLightOn.value,
+                onCheckedChange = { isChecked -> isLightOn.value = isChecked },
                 colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
-                onCheckedChange = { switchState.value = it },
-                modifier = Modifier
-                    .semantics { contentDescription = "Demo" }
             )
         }
 
