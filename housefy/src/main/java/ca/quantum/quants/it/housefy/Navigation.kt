@@ -46,31 +46,34 @@ fun Navigation() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
     val navController = rememberNavController()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     ModalNavigationDrawer(
         drawerContent = { DrawerContent(navController, drawerState) },
         drawerState = drawerState
     ) {
-        Scaffold(topBar = {
-            val textColor = MaterialTheme.colorScheme.secondary
+        Scaffold(
+            snackbarHost = { SnackbarHost(snackbarHostState) },
+            topBar = {
+                val textColor = MaterialTheme.colorScheme.secondary
 
-            CenterAlignedTopAppBar(
-                title = { TopBarTitle(navController, textColor) },
-                navigationIcon = {
-                    TopBarNavigationIcon(
-                        coroutineScope = coroutineScope,
-                        drawerState = drawerState
+                CenterAlignedTopAppBar(
+                    title = { TopBarTitle(navController, textColor) },
+                    navigationIcon = {
+                        TopBarNavigationIcon(
+                            coroutineScope = coroutineScope,
+                            drawerState = drawerState
+                        )
+                    },
+                    actions = { TopBarMenu(navController) },
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = Color(0xFFF0F2F1)
                     )
-                },
-                actions = { TopBarMenu(navController) },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color(0xFFF0F2F1)
                 )
-            )
-        }) {
+            }) {
             Box(modifier = Modifier.padding(it)) {
                 NavHost(navController = navController, startDestination = "HomePage") {
-                    composable("HomePage") { HomePage(navController) }
+                    composable("HomePage") { HomePage(navController, snackbarHostState) }
                     composable("AirConditionerPage") { AirConditionerPage() }
                     composable("AirQualityPage") { AirQualityPage() }
                     composable("SmartLightPage") { SmartLightPage() }
