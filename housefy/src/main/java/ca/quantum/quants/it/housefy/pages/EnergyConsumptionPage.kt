@@ -157,11 +157,15 @@ fun Chart(
                 YAxis(max_value)
 
                 // Graph columns
+
                 data.forEach {
-                    Bar(height = it.first, threshold = threshold, onClick = {
+                    Bar(height = it.first, threshold = threshold, maxValue = max_value.toFloat(), onClick = {
                         Toast.makeText(context, it.first.toString(), Toast.LENGTH_SHORT).show()
                     })
                 }
+
+
+
 
                 Box(
                     modifier = Modifier
@@ -237,16 +241,44 @@ fun YAxis(maxValue: Int) {
 }
 
 @Composable
-fun Bar(height: Float, threshold: Float, onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
+fun Bar(height: Float, threshold: Float, maxValue: Float, onClick: () -> Unit) {
+    val context = LocalContext.current
+
+    val totalHeightInDp = 10000.dp
+    val heightPercentage = height / maxValue
+    val thresholdPercentage = threshold / maxValue
+
+    val heightInDp = heightPercentage * totalHeightInDp.value
+    val thresholdInDp = thresholdPercentage * totalHeightInDp.value
+
+    val excessHeightInDp = maxOf(0f, heightInDp - thresholdInDp)
+    val belowThresholdHeightInDp = minOf(heightInDp, thresholdInDp)
+
+    Column(
+        Modifier
             .padding(start = 15.dp)
-            .clip(RoundedCornerShape(10.dp))
             .width(15.dp)
-            .fillMaxHeight(height)
-            .background(if (height > threshold) Color.Red else Color(0xFF7468E4)) // Choose color based on threshold
-            .clickable { onClick() }
-    )
+            .clickable { onClick() },
+        verticalArrangement = Arrangement.Bottom
+    ) {
+        // Part of the bar above the threshold
+        Box(
+            modifier = Modifier
+                .height(excessHeightInDp.dp)
+                .fillMaxWidth()
+                .background(Color.Red)
+                .clip(RoundedCornerShape(topStart = 70.dp, topEnd = 70.dp))
+        )
+
+        // Part of the bar below the threshold
+        Box(
+            modifier = Modifier
+                .height(belowThresholdHeightInDp.dp)
+                .fillMaxWidth()
+                .background(Color(0xFF7468E4))
+                .clip(RoundedCornerShape(bottomStart = 70.dp, bottomEnd = 70.dp))
+        )
+    }
 }
 
 @Composable
