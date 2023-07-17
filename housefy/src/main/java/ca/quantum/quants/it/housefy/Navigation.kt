@@ -31,6 +31,7 @@ import ca.quantum.quants.it.housefy.pages.EnergyConsumptionPage
 import ca.quantum.quants.it.housefy.pages.GuidePage
 //import ca.quantum.quants.it.housefy.pages.FeedbackPage
 import ca.quantum.quants.it.housefy.pages.HomePage
+import ca.quantum.quants.it.housefy.pages.SettingsPage
 import ca.quantum.quants.it.housefy.pages.SmartLightPage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -70,10 +71,10 @@ fun Navigation() {
                     composable("AirQualityPage") { AirQualityPage() }
                     composable("SmartLightPage") { SmartLightPage() }
                     composable("EnergyConsumptionPage") { EnergyConsumptionPage() }
+                    composable("SettingsPage") { SettingsPage() }
                     composable("FeedbackPage") { FeedbackPage() }
                     composable("GuidePage") { GuidePage() }
                     composable("AboutPage") { AboutPage() }
-
                 }
             }
         }
@@ -87,6 +88,7 @@ fun TopBarTitle(navController: NavController, textColor: Color) {
         "AirQualityPage" -> "Air Quality"
         "SmartLightPage" -> "Smart Light"
         "EnergyConsumptionPage" -> "Energy Consumption"
+        "SettingsPage" -> "Settings"
         "FeedbackPage" -> "Feedback"
         "GuidePage" -> "Guide"
         "AboutPage" -> "About"
