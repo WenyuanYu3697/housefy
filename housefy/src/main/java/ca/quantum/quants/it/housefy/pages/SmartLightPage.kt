@@ -31,11 +31,11 @@ fun SmartLightPage() {
             contentDescription = "Center Image",
             modifier = Modifier
                 .size(400.dp)
-                .scale(if (isLightOn.value) 2f else 1.62f)
+                .scale(if (isLightOn.value) 2.1f else 1.7f)
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 75.dp)
                 .offset(
-                    y = if (isLightOn.value) 0.dp else 27.dp,
+                    y = if (isLightOn.value) 0.dp else 26.dp,
                     x = if (isLightOn.value) 0.dp else 2.dp
                 )
         )
