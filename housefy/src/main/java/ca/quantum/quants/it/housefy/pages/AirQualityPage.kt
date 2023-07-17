@@ -27,7 +27,8 @@ fun AirQualityPage() {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xFFF0F2F1)),
+            .background(color = Color(0xFFF0F2F1))
+            .padding(bottom = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
