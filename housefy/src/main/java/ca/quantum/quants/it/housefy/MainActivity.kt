@@ -14,14 +14,21 @@ import androidx.compose.ui.Modifier
 import ca.quantum.quants.it.housefy.ui.theme.HousefyTheme
 
 val LightOnAmbient = compositionLocalOf<MutableState<Boolean>> { error("No light state provided") }
+val AirConditionerAmbient =
+    compositionLocalOf<MutableState<Boolean>> { error("No AirConditioner state provided") }
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val isLightOn = remember { mutableStateOf(false) }
+            val isAirConditionerOn = remember { mutableStateOf(false) }
 
             HousefyTheme() {
-                CompositionLocalProvider(LightOnAmbient provides isLightOn) {
+                CompositionLocalProvider(
+                    LightOnAmbient provides isLightOn,
+                    AirConditionerAmbient provides isAirConditionerOn
+                ) {
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                     ) {

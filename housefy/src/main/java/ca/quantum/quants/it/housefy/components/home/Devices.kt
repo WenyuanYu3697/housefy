@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.navOptions
+import ca.quantum.quants.it.housefy.AirConditionerAmbient
 import ca.quantum.quants.it.housefy.LightOnAmbient
 
 @Composable
@@ -87,8 +88,11 @@ fun DeviceCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val isLightOn =
-        if (text == "Smart Light") LightOnAmbient.current else remember { mutableStateOf(false) }
+    val deviceState = when (text) {
+        "Smart Light" -> LightOnAmbient.current
+        "Air Conditioner" -> AirConditionerAmbient.current
+        else -> remember { mutableStateOf(false) }
+    }
 
     Column(
         modifier = modifier
@@ -112,8 +116,8 @@ fun DeviceCard(
                 tint = Color(0xFF7468E4)
             )
             Switch(
-                checked = isLightOn.value,
-                onCheckedChange = { isChecked -> isLightOn.value = isChecked },
+                checked = deviceState.value,
+                onCheckedChange = { isChecked -> deviceState.value = isChecked },
                 colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
             )
         }

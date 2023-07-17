@@ -1,4 +1,4 @@
-package ca.quantum.quants.it.housefy.components.smart_light
+package ca.quantum.quants.it.housefy.components.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,9 +16,12 @@ import androidx.compose.ui.text.font.FontWeight
 import ca.quantum.quants.it.housefy.LightOnAmbient
 
 @Composable
-fun StateSwitcher(modifier: Modifier = Modifier) {
-    val isLightOn = LightOnAmbient.current
-
+fun StateSwitcher(
+    text: String,
+    checked: Boolean,
+    onCheckedChange: ((Boolean) -> Unit),
+    modifier: Modifier = Modifier
+) {
     Box(
         modifier = modifier
             .background(
@@ -33,12 +36,12 @@ fun StateSwitcher(modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Switch(
-                checked = isLightOn.value,
-                onCheckedChange = { isChecked -> isLightOn.value = isChecked },
+                checked = checked,
+                onCheckedChange = onCheckedChange,
                 colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
             )
             Text(
-                text = "Toggle on/off",
+                text = text,
                 style = MaterialTheme.typography.bodySmall
                     .copy(fontWeight = FontWeight.Medium)
                     .copy(color = Color(0xFFA3A3A5)),
