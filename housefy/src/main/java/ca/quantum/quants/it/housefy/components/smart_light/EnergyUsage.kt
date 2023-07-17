@@ -28,7 +28,7 @@ fun EnergyUsage(modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "0.01kWh  ($0.1/h)",
+                text = "0.01kWh  ($0.13/h)",
                 style = MaterialTheme.typography.bodyMedium
                     .copy(color = Color(0xFF353336))
                     .copy(fontWeight = FontWeight.Medium),
