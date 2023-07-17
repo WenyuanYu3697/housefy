@@ -94,13 +94,13 @@ fun EnergyUsageCard() {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "55.0 kWh",
+                    text = "0.0 kWh",
                     style = MaterialTheme.typography.bodyMedium
                         .copy(fontWeight = FontWeight.Medium)
                         .copy(color = Color(0xFF353336)),
                 )
                 Text(
-                    text = "234.0 kWh",
+                    text = "0.0 kWh",
                     style = MaterialTheme.typography.bodyMedium
                         .copy(fontWeight = FontWeight.Medium)
                         .copy(color = Color(0xFF353336)),
