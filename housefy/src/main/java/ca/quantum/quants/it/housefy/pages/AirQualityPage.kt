@@ -30,6 +30,18 @@ import ca.quantum.quants.it.housefy.components.air_quality.AQICategory
 import ca.quantum.quants.it.housefy.components.air_quality.AQICategoryCard
 import ca.quantum.quants.it.housefy.components.air_quality.AirQualityGraph
 import ca.quantum.quants.it.housefy.components.air_quality.getAQIColor
+import io.ktor.client.HttpClient
+import io.ktor.client.features.get
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.request.get
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import java.lang.Math.max
+import kotlin.math.roundToInt
 
 @Composable
 fun AirQualityPage() {
@@ -57,6 +69,23 @@ fun AirQualityPage() {
             ),
         )
 
+    var environmentDataList by remember { mutableStateOf(emptyList<EnvironmentData>()) }
+    var currentDataIndex by remember { mutableStateOf(0) }
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            environmentDataList = fetchEnvironmentData()
+            if (environmentDataList.isNotEmpty()) {
+                currentDataIndex = (currentDataIndex + 1) % environmentDataList.size
+            }
+            delay(3000)
+        }
+    }
+
+    val value = environmentDataList.getOrNull(currentDataIndex)?.let {
+        calculateAQI(it.co2).coerceAtMost(100)
+    } ?: 0
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -65,10 +94,6 @@ fun AirQualityPage() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
-            var value by remember {
-                mutableStateOf(20)
-            }
-
             AirQualityGraph(
                 indicatorValue = value,
                 foregroundIndicatorColor = getAQIColor(value)
@@ -84,4 +109,29 @@ fun AirQualityPage() {
         }
 
     }
+}
+
+@Serializable
+data class EnvironmentData(
+    val temperature: Float,
+    val co2: Float,
+    val voc: Float,
+    val lightLevel: Float,
+)
+
+val client = HttpClient {
+    install(JsonFeature) {
+        serializer = KotlinxSerializer(Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+        })
+    }
+}
+
+suspend fun fetchEnvironmentData(): List<EnvironmentData> = withContext(Dispatchers.IO) {
+    client.get("https://housefybackend.azurewebsites.net/api/environment")
+}
+
+fun calculateAQI(co2: Float): Int {
+    return (co2 / 10).roundToInt()
 }
