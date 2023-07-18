@@ -14,9 +14,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ca.quantum.quants.it.housefy.R
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,18 +32,18 @@ fun AboutPage() {
     ) {
         item {
             Text(
-                text = "About Housefy\n",
+                text = stringResource(R.string.about_housefy) + "\n",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "Housefy is an innovative smart home Internet of Things (IoT) application that seamlessly integrates technology into every corner of your home, elevating your everyday living experience.\n" +
+                text = stringResource(R.string.about_line_one) + "\n" +
                         "\n" +
-                        "We are dedicated to providing an unparalleled smart home experience that places simplicity, control, and convenience right at your fingertips. With the use of cutting-edge technology, Housefy effortlessly interconnects all your home devices, giving you the power to control and monitor your home, no matter where you are.\n" +
+                        stringResource(R.string.about_line_two) + "\n" +
                         "\n" +
-                        "Our app is designed with a user-friendly interface that makes it easy to manage a variety of home devices. From security systems and lighting controls to thermostats and home appliances, Housefy enables you to run your home in a smarter, more energy-efficient way. Whether you are at home or on the go, Housefy keeps you connected to what's important the most.\n" +
+                        stringResource(R.string.about_line_three) + "\n" +
                         "\n" +
-                        "Housefy is more than just an app - it's a lifestyle. It offers the convenience of smart automation, the comfort of energy efficiency and the peace of mind of remote control. It's your home, but smarter. Welcome to Housefy – embrace the future of home automation.\n"
+                        stringResource(R.string.about_line_four)
             )
         }
     }

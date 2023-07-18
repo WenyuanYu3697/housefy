@@ -16,7 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.air_quality.AQICategory
 import ca.quantum.quants.it.housefy.components.air_quality.AQICategoryCard
 import ca.quantum.quants.it.housefy.components.air_quality.AirQualityGraph
@@ -24,6 +26,30 @@ import ca.quantum.quants.it.housefy.components.air_quality.getAQIColor
 
 @Composable
 fun AirQualityPage() {
+    val aqiCategories =
+        listOf(
+            AQICategory(
+                stringResource(R.string.excellent),
+                stringResource(R.string.excellent_description),
+                Color(0xFF8CD456),
+            ),
+            AQICategory(
+                stringResource(R.string.good),
+                stringResource(R.string.good_description),
+                Color(0xFFFFE24C),
+            ),
+            AQICategory(
+                stringResource(R.string.moderate),
+                stringResource(R.string.moderate_description),
+                Color(0xFFFFA500),
+            ),
+            AQICategory(
+                stringResource(R.string.poor),
+                stringResource(R.string.poor_description),
+                Color(0xFFFF0000),
+            ),
+        )
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -41,29 +67,6 @@ fun AirQualityPage() {
                 foregroundIndicatorColor = getAQIColor(value)
             )
         }
-
-        val aqiCategories = listOf(
-            AQICategory(
-                "Excellent",
-                "Air quality is satisfactory with minimal or no risk of air pollution.",
-                Color(0xFF8CD456),
-            ),
-            AQICategory(
-                "Good",
-                "Air quality is acceptable. Some pollutants may have a moderate impact on a small number of sensitive individuals.",
-                Color(0xFFFFE24C),
-            ),
-            AQICategory(
-                "Moderate",
-                "Some sensitive individuals may experience health effects. The general public is unlikely to be affected.",
-                Color(0xFFFFA500),
-            ),
-            AQICategory(
-                "Poor",
-                "Health effects may occur in the general public, and sensitive groups may experience more severe health issues.",
-                Color(0xFFFF0000),
-            ),
-        )
 
         item { Spacer(modifier = Modifier.height(24.dp)) }
 

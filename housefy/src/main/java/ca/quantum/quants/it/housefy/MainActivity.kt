@@ -37,16 +37,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Create the NotificationChannel
-            val name = "Notification Channel"
-            val descriptionText = "Description of the notification channel"
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val mChannel = NotificationChannel("housefy_notification_channel", name, importance)
-            mChannel.description = descriptionText
-            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(mChannel)
-        }
+        val name = getString(R.string.notification_channel)
+        val descriptionText = getString(R.string.description_of_the_notification_channel)
+        val importance = NotificationManager.IMPORTANCE_HIGH
+        val mChannel = NotificationChannel(getString(R.string.housefy_notification_channel), name, importance)
+        mChannel.description = descriptionText
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(mChannel)
 
         setContent {
             val isLightOn = remember { mutableStateOf(false) }
@@ -69,25 +66,25 @@ class MainActivity : ComponentActivity() {
                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                         Icon(
                                             Icons.Outlined.Warning,
-                                            contentDescription = "Warning icon"
+                                            contentDescription = null
                                         )
                                         Spacer(modifier = Modifier.width(8.dp))
-                                        Text("Exit App")
+                                        Text(getString(R.string.exit_app))
                                     }
                                 },
-                                text = { Text("Do you want to exit the app?") },
+                                text = { Text(getString(R.string.do_you_want_to_exit_the_app)) },
                                 confirmButton = {
                                     Button(
                                         onClick = { finish() }
                                     ) {
-                                        Text("Yes")
+                                        Text(getString(R.string.yes))
                                     }
                                 },
                                 dismissButton = {
                                     Button(
                                         onClick = { isBackDialogShown.value = false }
                                     ) {
-                                        Text("No")
+                                        Text(getString(R.string.no))
                                     }
                                 }
                             )
