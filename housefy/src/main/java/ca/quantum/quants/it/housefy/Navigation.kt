@@ -7,7 +7,6 @@ package ca.quantum.quants.it.housefy
  * @course Software Project - CENG-322-0NA
  */
 
-import FeedbackPage
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -40,6 +39,7 @@ import ca.quantum.quants.it.housefy.pages.AboutPage
 import ca.quantum.quants.it.housefy.pages.AirConditionerPage
 import ca.quantum.quants.it.housefy.pages.AirQualityPage
 import ca.quantum.quants.it.housefy.pages.EnergyConsumptionPage
+import ca.quantum.quants.it.housefy.pages.FeedbackPage
 import ca.quantum.quants.it.housefy.pages.GuidePage
 //import ca.quantum.quants.it.housefy.pages.FeedbackPage
 import ca.quantum.quants.it.housefy.pages.HomePage

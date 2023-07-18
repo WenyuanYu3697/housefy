@@ -9,6 +9,7 @@ package ca.quantum.quants.it.housefy.pages
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -33,6 +34,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.edit
 import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.settings.SettingsRow
 
@@ -42,10 +44,34 @@ fun SettingsPage() {
     val context = LocalContext.current
     val activity = context as? Activity
 
-    val lockPortrait = remember { mutableStateOf(false) }
-    val enableNotifications = remember { mutableStateOf(false) }
-    var airQualityThreshold by remember { mutableStateOf(0f) }
-    var airTemperatureThreshold by remember { mutableStateOf(0f) }
+    val preferences = context.getSharedPreferences("housefy_preferences", Context.MODE_PRIVATE)
+
+    // Load values from SharedPreferences or set default values if not found
+    var lockPortrait by remember { mutableStateOf(preferences.getBoolean("lockPortrait", false)) }
+    var enableNotifications by remember {
+        mutableStateOf(
+            preferences.getBoolean(
+                "enableNotifications",
+                false
+            )
+        )
+    }
+    var airQualityThreshold by remember {
+        mutableStateOf(
+            preferences.getFloat(
+                "airQualityThreshold",
+                0f
+            )
+        )
+    }
+    var airTemperatureThreshold by remember {
+        mutableStateOf(
+            preferences.getFloat(
+                "airTemperatureThreshold",
+                0f
+            )
+        )
+    }
 
     Box(
         modifier = Modifier
@@ -62,10 +88,12 @@ fun SettingsPage() {
                 title = stringResource(R.string.lock_portrait),
                 control = {
                     Switch(
-                        checked = lockPortrait.value,
+                        checked = lockPortrait,
                         colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
                         onCheckedChange = { newValue ->
-                            lockPortrait.value = newValue
+                            lockPortrait = newValue
+
+                            preferences.edit { putBoolean("lockPortrait", newValue) }
 
                             val toastMessage =
                                 if (newValue) portraitLocked
@@ -89,10 +117,12 @@ fun SettingsPage() {
                 title = stringResource(R.string.enable_notifications),
                 control = {
                     Switch(
-                        checked = enableNotifications.value,
+                        checked = enableNotifications,
                         colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
                         onCheckedChange = { newValue ->
-                            enableNotifications.value = newValue
+                            enableNotifications = newValue
+
+                            preferences.edit { putBoolean("enableNotifications", newValue) }
 
                             if (newValue) {
                                 val builder = NotificationCompat.Builder(
@@ -118,7 +148,13 @@ fun SettingsPage() {
                 control = {
                     Slider(
                         value = airQualityThreshold,
-                        onValueChange = { airQualityThreshold = it },
+                        onValueChange = { newValue ->
+                            airQualityThreshold = newValue
+
+                            preferences.edit {
+                                putFloat("airQualityThreshold", newValue)
+                            }
+                        },
                         steps = 5,
                         valueRange = 20f..100f,
                         modifier = Modifier.width(150.dp),
@@ -134,7 +170,13 @@ fun SettingsPage() {
                 control = {
                     Slider(
                         value = airTemperatureThreshold,
-                        onValueChange = { airTemperatureThreshold = it },
+                        onValueChange = { newValue ->
+                            airTemperatureThreshold = newValue
+
+                            preferences.edit {
+                                putFloat("airTemperatureThreshold", newValue)
+                            }
+                        },
                         steps = 5,
                         valueRange = 0f..50f,
                         modifier = Modifier.width(150.dp),
