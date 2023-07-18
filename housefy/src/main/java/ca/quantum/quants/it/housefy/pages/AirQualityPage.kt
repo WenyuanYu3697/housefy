@@ -7,6 +7,7 @@ package ca.quantum.quants.it.housefy.pages
  * @course Software Project - CENG-322-0NA
  */
 
+import android.util.Log
 import androidx.compose.material3.*
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -31,6 +32,7 @@ import ca.quantum.quants.it.housefy.components.air_quality.AQICategoryCard
 import ca.quantum.quants.it.housefy.components.air_quality.AirQualityGraph
 import ca.quantum.quants.it.housefy.components.air_quality.getAQIColor
 import io.ktor.client.HttpClient
+import io.ktor.client.features.HttpTimeout
 import io.ktor.client.features.get
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
@@ -74,9 +76,14 @@ fun AirQualityPage() {
 
     LaunchedEffect(Unit) {
         while (true) {
-            environmentDataList = fetchEnvironmentData()
-            if (environmentDataList.isNotEmpty()) {
-                currentDataIndex = (currentDataIndex + 1) % environmentDataList.size
+            try {
+                val newData = fetchEnvironmentData()
+                if (newData != null && newData.isNotEmpty()) {
+                    environmentDataList = newData
+                    currentDataIndex = (currentDataIndex + 1) % environmentDataList.size
+                }
+            } catch (e: Exception) {
+                Log.e("Air Quality", "Error during fetching air quality")
             }
             delay(3000)
         }
@@ -126,10 +133,18 @@ val client = HttpClient {
             isLenient = true
         })
     }
+
+    install(HttpTimeout) {
+        requestTimeoutMillis = 3000
+    }
 }
 
-suspend fun fetchEnvironmentData(): List<EnvironmentData> = withContext(Dispatchers.IO) {
-    client.get("https://housefybackend.azurewebsites.net/api/environment")
+suspend fun fetchEnvironmentData(): List<EnvironmentData>? = try {
+    withContext(Dispatchers.IO) {
+        client.get("https://housefybackend.azurewebsites.net/api/environment")
+    }
+} catch (e: Exception) {
+    null
 }
 
 fun calculateAQI(co2: Float): Int {
