@@ -1,5 +1,12 @@
 package ca.quantum.quants.it.housefy.components.air_quality
 
+/*
+ * @author Artem Tsurkan, n01414146
+ * @author Wenyuan Yu, n01403697
+ * @author Kyrylo Lvov, n01414058
+ * @course Software Project - CENG-322-0NA
+ */
+
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween

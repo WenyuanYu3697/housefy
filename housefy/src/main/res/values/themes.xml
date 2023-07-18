@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Artem Tsurkan, n01414146
+    Wenyuan Yu, n01403697
+    Kyrylo Lvov, n01414058
+    Software Project - CENG-322-0NA
+-->
 <resources>
-
     <style name="Theme.Housefy" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
