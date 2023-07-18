@@ -1,7 +1,5 @@
 package ca.quantum.quants.it.housefy.components.settings
 
-import android.app.NotificationManager
-import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,9 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.app.NotificationCompat
-import ca.quantum.quants.it.housefy.R
-import kotlin.random.Random
 
 @Composable
 fun SettingsRow(
@@ -39,18 +34,4 @@ fun SettingsRow(
 
         control()
     }
-}
-
-@Composable
-fun sendNotification(context: Context) {
-    val notification = NotificationCompat.Builder(context, "water_notification")
-        .setSmallIcon(R.drawable.housefy_logo)
-        .setContentTitle("Notifications Enabled")
-        .setContentText("Notifications for your application were enabled!")
-        .setPriority(NotificationCompat.PRIORITY_HIGH)
-        .setAutoCancel(true)
-        .build()
-
-    val notificationManager = context.getSystemService(NotificationManager::class.java)
-    notificationManager.notify(Random.nextInt(), notification)
 }

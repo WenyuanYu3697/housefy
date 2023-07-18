@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ca.quantum.quants.it.housefy.LightOnAmbient
 import ca.quantum.quants.it.housefy.R
@@ -28,7 +29,7 @@ fun SmartLightPage() {
     ) {
         Image(
             painter = painterResource(id = if (isLightOn.value) R.drawable.smart_light_on else R.drawable.smart_light_off),
-            contentDescription = "Center Image",
+            contentDescription = null,
             modifier = Modifier
                 .size(400.dp)
                 .scale(if (isLightOn.value) 2.1f else 1.7f)
@@ -55,7 +56,7 @@ fun SmartLightPage() {
             Spacer(modifier = Modifier.width(24.dp))
 
             StateSwitcher(
-                text = "Toggle on/off",
+                text = stringResource(R.string.toggle_on_off),
                 checked = isLightOn.value,
                 onCheckedChange = { isChecked -> isLightOn.value = isChecked },
                 modifier = Modifier.weight(1f)

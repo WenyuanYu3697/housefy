@@ -10,7 +10,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import ca.quantum.quants.it.housefy.R
 
 @Composable
 fun EnergyUsage(text: String, modifier: Modifier = Modifier) {
@@ -35,7 +37,7 @@ fun EnergyUsage(text: String, modifier: Modifier = Modifier) {
                 modifier = Modifier.padding(bottom = 12.dp, top = 12.dp)
             )
             Text(
-                text = "Energy usage",
+                text = stringResource(R.string.energy_usage),
                 style = MaterialTheme.typography.bodySmall
                     .copy(fontWeight = FontWeight.Medium)
                     .copy(color = Color(0xFFA3A3A5)),

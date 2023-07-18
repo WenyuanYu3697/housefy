@@ -12,8 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ca.quantum.quants.it.housefy.R
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.HttpResponse
@@ -55,7 +57,7 @@ fun FeedbackPage() {
             OutlinedTextField(
                 value = fullName,
                 onValueChange = { fullName = it },
-                label = { Text("Full Name") },
+                label = { Text(stringResource(R.string.full_name)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -65,7 +67,7 @@ fun FeedbackPage() {
             OutlinedTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
-                label = { Text("Phone Number") },
+                label = { Text(stringResource(R.string.phone_number)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -75,7 +77,7 @@ fun FeedbackPage() {
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Email") },
+                label = { Text(stringResource(R.string.email)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -85,7 +87,7 @@ fun FeedbackPage() {
             OutlinedTextField(
                 value = comment,
                 onValueChange = { comment = it },
-                label = { Text("Comment") },
+                label = { Text(stringResource(R.string.comment)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp),
@@ -121,7 +123,7 @@ fun FeedbackPage() {
                         }
                     }
                 }) {
-                    Text("Submit Feedback")
+                    Text(stringResource(R.string.submit_feedback))
                 }
             }
         }
@@ -130,7 +132,7 @@ fun FeedbackPage() {
     if (dialogVisible) {
         AlertDialog(
             onDismissRequest = { dialogVisible = false },
-            title = { Text(text = "Feedback Response") },
+            title = { Text(text = stringResource(R.string.feedback_response)) },
             text = { Text(text = dialogMessage) },
             confirmButton = {
                 Button(onClick = { dialogVisible = false }) {

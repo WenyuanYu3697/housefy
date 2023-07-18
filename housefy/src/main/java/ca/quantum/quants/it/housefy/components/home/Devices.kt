@@ -28,12 +28,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.navOptions
 import ca.quantum.quants.it.housefy.AirConditionerAmbient
 import ca.quantum.quants.it.housefy.LightOnAmbient
+import ca.quantum.quants.it.housefy.R
 
 @Composable
 fun DevicesList(navController: NavHostController) {
@@ -41,7 +43,7 @@ fun DevicesList(navController: NavHostController) {
         Row(modifier = Modifier.fillMaxWidth()) {
             DeviceCard(
                 icon = Icons.Rounded.AcUnit,
-                text = "Air Conditioner",
+                text = stringResource(R.string.air_conditioner),
                 modifier = Modifier.weight(1f),
                 onClick = {
                     navController.navigate("AirConditionerPage", navOptions {
@@ -53,7 +55,7 @@ fun DevicesList(navController: NavHostController) {
             Spacer(modifier = Modifier.width(16.dp))
             DeviceCard(
                 icon = Icons.Rounded.Air,
-                text = "Air Quality",
+                text = stringResource(R.string.air_quality),
                 modifier = Modifier.weight(1f),
                 onClick = {
                     navController.navigate("AirQualityPage", navOptions {
@@ -67,7 +69,7 @@ fun DevicesList(navController: NavHostController) {
         Row(modifier = Modifier.fillMaxWidth()) {
             DeviceCard(
                 icon = Icons.Rounded.EmojiObjects,
-                text = "Smart Light",
+                text = stringResource(R.string.smart_light),
                 modifier = Modifier.weight(1f),
                 onClick = {
                     navController.navigate("SmartLightPage", navOptions {
@@ -89,8 +91,8 @@ fun DeviceCard(
     modifier: Modifier = Modifier,
 ) {
     val deviceState = when (text) {
-        "Smart Light" -> LightOnAmbient.current
-        "Air Conditioner" -> AirConditionerAmbient.current
+        stringResource(R.string.smart_light) -> LightOnAmbient.current
+        stringResource(R.string.air_conditioner) -> AirConditionerAmbient.current
         else -> remember { mutableStateOf(false) }
     }
 
@@ -136,7 +138,7 @@ fun DeviceCard(
 
         Row() {
             Text(
-                text = "1 device",
+                text = stringResource(R.string.one_device),
                 style = MaterialTheme.typography.bodySmall
                     .copy(fontWeight = FontWeight.Medium)
                     .copy(color = Color(0xFFA3A3A5)),

@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -46,9 +47,12 @@ fun SettingsPage() {
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
     ) {
 
+        val portraitLocked = stringResource(R.string.portrait_mode_locked)
+        val portraitUnlocked = stringResource(R.string.portrait_mode_unlocked)
+
         Column() {
             SettingsRow(
-                title = "Lock Portrait",
+                title = stringResource(R.string.lock_portrait),
                 control = {
                     Switch(
                         checked = lockPortrait.value,
@@ -57,7 +61,8 @@ fun SettingsPage() {
                             lockPortrait.value = newValue
 
                             val toastMessage =
-                                if (newValue) "Portrait mode locked" else "Portrait mode unlocked"
+                                if (newValue) portraitLocked
+                                else portraitUnlocked
                             Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
 
                             activity?.requestedOrientation = if (newValue) {
@@ -70,8 +75,11 @@ fun SettingsPage() {
                 }
             )
 
+            val notificationChannel = stringResource(R.string.housefy_notification_channel)
+            val notificationTitle = stringResource(R.string.app_name)
+            val notificationText = stringResource(R.string.notifications_enabled)
             SettingsRow(
-                title = "Enable Notifications",
+                title = stringResource(R.string.enable_notifications),
                 control = {
                     Switch(
                         checked = enableNotifications.value,
@@ -81,12 +89,11 @@ fun SettingsPage() {
 
                             if (newValue) {
                                 val builder = NotificationCompat.Builder(
-                                    context,
-                                    "housefy_notification_channel"
+                                    context, notificationChannel
                                 )
-                                    .setSmallIcon(R.drawable.housefy_logo) // replace with your own notification icon
-                                    .setContentTitle("Housefy")
-                                    .setContentText("Notifications Enabled")
+                                    .setSmallIcon(R.drawable.housefy_logo)
+                                    .setContentTitle(notificationTitle)
+                                    .setContentText(notificationText)
                                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                                     .setAutoCancel(true)
 
@@ -100,7 +107,7 @@ fun SettingsPage() {
             )
 
             SettingsRow(
-                title = "Air Quality Threshold",
+                title = stringResource(R.string.air_quality_threshold),
                 control = {
                     Slider(
                         value = airQualityThreshold,
@@ -116,7 +123,7 @@ fun SettingsPage() {
             )
 
             SettingsRow(
-                title = "Temperature Threshold",
+                title = stringResource(R.string.temperature_threshold),
                 control = {
                     Slider(
                         value = airTemperatureThreshold,

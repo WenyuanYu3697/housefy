@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -140,7 +141,7 @@ fun PermissionGranted(temp: String, feelsLike: String, icon: String) {
                 fontSize = 32.sp
             )
             Text(
-                text = "Feels like $feelsLike°",
+                text = stringResource(R.string.feels_like) + " " + "$feelsLike°",
                 modifier = Modifier.padding(top = 4.dp),
                 style = MaterialTheme.typography.bodyLarge.copy(color = Color.White)
             )
@@ -174,7 +175,7 @@ fun PermissionNotGranted(onClick: () -> Unit) {
             modifier = Modifier.align(Alignment.Center)
         ) {
             Text(
-                text = "Grant access to location in order to see weather",
+                text = stringResource(R.string.grant_access_to_location_in_order_to_see_weather),
                 style = MaterialTheme.typography.bodyMedium.copy(color = Color.White),
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center

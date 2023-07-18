@@ -24,11 +24,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ca.quantum.quants.it.housefy.R
 
 @Composable
 fun AirQualityGraph(
@@ -146,7 +148,7 @@ fun EmbeddedElements(
     )
 
     Text(
-        text = "Air Quality Index",
+        text = stringResource(R.string.air_quality_index),
         fontSize = 16.sp,
         textAlign = TextAlign.Center,
         modifier = Modifier.offset(y = 64.dp),
@@ -172,11 +174,12 @@ fun getAQIColor(aqi: Int): Color {
     }
 }
 
+@Composable
 fun getAQIDescription(aqi: Int): String {
     return when {
-        aqi in 0..25 -> "Excellent"
-        aqi in 26..50 -> "Good"
-        aqi in 51..75 -> "Moderate"
-        else -> "Poor"
+        aqi in 0..25 -> stringResource(R.string.excellent)
+        aqi in 26..50 -> stringResource(R.string.good)
+        aqi in 51..75 -> stringResource(R.string.moderate)
+        else -> stringResource(R.string.poor)
     }
 }

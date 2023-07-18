@@ -16,9 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import ca.quantum.quants.it.housefy.R
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -35,13 +37,13 @@ fun EnergyUsageCard() {
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(
-                text = "Energy Usage",
+                text = stringResource(R.string.energy_usage),
                 style = MaterialTheme.typography.titleMedium
                     .copy(fontWeight = FontWeight.Medium)
                     .copy(color = Color(0xFF353336)),
             )
             Text(
-                text = "See All",
+                text = stringResource(R.string.see_all),
                 style = MaterialTheme.typography.bodySmall
                     .copy(fontWeight = FontWeight.Medium)
                     .copy(color = Color(0xFF353336)),
@@ -76,13 +78,13 @@ fun EnergyUsageCard() {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "Today",
+                    text = stringResource(R.string.today),
                     style = MaterialTheme.typography.bodySmall
                         .copy(fontWeight = FontWeight.SemiBold)
                         .copy(color = Color(0xFFA3A3A5)),
                 )
                 Text(
-                    text = "This month",
+                    text = stringResource(R.string.this_month),
                     style = MaterialTheme.typography.bodySmall
                         .copy(fontWeight = FontWeight.SemiBold)
                         .copy(color = Color(0xFFA3A3A5)),

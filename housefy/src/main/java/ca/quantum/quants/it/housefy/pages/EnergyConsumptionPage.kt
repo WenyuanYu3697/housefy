@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.res.stringResource
+import ca.quantum.quants.it.housefy.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,7 +34,8 @@ fun EnergyConsumptionPage() {
         modifier = Modifier
             .fillMaxSize()
             .background(color = Color(0xFFF0F2F1)),
-        contentAlignment = Alignment.Center) {
+        contentAlignment = Alignment.Center
+    ) {
 
         Chart(
             data = listOf(
@@ -66,7 +69,7 @@ fun ThresholdSettings(threshold: Float, onThresholdChange: (Float) -> Unit) {
     ) {
         Column() {
             Text(
-                text = "Set Threshold",
+                text = stringResource(R.string.set_threshold),
                 color = Color(0xFF7468E4),
                 textAlign = TextAlign.Start,
             )
@@ -76,7 +79,7 @@ fun ThresholdSettings(threshold: Float, onThresholdChange: (Float) -> Unit) {
             TextField(
                 value = threshold.toString(),
                 onValueChange = { onThresholdChange(it.toFloatOrNull() ?: threshold) },
-                label = { Text(text = "Set Threshold") },
+                label = { Text(text = stringResource(R.string.set_threshold)) },
                 modifier = Modifier
                     .background(color = Color(0xFFFFFFFF)),
             )
@@ -159,9 +162,13 @@ fun Chart(
                 // Graph columns
 
                 data.forEach {
-                    Bar(height = it.first, threshold = threshold, maxValue = max_value.toFloat(), onClick = {
-                        Toast.makeText(context, it.first.toString(), Toast.LENGTH_SHORT).show()
-                    })
+                    Bar(
+                        height = it.first,
+                        threshold = threshold,
+                        maxValue = max_value.toFloat(),
+                        onClick = {
+                            Toast.makeText(context, it.first.toString(), Toast.LENGTH_SHORT).show()
+                        })
                 }
 
 
@@ -182,7 +189,7 @@ fun Chart(
             modifier = Modifier
                 .fillMaxWidth()
                 .absoluteOffset(28.dp, 370.dp)
-        ){
+        ) {
             Text(
                 text = "Total: 254 KWh",
                 fontWeight = FontWeight.Bold,

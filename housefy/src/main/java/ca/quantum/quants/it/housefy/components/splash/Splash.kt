@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -33,7 +34,7 @@ fun LogoAndDescription() {
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.housefy_logo),
-                    contentDescription = "App Logo"
+                    contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 DescriptionText()
@@ -41,7 +42,7 @@ fun LogoAndDescription() {
         } else {
             Image(
                 painter = painterResource(id = R.drawable.housefy_logo),
-                contentDescription = "App Logo",
+                contentDescription = null,
                 modifier = Modifier.align(Alignment.Center)
             )
             DescriptionText(
@@ -60,14 +61,14 @@ fun DescriptionText(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Housefy",
+            text = stringResource(R.string.app_name),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge
                 .copy(fontWeight = FontWeight.SemiBold)
                 .copy(color = Color(0xFF353336)),
         )
         Text(
-            text = "Smart Home Environment and Energy Monitoring System",
+            text = stringResource(R.string.app_description),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyMedium
                 .copy(fontWeight = FontWeight.Normal)
