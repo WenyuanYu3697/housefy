@@ -1,4 +1,4 @@
-package ca.quantum.quants.it.housefy.components.air_continioner
+package ca.quantum.quants.it.housefy.components.common
 
 /*
  * @author Artem Tsurkan, n01414146
@@ -12,10 +12,8 @@ import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,18 +29,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+
+// Refactoring was done to extract the common functionality between the
+// AirConditionerGraph and AirQualityGraph components into a more general,
+// reusable component called IndicatorGraph. This was done to enhance modularity,
+// reduce redundancy and facilitate code maintainability.
 
 @Composable
-fun AirConditionerGraph(
+fun IndicatorGraph(
+    foregroundIndicatorColor: Color = Color(0xFF7468E4),
     indicatorValue: Int,
-    canvasSize: Dp = 300.dp,
     maxIndicatorValue: Int = 40,
     backgroundIndicatorColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
+    canvasSize: Dp = 300.dp,
+    indicatorText: @Composable (Int) -> Unit
 ) {
     var allowedIndicatorValue by remember {
         mutableStateOf(maxIndicatorValue)
@@ -83,14 +85,13 @@ fun AirConditionerGraph(
                 foregroundIndicator(
                     sweepAngle = sweepAngle,
                     componentSize = componentSize,
+                    indicatorColor = foregroundIndicatorColor,
                 )
             },
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        EmbeddedElements(
-            aqiValue = receivedValue,
-        )
+        indicatorText(receivedValue)
     }
 }
 
@@ -118,10 +119,11 @@ fun DrawScope.backgroundIndicator(
 fun DrawScope.foregroundIndicator(
     sweepAngle: Float,
     componentSize: Size,
+    indicatorColor: Color,
 ) {
     drawArc(
         size = componentSize,
-        color = Color(0xFF7468E4),
+        color = indicatorColor,
         startAngle = 150f,
         sweepAngle = sweepAngle,
         useCenter = false,
@@ -133,19 +135,5 @@ fun DrawScope.foregroundIndicator(
             x = (size.width - componentSize.width) / 2f,
             y = (size.height - componentSize.height) / 2f
         )
-    )
-}
-
-@Composable
-fun EmbeddedElements(
-    aqiValue: Int,
-) {
-    Text(
-        text = "$aqiValue°C",
-        color = Color(0xFF353336),
-        fontSize = 64.sp,
-        textAlign = TextAlign.Center,
-        fontWeight = FontWeight.Bold,
-        modifier = Modifier.offset(y = (-8).dp),
     )
 }
