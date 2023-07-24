@@ -15,6 +15,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -25,15 +26,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.air_quality.AQICategory
 import ca.quantum.quants.it.housefy.components.air_quality.AQICategoryCard
-import ca.quantum.quants.it.housefy.components.air_quality.AirQualityGraph
-import ca.quantum.quants.it.housefy.components.air_quality.getAQIColor
+import ca.quantum.quants.it.housefy.components.common.IndicatorGraph
 import io.ktor.client.HttpClient
 import io.ktor.client.features.HttpTimeout
-import io.ktor.client.features.get
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.get
@@ -42,7 +44,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import java.lang.Math.max
 import kotlin.math.roundToInt
 
 @Composable
@@ -101,9 +102,19 @@ fun AirQualityPage() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
-            AirQualityGraph(
+            IndicatorGraph(
                 indicatorValue = value,
-                foregroundIndicatorColor = getAQIColor(value)
+                foregroundIndicatorColor = getAQIColor(value),
+                indicatorText = {
+                    Text(
+                        text = "$value",
+                        color = getAQIColor(value),
+                        fontSize = 84.sp,
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.offset(y = (-8).dp),
+                    )
+                }
             )
         }
 
@@ -149,4 +160,23 @@ suspend fun fetchEnvironmentData(): List<EnvironmentData>? = try {
 
 fun calculateAQI(co2: Float): Int {
     return (co2 / 10).roundToInt()
+}
+
+fun getAQIColor(aqi: Int): Color {
+    return when {
+        aqi in 0..25 -> Color(0xFF8CD456)
+        aqi in 26..50 -> Color(0xFFFFE24C)
+        aqi in 51..75 -> Color(0xFFFFA500)
+        else -> Color(0xFFFF0000)
+    }
+}
+
+@Composable
+fun getAQIDescription(aqi: Int): String {
+    return when {
+        aqi in 0..25 -> stringResource(R.string.excellent)
+        aqi in 26..50 -> stringResource(R.string.good)
+        aqi in 51..75 -> stringResource(R.string.moderate)
+        else -> stringResource(R.string.poor)
+    }
 }
