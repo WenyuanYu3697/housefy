@@ -18,7 +18,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ca.quantum.quants.it.housefy.R
@@ -36,10 +35,8 @@ import kotlinx.serialization.json.Json
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeedbackPage() {
-    val context = LocalContext.current
-
     var fullName by remember { mutableStateOf("") }
-    var phoneModel by remember { mutableStateOf(Build.MODEL) }  // automatically get phone model
+    val phoneModel by remember { mutableStateOf(Build.MODEL) }  // automatically get phone model
     var phoneNumber by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var rating by remember { mutableStateOf(1) }  // rating as Int
@@ -49,16 +46,20 @@ fun FeedbackPage() {
 
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+    val dismiss = stringResource(id = R.string.dismiss_label)
+    val fullNameError = stringResource(id = R.string.fullname_error)
+    val fullNameError1 = stringResource(id = R.string.fullname_error1)
 
-    fun showSnackbarMessage(message: String) {
+    fun showSnackbarMessage(message: String, dismiss: String) {
         coroutineScope.launch {
             snackbarHostState.showSnackbar(
                 message = message,
-                actionLabel = "Dismiss",
+                actionLabel = dismiss,
                 duration = SnackbarDuration.Short
             )
         }
     }
+
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -127,8 +128,12 @@ fun FeedbackPage() {
             ) {
                 Button(onClick = {
                     when {
-                        fullName.length > 50 -> showSnackbarMessage("Name cannot exceed 50 characters.")
-                        fullName.any { it.isDigit() } -> showSnackbarMessage("Name should not contain numbers.")
+                        fullName.length > 50 -> {
+                            showSnackbarMessage(fullNameError, dismiss)
+                        }
+                        fullName.any { it.isDigit() } -> {
+                            showSnackbarMessage(fullNameError1, dismiss)
+                        }
                         else -> {
                             coroutineScope.launch(Dispatchers.IO) {
                                 try {
