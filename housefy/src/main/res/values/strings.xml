@@ -73,4 +73,7 @@
     <string name="full_name">Full Name</string>
     <string name="air_quality_threshold">Air Quality Threshold</string>
     <string name="temperature_threshold">Temperature Threshold</string>
+    <string name="dismiss_label">dismiss</string>
+    <string name="fullname_error">full name should not beyound 50 characters</string>
+    <string name="fullname_error1">full name section should not contain digital numbers</string>
 </resources>
