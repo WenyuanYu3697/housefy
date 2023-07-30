@@ -2,7 +2,7 @@ package ca.quantum.quants.it.housefy.network
 
 // NetworkRepository.kt
 
-import ca.quantum.quants.it.housefy.pages.Feedback
+import ca.quantum.quants.it.housefy.models.Feedback
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*

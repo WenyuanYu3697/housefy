@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ca.quantum.quants.it.housefy.R
 import io.ktor.client.*
@@ -26,25 +27,10 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.serialization.Serializable
 import ca.quantum.quants.it.housefy.network.postFeedback
+import ca.quantum.quants.it.housefy.models.User
+import ca.quantum.quants.it.housefy.models.Feedback
 
-@Serializable
-data class User(
-    val name: String,
-    val email: String,
-    val deviceName: String,
-    val phoneNumber: String
-)
-
-@Serializable
-data class Feedback(
-    val rating: Int,
-    val comment: String,
-    val user: User
-)
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeedbackPage() {
     var fullName by remember { mutableStateOf("") }
@@ -82,47 +68,31 @@ fun FeedbackPage() {
                 .padding(16.dp, 50.dp, 16.dp, 16.dp),
             verticalArrangement = Arrangement.Top
         ) {
-            OutlinedTextField(
+            CustomOutlinedTextField(
                 value = fullName,
                 onValueChange = { fullName = it },
-                label = { Text(stringResource(R.string.full_name)) },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth()
+                label = stringResource(R.string.full_name)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OutlinedTextField(
+            CustomOutlinedTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
-                label = { Text(stringResource(R.string.phone_number)) },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth()
+                label = stringResource(R.string.phone_number)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OutlinedTextField(
+            CustomOutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text(stringResource(R.string.email)) },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth()
+                label = stringResource(R.string.email)
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OutlinedTextField(
+            CustomOutlinedTextField(
                 value = comment,
                 onValueChange = { comment = it },
-                label = { Text(stringResource(R.string.comment)) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(150.dp),
+                label = stringResource(R.string.comment),
+                height = 150.dp,
                 maxLines = 10
             )
-
-            Spacer(modifier = Modifier.height(16.dp))
 
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                 RatingBar(current = rating, onValueChange = { newRating ->
@@ -151,14 +121,16 @@ fun FeedbackPage() {
                                     val user = User(fullName, email, phoneModel, phoneNumber)
                                     val feedback = Feedback(rating, comment, user)
                                     val result = postFeedback(feedback)
-                                    dialogMessage = result.second
-                                    dialogVisible = true
-                                    if (result.first) { // reset only on success
+                                    if(result.first){
+                                        // Clear all fields on successful submission
                                         fullName = ""
                                         phoneNumber = ""
                                         email = ""
                                         comment = ""
+                                        rating = 1
                                     }
+                                    dialogMessage = result.second
+                                    dialogVisible = true
                                 } catch (e: Exception) {
                                     dialogMessage = "Error: ${e.localizedMessage}"
                                     dialogVisible = true
@@ -195,6 +167,30 @@ fun FeedbackPage() {
             }
         )
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomOutlinedTextField(
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
+    label: String,
+    singleLine: Boolean = true,
+    height: Dp = Dp.Unspecified,
+    maxLines: Int = 1
+) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        label = { Text(label) },
+        singleLine = singleLine,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(height),
+        maxLines = maxLines
+    )
+    Spacer(modifier = Modifier.height(16.dp))
 }
 
 @Composable
