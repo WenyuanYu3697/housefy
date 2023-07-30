@@ -48,6 +48,8 @@ fun FeedbackPage() {
     val dismiss = stringResource(id = R.string.dismiss_label)
     val fullNameError = stringResource(id = R.string.fullname_error)
     val fullNameError1 = stringResource(id = R.string.fullname_error1)
+    val emailError = stringResource(id = R.string.email_error)
+    val emailError1 = stringResource(id = R.string.email_error1)
 
     fun showSnackbarMessage(message: String, dismiss: String) {
         coroutineScope.launch {
@@ -117,10 +119,10 @@ fun FeedbackPage() {
                             showSnackbarMessage(fullNameError1, dismiss)
                         }
                         email.length > 100 -> {
-                            showSnackbarMessage("Email too long", dismiss)
+                            showSnackbarMessage(emailError, dismiss)
                         }
                         !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                            showSnackbarMessage("Invalid email format", dismiss)
+                            showSnackbarMessage(emailError1, dismiss)
                         }
                         else -> {
                             coroutineScope.launch(Dispatchers.IO) {
