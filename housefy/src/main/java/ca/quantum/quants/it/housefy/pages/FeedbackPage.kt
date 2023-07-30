@@ -50,6 +50,14 @@ fun FeedbackPage() {
     val fullNameError = stringResource(id = R.string.fullname_error)
     val fullNameError1 = stringResource(id = R.string.fullname_error1)
 
+    fun clearFields() {
+        fullName = ""
+        phoneNumber = ""
+        email = ""
+        rating = 1
+        comment = ""
+    }
+
     fun showSnackbarMessage(message: String, dismiss: String) {
         coroutineScope.launch {
             snackbarHostState.showSnackbar(
@@ -59,7 +67,6 @@ fun FeedbackPage() {
             )
         }
     }
-
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -142,6 +149,10 @@ fun FeedbackPage() {
                                     val result = postFeedback(feedback)
                                     dialogMessage = result.second
                                     dialogVisible = true
+                                    if (result.first) {
+                                        // Call the clearFields() function after successful submission
+                                        clearFields()
+                                    }
                                 } catch (e: Exception) {
                                     dialogMessage = "Error: ${e.localizedMessage}"
                                     dialogVisible = true
