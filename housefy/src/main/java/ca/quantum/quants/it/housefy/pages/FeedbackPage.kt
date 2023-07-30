@@ -8,6 +8,7 @@ package ca.quantum.quants.it.housefy.pages
  */
 
 import android.os.Build
+import android.util.Patterns
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -114,6 +115,12 @@ fun FeedbackPage() {
                         }
                         fullName.any { it.isDigit() } -> {
                             showSnackbarMessage(fullNameError1, dismiss)
+                        }
+                        email.length > 100 -> {
+                            showSnackbarMessage("Email too long", dismiss)
+                        }
+                        !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                            showSnackbarMessage("Invalid email format", dismiss)
                         }
                         else -> {
                             coroutineScope.launch(Dispatchers.IO) {
