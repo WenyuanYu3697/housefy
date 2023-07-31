@@ -10,5 +10,8 @@ package ca.quantum.quants.it.housefy.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val Purple = Color(0xFF7468E4)
+
 val TextBlack = Color(0xFF353336)
 val TextGrey = Color(0xFFA3A3A5)
+
+val BackgroundGrey = Color(0xFFF0F2F1)
