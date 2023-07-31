@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import ca.quantum.quants.it.housefy.network.postFeedback
 import ca.quantum.quants.it.housefy.models.User
 import ca.quantum.quants.it.housefy.models.Feedback
+import kotlinx.coroutines.withContext
 
 @Composable
 fun FeedbackPage() {
@@ -42,6 +43,7 @@ fun FeedbackPage() {
     var comment by remember { mutableStateOf("") }
     var dialogMessage by remember { mutableStateOf("") }
     var dialogVisible by remember { mutableStateOf(false) }
+    var loadingDialogVisible by remember { mutableStateOf(false) }
 
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
@@ -57,7 +59,7 @@ fun FeedbackPage() {
                 message = message,
                 actionLabel = dismiss,
                 duration = SnackbarDuration.Short
-            )
+             )
         }
     }
 
@@ -124,25 +126,38 @@ fun FeedbackPage() {
                         !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
                             showSnackbarMessage(emailError1, dismiss)
                         }
+                        phoneNumber.length > 30 -> {
+                            showSnackbarMessage("phone number is too long", dismiss)
+                        }
+                        phoneNumber.any { it !in '0'..'9' } -> {
+                            showSnackbarMessage("phone number should not contains letters other than digital numbers", dismiss)
+                        }
                         else -> {
                             coroutineScope.launch(Dispatchers.IO) {
                                 try {
+                                    withContext(Dispatchers.Main) { loadingDialogVisible = true } // Show loading dialog
                                     val user = User(fullName, email, phoneModel, phoneNumber)
                                     val feedback = Feedback(rating, comment, user)
                                     val result = postFeedback(feedback)
-                                    if(result.first){
-                                        // Clear all fields on successful submission
-                                        fullName = ""
-                                        phoneNumber = ""
-                                        email = ""
-                                        comment = ""
-                                        rating = 1
+                                    withContext(Dispatchers.Main) {
+                                        loadingDialogVisible = false // Hide loading dialog
+                                        if(result.first){
+                                            // Clear all fields on successful submission
+                                            fullName = ""
+                                            phoneNumber = ""
+                                            email = ""
+                                            comment = ""
+                                            rating = 1
+                                        }
+                                        dialogMessage = result.second
+                                        dialogVisible = true
                                     }
-                                    dialogMessage = result.second
-                                    dialogVisible = true
                                 } catch (e: Exception) {
-                                    dialogMessage = "Error: ${e.localizedMessage}"
-                                    dialogVisible = true
+                                    withContext(Dispatchers.Main) {
+                                        loadingDialogVisible = false // Hide loading dialog
+                                        dialogMessage = "Error: ${e.localizedMessage}"
+                                        dialogVisible = true
+                                    }
                                 }
                             }
                         }
@@ -151,6 +166,14 @@ fun FeedbackPage() {
                     Text(stringResource(R.string.submit_feedback))
                 }
             }
+        }
+        if (loadingDialogVisible) {
+            AlertDialog(
+                onDismissRequest = { },
+                title = { Text(text = "Please wait...") },
+                text = { CircularProgressIndicator() },
+                confirmButton = {}
+            )
         }
     }
 
