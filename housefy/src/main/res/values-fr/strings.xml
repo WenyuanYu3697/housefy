@@ -76,4 +76,6 @@
     <string name="dismiss_label">rejeter</string>
     <string name="fullname_error">le nom complet ne doit pas dépasser 50 caractères</string>
     <string name="fullname_error1">la section du nom complet ne doit pas contenir de chiffres numériques</string>
+    <string name="email_error">l\ e-mail dépasse 100 caractères</string>
+    <string name="email_error1">le format de l\ e-mail n est pas valide</string>
 </resources>

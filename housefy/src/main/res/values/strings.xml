@@ -76,4 +76,6 @@
     <string name="dismiss_label">dismiss</string>
     <string name="fullname_error">full name should not beyound 50 characters</string>
     <string name="fullname_error1">full name section should not contain digital numbers</string>
+    <string name="email_error">email is beyond 100 characters</string>
+    <string name="email_error1">email format is invalid</string>
 </resources>

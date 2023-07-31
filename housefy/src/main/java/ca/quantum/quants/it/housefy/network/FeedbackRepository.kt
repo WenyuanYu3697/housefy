@@ -18,6 +18,7 @@ suspend fun postFeedback(feedback: Feedback): Pair<Boolean, String> {
     val jsonData = json.encodeToString(feedback)
 
     return try {
+        println("jsonData: $jsonData")
         val response: HttpResponse =
             client.post("https://housefybackend.azurewebsites.net/api/feedback") {
                 body = TextContent(jsonData, ContentType.Application.Json)
