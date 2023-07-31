@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.dp
 fun IndicatorGraph(
     foregroundIndicatorColor: Color = Color(0xFF7468E4),
     indicatorValue: Int,
-    maxIndicatorValue: Int = 40,
+    maxIndicatorValue: Int,
     backgroundIndicatorColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
     canvasSize: Dp = 300.dp,
     indicatorText: @Composable (Int) -> Unit

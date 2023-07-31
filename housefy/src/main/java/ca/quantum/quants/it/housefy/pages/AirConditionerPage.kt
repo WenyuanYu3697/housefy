@@ -54,6 +54,7 @@ fun AirConditionerPage() {
     ) {
         IndicatorGraph(
             indicatorValue = 25,
+            maxIndicatorValue = 50,
             indicatorText = {
                 Text(
                     text = "25°C",

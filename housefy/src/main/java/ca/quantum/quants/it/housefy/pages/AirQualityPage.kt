@@ -105,6 +105,7 @@ fun AirQualityPage() {
             IndicatorGraph(
                 indicatorValue = value,
                 foregroundIndicatorColor = getAQIColor(value),
+                maxIndicatorValue = 100,
                 indicatorText = {
                     Text(
                         text = "$value",
