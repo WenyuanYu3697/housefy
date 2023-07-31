@@ -27,7 +27,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,6 +38,8 @@ import ca.quantum.quants.it.housefy.components.air_continioner.FanSpeedCard
 import ca.quantum.quants.it.housefy.components.common.EnergyUsage
 import ca.quantum.quants.it.housefy.components.common.IndicatorGraph
 import ca.quantum.quants.it.housefy.components.common.StateSwitcher
+import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
+import ca.quantum.quants.it.housefy.ui.theme.TextBlack
 
 @Composable
 fun AirConditionerPage() {
@@ -48,7 +49,7 @@ fun AirConditionerPage() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xFFF0F2F1)),
+            .background(color = BackgroundGrey),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -58,7 +59,7 @@ fun AirConditionerPage() {
             indicatorText = {
                 Text(
                     text = "25°C",
-                    color = Color(0xFF353336),
+                    color = TextBlack,
                     fontSize = 64.sp,
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
