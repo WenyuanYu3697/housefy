@@ -9,7 +9,6 @@ package ca.quantum.quants.it.housefy.components.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,9 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ca.quantum.quants.it.housefy.R
+import ca.quantum.quants.it.housefy.ui.theme.TextBlack
+import ca.quantum.quants.it.housefy.ui.theme.TextGrey
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -47,13 +47,13 @@ fun EnergyUsageCard() {
                 text = stringResource(R.string.energy_usage),
                 style = MaterialTheme.typography.titleMedium
                     .copy(fontWeight = FontWeight.Medium)
-                    .copy(color = Color(0xFF353336)),
+                    .copy(color = TextBlack),
             )
             Text(
                 text = stringResource(R.string.see_all),
                 style = MaterialTheme.typography.bodySmall
                     .copy(fontWeight = FontWeight.Medium)
-                    .copy(color = Color(0xFF353336)),
+                    .copy(color = TextBlack),
             )
         }
 
@@ -76,7 +76,7 @@ fun EnergyUsageCard() {
                     text = formattedDate,
                     style = MaterialTheme.typography.bodySmall
                         .copy(fontWeight = FontWeight.Medium)
-                        .copy(color = Color(0xFF353336)),
+                        .copy(color = TextBlack),
                 )
             }
             Spacer(modifier = Modifier.height(24.dp))
@@ -88,13 +88,13 @@ fun EnergyUsageCard() {
                     text = stringResource(R.string.today),
                     style = MaterialTheme.typography.bodySmall
                         .copy(fontWeight = FontWeight.SemiBold)
-                        .copy(color = Color(0xFFA3A3A5)),
+                        .copy(color = TextGrey),
                 )
                 Text(
                     text = stringResource(R.string.this_month),
                     style = MaterialTheme.typography.bodySmall
                         .copy(fontWeight = FontWeight.SemiBold)
-                        .copy(color = Color(0xFFA3A3A5)),
+                        .copy(color = TextGrey),
                 )
             }
             Spacer(modifier = Modifier.height(4.dp))
@@ -106,13 +106,13 @@ fun EnergyUsageCard() {
                     text = "0.0 kWh",
                     style = MaterialTheme.typography.bodyMedium
                         .copy(fontWeight = FontWeight.Medium)
-                        .copy(color = Color(0xFF353336)),
+                        .copy(color = TextBlack),
                 )
                 Text(
                     text = "0.0 kWh",
                     style = MaterialTheme.typography.bodyMedium
                         .copy(fontWeight = FontWeight.Medium)
-                        .copy(color = Color(0xFF353336)),
+                        .copy(color = TextBlack),
                 )
             }
         }
