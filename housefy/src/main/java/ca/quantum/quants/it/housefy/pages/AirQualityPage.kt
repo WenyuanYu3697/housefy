@@ -34,6 +34,11 @@ import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.air_quality.AQICategory
 import ca.quantum.quants.it.housefy.components.air_quality.AQICategoryCard
 import ca.quantum.quants.it.housefy.components.common.IndicatorGraph
+import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
+import ca.quantum.quants.it.housefy.ui.theme.Green
+import ca.quantum.quants.it.housefy.ui.theme.Orange
+import ca.quantum.quants.it.housefy.ui.theme.Red
+import ca.quantum.quants.it.housefy.ui.theme.Yellow
 import io.ktor.client.HttpClient
 import io.ktor.client.features.HttpTimeout
 import io.ktor.client.features.json.JsonFeature
@@ -53,22 +58,22 @@ fun AirQualityPage() {
             AQICategory(
                 stringResource(R.string.excellent),
                 stringResource(R.string.excellent_description),
-                Color(0xFF8CD456),
+                Green,
             ),
             AQICategory(
                 stringResource(R.string.good),
                 stringResource(R.string.good_description),
-                Color(0xFFFFE24C),
+                Yellow,
             ),
             AQICategory(
                 stringResource(R.string.moderate),
                 stringResource(R.string.moderate_description),
-                Color(0xFFFFA500),
+                Orange,
             ),
             AQICategory(
                 stringResource(R.string.poor),
                 stringResource(R.string.poor_description),
-                Color(0xFFFF0000),
+                Red,
             ),
         )
 
@@ -97,7 +102,7 @@ fun AirQualityPage() {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xFFF0F2F1))
+            .background(color = BackgroundGrey)
             .padding(bottom = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -165,10 +170,10 @@ fun calculateAQI(co2: Float): Int {
 
 fun getAQIColor(aqi: Int): Color {
     return when {
-        aqi in 0..25 -> Color(0xFF8CD456)
-        aqi in 26..50 -> Color(0xFFFFE24C)
-        aqi in 51..75 -> Color(0xFFFFA500)
-        else -> Color(0xFFFF0000)
+        aqi in 0..25 -> Green
+        aqi in 26..50 -> Yellow
+        aqi in 51..75 -> Orange
+        else -> Red
     }
 }
 
