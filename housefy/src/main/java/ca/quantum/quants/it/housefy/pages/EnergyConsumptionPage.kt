@@ -268,8 +268,7 @@ fun Bar(height: Float, threshold: Float, maxValue: Float, onClick: () -> Unit) {
     val excessHeightInDp = maxOf(0f, heightInDp - thresholdInDp)
     val belowThresholdHeightInDp = minOf(heightInDp, thresholdInDp)
 
-    val aboveThresholdShape = RoundedCornerShape(topStartPercent = 50, topEndPercent = 50)
-    val belowThresholdShape = RoundedCornerShape(bottomStartPercent = 50, bottomEndPercent = 50)
+    val barShape = RoundedCornerShape(percent = 50) // Defined a single shape for the whole bar
 
     Column(
         Modifier
@@ -284,7 +283,7 @@ fun Bar(height: Float, threshold: Float, maxValue: Float, onClick: () -> Unit) {
                 modifier = Modifier
                     .height(excessHeightInDp.dp)
                     .fillMaxWidth()
-                    .clip(aboveThresholdShape)
+                    .clip(barShape) // Use the new shape
                     .background(Color.Red)
             )
 
@@ -296,7 +295,7 @@ fun Bar(height: Float, threshold: Float, maxValue: Float, onClick: () -> Unit) {
             modifier = Modifier
                 .height((belowThresholdHeightInDp + if (threshold == 0f) excessHeightInDp else 0f).dp)
                 .fillMaxWidth()
-                .clip(belowThresholdShape)
+                .clip(barShape) // Use the same shape
                 .background(Color(0xFF7468E4))
         )
     }
