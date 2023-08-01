@@ -278,21 +278,23 @@ fun Bar(height: Float, threshold: Float, maxValue: Float, onClick: () -> Unit) {
             .clickable { onClick() },
         verticalArrangement = Arrangement.Bottom
     ) {
-        // Part of the bar above the threshold
-        Box(
-            modifier = Modifier
-                .height(excessHeightInDp.dp)
-                .fillMaxWidth()
-                .clip(aboveThresholdShape)
-                .background(Color.Red)
-        )
+        if (threshold != 0f) {
+            // Part of the bar above the threshold
+            Box(
+                modifier = Modifier
+                    .height(excessHeightInDp.dp)
+                    .fillMaxWidth()
+                    .clip(aboveThresholdShape)
+                    .background(Color.Red)
+            )
 
-        Spacer(modifier = Modifier.height(1.dp))
+            Spacer(modifier = Modifier.height(1.dp))
+        }
 
         // Part of the bar below the threshold
         Box(
             modifier = Modifier
-                .height(belowThresholdHeightInDp.dp)
+                .height((belowThresholdHeightInDp + if (threshold == 0f) excessHeightInDp else 0f).dp)
                 .fillMaxWidth()
                 .clip(belowThresholdShape)
                 .background(Color(0xFF7468E4))
