@@ -55,7 +55,7 @@ fun FeedbackPage() {
     val emailError1 = stringResource(id = R.string.email_error1)
     val phoneNumebrError = stringResource(id = R.string.phoneNumber_error)
     val phoneNumberError1 = stringResource(id = R.string.phoneNumber_error1)
-
+    val commentError = stringResource(id = R.string.comment_error)
 
     fun showSnackbarMessage(message: String, dismiss: String) {
         coroutineScope.launch {
@@ -109,7 +109,7 @@ fun FeedbackPage() {
                 })
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             Box(
                 modifier = Modifier
@@ -137,7 +137,7 @@ fun FeedbackPage() {
                             showSnackbarMessage(phoneNumberError1, dismiss)
                         }
                         comment.length > 200 -> {
-                            showSnackbarMessage("Comment is too long. Must be less than or equal to 200 characters", dismiss)
+                            showSnackbarMessage(commentError, dismiss)
                         }
                         else -> {
                             coroutineScope.launch(Dispatchers.IO) {
@@ -189,7 +189,7 @@ fun FeedbackPage() {
     ) {
         SnackbarHost(
             hostState = snackbarHostState,
-            modifier = Modifier.padding(bottom = 20.dp)
+            modifier = Modifier.padding(bottom = 10.dp)
         )
     }
 
@@ -229,7 +229,7 @@ fun CustomOutlinedTextField(
         maxLines = maxLines,
         textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Start)
     )
-    Spacer(modifier = Modifier.height(16.dp))
+    Spacer(modifier = Modifier.height(32.dp))
 }
 
 
@@ -251,8 +251,11 @@ fun RatingBar(current: Int, onValueChange: (Int) -> Unit) {
                     .clickable {
                         rating = index + 1
                         onValueChange(rating)
-                    }
+                    },
+                tint = if (isFilled) Color(0xFF800080) else Color.Gray // Changed color to purple for filled stars using Hex code
             )
         }
     }
 }
+
+

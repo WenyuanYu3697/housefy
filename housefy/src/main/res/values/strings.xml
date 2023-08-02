@@ -80,5 +80,6 @@
     <string name="email_error1">email format is invalid</string>
     <string name="phoneNumber_error">phone number is too long</string>
     <string name="phoneNumber_error1">phone number should not contains letters other than digital numbers</string>
+    <string name="comment_error">Comment is too long. Must be less than or equal to 200 characters</string>
     <string name="feedback_url">https://housefybackend.azurewebsites.net/api/feedback</string>
 </resources>
