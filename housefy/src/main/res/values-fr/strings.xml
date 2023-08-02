@@ -78,4 +78,7 @@
     <string name="fullname_error1">la section du nom complet ne doit pas contenir de chiffres numériques</string>
     <string name="email_error">l\ e-mail dépasse 100 caractères</string>
     <string name="email_error1">le format de l\ e-mail n est pas valide</string>
+    <string name="phoneNumber_error">le numéro de téléphone est trop long</string>
+    <string name="phoneNumber_error1">le numéro de téléphone ne doit pas contenir de lettres autres que des chiffres numériques</string>
+    <string name="feedback_url">https://housefybackend.azurewebsites.net/api/feedback</string>
 </resources>

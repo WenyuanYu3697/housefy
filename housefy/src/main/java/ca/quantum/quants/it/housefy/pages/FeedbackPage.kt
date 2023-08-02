@@ -52,6 +52,9 @@ fun FeedbackPage() {
     val fullNameError1 = stringResource(id = R.string.fullname_error1)
     val emailError = stringResource(id = R.string.email_error)
     val emailError1 = stringResource(id = R.string.email_error1)
+    val phoneNumebrError = stringResource(id = R.string.phoneNumber_error)
+    val phoneNumberError1 = stringResource(id = R.string.phoneNumber_error1)
+
 
     fun showSnackbarMessage(message: String, dismiss: String) {
         coroutineScope.launch {
@@ -127,10 +130,10 @@ fun FeedbackPage() {
                             showSnackbarMessage(emailError1, dismiss)
                         }
                         phoneNumber.length > 30 -> {
-                            showSnackbarMessage("phone number is too long", dismiss)
+                            showSnackbarMessage(phoneNumebrError, dismiss)
                         }
                         phoneNumber.any { it !in '0'..'9' } -> {
-                            showSnackbarMessage("phone number should not contains letters other than digital numbers", dismiss)
+                            showSnackbarMessage(phoneNumberError1, dismiss)
                         }
                         else -> {
                             coroutineScope.launch(Dispatchers.IO) {
@@ -140,9 +143,8 @@ fun FeedbackPage() {
                                     val feedback = Feedback(rating, comment, user)
                                     val result = postFeedback(feedback)
                                     withContext(Dispatchers.Main) {
-                                        loadingDialogVisible = false // Hide loading dialog
+                                        loadingDialogVisible = false
                                         if(result.first){
-                                            // Clear all fields on successful submission
                                             fullName = ""
                                             phoneNumber = ""
                                             email = ""
@@ -154,7 +156,7 @@ fun FeedbackPage() {
                                     }
                                 } catch (e: Exception) {
                                     withContext(Dispatchers.Main) {
-                                        loadingDialogVisible = false // Hide loading dialog
+                                        loadingDialogVisible = false
                                         dialogMessage = "Error: ${e.localizedMessage}"
                                         dialogVisible = true
                                     }
