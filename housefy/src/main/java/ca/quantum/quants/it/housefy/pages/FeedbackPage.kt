@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ca.quantum.quants.it.housefy.R
@@ -213,7 +214,7 @@ fun CustomOutlinedTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
-    singleLine: Boolean = true,
+    singleLine: Boolean = false,  // set singleLine to false for multiline input
     height: Dp = Dp.Unspecified,
     maxLines: Int = 1
 ) {
@@ -225,10 +226,12 @@ fun CustomOutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
             .height(height),
-        maxLines = maxLines
+        maxLines = maxLines,
+        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Start)
     )
     Spacer(modifier = Modifier.height(16.dp))
 }
+
 
 @Composable
 fun RatingBar(current: Int, onValueChange: (Int) -> Unit) {
