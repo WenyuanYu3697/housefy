@@ -9,10 +9,16 @@ package ca.quantum.quants.it.housefy.pages
 
 import android.os.Build
 import android.util.Patterns
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Comment
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.runtime.*
@@ -20,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ca.quantum.quants.it.housefy.R
@@ -80,19 +85,37 @@ fun FeedbackPage() {
             CustomOutlinedTextField(
                 value = fullName,
                 onValueChange = { fullName = it },
-                label = stringResource(R.string.full_name)
+                label = stringResource(R.string.full_name),
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Person,
+                        contentDescription = stringResource(R.string.full_name)
+                    )
+                }
             )
 
             CustomOutlinedTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
-                label = stringResource(R.string.phone_number)
+                label = stringResource(R.string.phone_number),
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Phone,
+                        contentDescription = stringResource(R.string.phone_number)
+                    )
+                }
             )
 
             CustomOutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = stringResource(R.string.email)
+                label = stringResource(R.string.email),
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Email,
+                        contentDescription = stringResource(R.string.email)
+                    )
+                }
             )
 
             CustomOutlinedTextField(
@@ -100,7 +123,13 @@ fun FeedbackPage() {
                 onValueChange = { comment = it },
                 label = stringResource(R.string.comment),
                 height = 150.dp,
-                maxLines = 10
+                maxLines = 5,
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Comment,
+                        contentDescription = stringResource(R.string.comment)
+                    )
+                }
             )
 
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -168,7 +197,10 @@ fun FeedbackPage() {
                             }
                         }
                     }
-                }) {
+                },
+                modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp)
+                    ) {
                     Text(stringResource(R.string.submit_feedback))
                 }
             }
@@ -207,6 +239,7 @@ fun FeedbackPage() {
     }
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomOutlinedTextField(
@@ -214,24 +247,26 @@ fun CustomOutlinedTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
-    singleLine: Boolean = false,  // set singleLine to false for multiline input
+    singleLine: Boolean = true,
     height: Dp = Dp.Unspecified,
-    maxLines: Int = 1
+    maxLines: Int = 1,
+    leadingIcon: @Composable (() -> Unit)? = null
 ) {
-    OutlinedTextField(
+    TextField(
         value = value,
         onValueChange = onValueChange,
         label = { Text(label) },
         singleLine = singleLine,
         modifier = modifier
             .fillMaxWidth()
-            .height(height),
+            .height(height)
+            .background(color = Color(0XCCCCCC), shape = RoundedCornerShape(4.dp)),
         maxLines = maxLines,
-        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Start)
+        leadingIcon = leadingIcon,
+        textStyle = LocalTextStyle.current.copy(color = Color.White),
     )
-    Spacer(modifier = Modifier.height(32.dp))
+    Spacer(modifier = Modifier.height(16.dp))
 }
-
 
 @Composable
 fun RatingBar(current: Int, onValueChange: (Int) -> Unit) {
@@ -257,5 +292,3 @@ fun RatingBar(current: Int, onValueChange: (Int) -> Unit) {
         }
     }
 }
-
-
