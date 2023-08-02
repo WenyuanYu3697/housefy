@@ -20,7 +20,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import ca.quantum.quants.it.housefy.LightOnAmbient
+import ca.quantum.quants.it.housefy.ui.theme.Purple
+import ca.quantum.quants.it.housefy.ui.theme.TextGrey
 
 @Composable
 fun StateSwitcher(
@@ -45,13 +46,13 @@ fun StateSwitcher(
             Switch(
                 checked = checked,
                 onCheckedChange = onCheckedChange,
-                colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
+                colors = SwitchDefaults.colors(checkedTrackColor = Purple),
             )
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodySmall
                     .copy(fontWeight = FontWeight.Medium)
-                    .copy(color = Color(0xFFA3A3A5)),
+                    .copy(color = TextGrey),
             )
         }
     }

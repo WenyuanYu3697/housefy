@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import ca.quantum.quants.it.housefy.ui.theme.Purple
 
 // Refactoring was done to extract the common functionality between the
 // AirConditionerGraph and AirQualityGraph components into a more general,
@@ -39,7 +40,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun IndicatorGraph(
-    foregroundIndicatorColor: Color = Color(0xFF7468E4),
+    foregroundIndicatorColor: Color = Purple,
     indicatorValue: Int,
     maxIndicatorValue: Int,
     backgroundIndicatorColor: Color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f),
