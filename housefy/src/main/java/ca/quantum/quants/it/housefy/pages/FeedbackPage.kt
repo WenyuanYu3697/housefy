@@ -135,6 +135,9 @@ fun FeedbackPage() {
                         phoneNumber.any { it !in '0'..'9' } -> {
                             showSnackbarMessage(phoneNumberError1, dismiss)
                         }
+                        comment.length > 200 -> {
+                            showSnackbarMessage("Comment is too long. Must be less than or equal to 200 characters", dismiss)
+                        }
                         else -> {
                             coroutineScope.launch(Dispatchers.IO) {
                                 try {
