@@ -37,6 +37,7 @@ import kotlinx.coroutines.launch
 import ca.quantum.quants.it.housefy.network.postFeedback
 import ca.quantum.quants.it.housefy.models.User
 import ca.quantum.quants.it.housefy.models.Feedback
+import ca.quantum.quants.it.housefy.utils.validateInput
 import kotlinx.coroutines.withContext
 
 @Composable
@@ -56,21 +57,15 @@ fun FeedbackPage() {
     val dismiss = stringResource(id = R.string.dismiss_label)
     val fullNameError = stringResource(id = R.string.fullname_error)
     val fullNameError1 = stringResource(id = R.string.fullname_error1)
+    val fullNameError2 = stringResource(id = R.string.fullname_error2)
     val emailError = stringResource(id = R.string.email_error)
     val emailError1 = stringResource(id = R.string.email_error1)
+    val emailError2 = stringResource(id = R.string.email_error2)
     val phoneNumebrError = stringResource(id = R.string.phoneNumber_error)
     val phoneNumberError1 = stringResource(id = R.string.phoneNumber_error1)
+    val phoneNumberError2 = stringResource(id = R.string.phoneNumber_error2)
     val commentError = stringResource(id = R.string.comment_error)
-
-    fun showSnackbarMessage(message: String, dismiss: String) {
-        coroutineScope.launch {
-            snackbarHostState.showSnackbar(
-                message = message,
-                actionLabel = dismiss,
-                duration = SnackbarDuration.Short
-             )
-        }
-    }
+    val commentError1 = stringResource(id = R.string.comment_error1)
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -146,61 +141,77 @@ fun FeedbackPage() {
                 contentAlignment = Alignment.Center
             ) {
                 Button(onClick = {
-                    when {
-                        fullName.length > 50 -> {
-                            showSnackbarMessage(fullNameError, dismiss)
-                        }
-                        fullName.any { it.isDigit() } -> {
-                            showSnackbarMessage(fullNameError1, dismiss)
-                        }
-                        email.length > 100 -> {
-                            showSnackbarMessage(emailError, dismiss)
-                        }
-                        !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                            showSnackbarMessage(emailError1, dismiss)
-                        }
-                        phoneNumber.length > 30 -> {
-                            showSnackbarMessage(phoneNumebrError, dismiss)
-                        }
-                        phoneNumber.any { it !in '0'..'9' } -> {
-                            showSnackbarMessage(phoneNumberError1, dismiss)
-                        }
-                        comment.length > 200 -> {
-                            showSnackbarMessage(commentError, dismiss)
-                        }
-                        else -> {
-                            coroutineScope.launch(Dispatchers.IO) {
-                                try {
-                                    withContext(Dispatchers.Main) { loadingDialogVisible = true } // Show loading dialog
-                                    val user = User(fullName, email, phoneModel, phoneNumber)
-                                    val feedback = Feedback(rating, comment, user)
-                                    val result = postFeedback(feedback)
-                                    withContext(Dispatchers.Main) {
-                                        loadingDialogVisible = false
-                                        if(result.first){
-                                            fullName = ""
-                                            phoneNumber = ""
-                                            email = ""
-                                            comment = ""
-                                            rating = 1
-                                        }
-                                        dialogMessage = result.second
-                                        dialogVisible = true
+                    if (
+                        validateInput(
+                            fullName,
+                            listOf(
+                                { s: String -> s.isEmpty() } to fullNameError2,
+                                { s: String -> s.length > 50 } to fullNameError,
+                                { s: String -> s.any { char -> char.isDigit() } } to fullNameError1
+                            ),
+                            coroutineScope, snackbarHostState, dismiss
+                        ) &&
+                        validateInput(
+                            email,
+                            listOf(
+                                { s: String -> s.isEmpty() } to emailError2,
+                                { s: String -> s.length > 100 } to emailError,
+                                { s: String -> !Patterns.EMAIL_ADDRESS.matcher(s).matches() } to emailError1
+                            ),
+                            coroutineScope, snackbarHostState, dismiss
+                        ) &&
+                        validateInput(
+                            phoneNumber,
+                            listOf(
+                                { s: String -> s.isEmpty() } to phoneNumberError2,
+                                { s: String -> s.length > 30 } to phoneNumebrError,
+                                { s: String -> s.any { char -> char !in '0'..'9' } } to phoneNumberError1,
+                            ),
+                            coroutineScope, snackbarHostState, dismiss
+                        ) &&
+                        validateInput(
+                            comment,
+                            listOf(
+                                { s: String -> s.isEmpty() } to commentError1,
+                                { s: String -> s.length > 200 } to commentError
+                            ),
+                            coroutineScope, snackbarHostState, dismiss
+                        )
+
+
+                    ) {
+                        // All fields have been validated and passed.
+                        coroutineScope.launch(Dispatchers.IO) {
+                            try {
+                                withContext(Dispatchers.Main) { loadingDialogVisible = true } // Show loading dialog
+                                val user = User(fullName, email, phoneModel, phoneNumber)
+                                val feedback = Feedback(rating, comment, user)
+                                val result = postFeedback(feedback)
+                                withContext(Dispatchers.Main) {
+                                    loadingDialogVisible = false
+                                    if(result.first){
+                                        fullName = ""
+                                        phoneNumber = ""
+                                        email = ""
+                                        comment = ""
+                                        rating = 1
                                     }
-                                } catch (e: Exception) {
-                                    withContext(Dispatchers.Main) {
-                                        loadingDialogVisible = false
-                                        dialogMessage = "Error: ${e.localizedMessage}"
-                                        dialogVisible = true
-                                    }
+                                    dialogMessage = result.second
+                                    dialogVisible = true
+                                }
+                            } catch (e: Exception) {
+                                withContext(Dispatchers.Main) {
+                                    loadingDialogVisible = false
+                                    dialogMessage = "Error: ${e.localizedMessage}"
+                                    dialogVisible = true
                                 }
                             }
                         }
                     }
                 },
-                modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp)
-                    ) {
+                ) {
                     Text(stringResource(R.string.submit_feedback))
                 }
             }
@@ -263,7 +274,7 @@ fun CustomOutlinedTextField(
             .background(color = Color(0XCCCCCC), shape = RoundedCornerShape(4.dp)),
         maxLines = maxLines,
         leadingIcon = leadingIcon,
-        textStyle = LocalTextStyle.current.copy(color = Color.White),
+        textStyle = LocalTextStyle.current.copy(color = Color.Black),
     )
     Spacer(modifier = Modifier.height(16.dp))
 }
@@ -287,7 +298,7 @@ fun RatingBar(current: Int, onValueChange: (Int) -> Unit) {
                         rating = index + 1
                         onValueChange(rating)
                     },
-                tint = if (isFilled) Color(0xFF800080) else Color.Gray // Changed color to purple for filled stars using Hex code
+                tint = if (isFilled) Color(0xFF800080) else Color.Gray
             )
         }
     }
