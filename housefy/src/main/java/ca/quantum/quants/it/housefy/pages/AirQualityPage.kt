@@ -9,22 +9,14 @@ package ca.quantum.quants.it.housefy.pages
 
 import android.util.Log
 import androidx.compose.material3.*
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,16 +26,9 @@ import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.air_quality.AQICategory
 import ca.quantum.quants.it.housefy.components.air_quality.AQICategoryCard
 import ca.quantum.quants.it.housefy.components.common.IndicatorGraph
-import io.ktor.client.HttpClient
-import io.ktor.client.features.HttpTimeout
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
-import io.ktor.client.request.get
-import kotlinx.coroutines.Dispatchers
+import ca.quantum.quants.it.housefy.models.EnvironmentData
+import ca.quantum.quants.it.housefy.network.fetchEnvironmentData
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 import kotlin.math.roundToInt
 
 @Composable
@@ -79,7 +64,7 @@ fun AirQualityPage() {
         while (true) {
             try {
                 val newData = fetchEnvironmentData()
-                if (newData != null && newData.isNotEmpty()) {
+                if (!newData.isNullOrEmpty()) {
                     environmentDataList = newData
                     currentDataIndex = (currentDataIndex + 1) % environmentDataList.size
                 }
@@ -129,54 +114,15 @@ fun AirQualityPage() {
     }
 }
 
-@Serializable
-data class EnvironmentData(
-    val temperature: Float,
-    val co2: Float,
-    val voc: Float,
-    val lightLevel: Float,
-)
-
-val client = HttpClient {
-    install(JsonFeature) {
-        serializer = KotlinxSerializer(Json {
-            ignoreUnknownKeys = true
-            isLenient = true
-        })
-    }
-
-    install(HttpTimeout) {
-        requestTimeoutMillis = 3000
-    }
-}
-
-suspend fun fetchEnvironmentData(): List<EnvironmentData>? = try {
-    withContext(Dispatchers.IO) {
-        client.get("https://housefybackend.azurewebsites.net/api/environment")
-    }
-} catch (e: Exception) {
-    null
-}
-
 fun calculateAQI(co2: Float): Int {
     return (co2 / 10).roundToInt()
 }
 
 fun getAQIColor(aqi: Int): Color {
-    return when {
-        aqi in 0..25 -> Color(0xFF8CD456)
-        aqi in 26..50 -> Color(0xFFFFE24C)
-        aqi in 51..75 -> Color(0xFFFFA500)
+    return when (aqi) {
+        in 0..25 -> Color(0xFF8CD456)
+        in 26..50 -> Color(0xFFFFE24C)
+        in 51..75 -> Color(0xFFFFA500)
         else -> Color(0xFFFF0000)
-    }
-}
-
-@Composable
-fun getAQIDescription(aqi: Int): String {
-    return when {
-        aqi in 0..25 -> stringResource(R.string.excellent)
-        aqi in 26..50 -> stringResource(R.string.good)
-        aqi in 51..75 -> stringResource(R.string.moderate)
-        else -> stringResource(R.string.poor)
     }
 }

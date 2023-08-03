@@ -1,7 +1,11 @@
 package ca.quantum.quants.it.housefy.network
 
-// NetworkRepository.kt
-
+/*
+ * @author Artem Tsurkan, n01414146
+ * @author Wenyuan Yu, n01403697
+ * @author Kyrylo Lvov, n01414058
+ * @course Software Project - CENG-322-0NA
+ */
 import ca.quantum.quants.it.housefy.models.Feedback
 import io.ktor.client.*
 import io.ktor.client.request.*
@@ -10,7 +14,6 @@ import io.ktor.http.*
 import io.ktor.http.content.*
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-
 suspend fun postFeedback(feedback: Feedback): Pair<Boolean, String> {
     val client = HttpClient {}
 
