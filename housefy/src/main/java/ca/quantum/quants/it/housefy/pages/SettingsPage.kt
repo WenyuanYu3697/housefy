@@ -37,6 +37,8 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.settings.SettingsRow
+import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
+import ca.quantum.quants.it.housefy.ui.theme.Purple
 
 @SuppressLint("MissingPermission")
 @Composable
@@ -76,7 +78,7 @@ fun SettingsPage() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xFFF0F2F1))
+            .background(color = BackgroundGrey)
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
     ) {
 
@@ -89,7 +91,7 @@ fun SettingsPage() {
                 control = {
                     Switch(
                         checked = lockPortrait,
-                        colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
+                        colors = SwitchDefaults.colors(checkedTrackColor = Purple),
                         onCheckedChange = { newValue ->
                             lockPortrait = newValue
 
@@ -118,7 +120,7 @@ fun SettingsPage() {
                 control = {
                     Switch(
                         checked = enableNotifications,
-                        colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
+                        colors = SwitchDefaults.colors(checkedTrackColor = Purple),
                         onCheckedChange = { newValue ->
                             enableNotifications = newValue
 
@@ -159,7 +161,7 @@ fun SettingsPage() {
                         valueRange = 20f..100f,
                         modifier = Modifier.width(150.dp),
                         colors = SliderDefaults.colors(
-                            thumbColor = Color(0xFF7468E4),
+                            thumbColor = Purple,
                         )
                     )
                 }
@@ -181,7 +183,7 @@ fun SettingsPage() {
                         valueRange = 0f..50f,
                         modifier = Modifier.width(150.dp),
                         colors = SliderDefaults.colors(
-                            thumbColor = Color(0xFF7468E4),
+                            thumbColor = Purple,
                         )
                     )
                 }

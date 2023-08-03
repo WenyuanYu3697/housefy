@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ca.quantum.quants.it.housefy.ui.theme.TextBlack
 
 @Composable
 fun SettingsRow(
@@ -36,7 +37,7 @@ fun SettingsRow(
             text = title,
             style = MaterialTheme.typography.bodyMedium
                 .copy(fontWeight = FontWeight.Medium)
-                .copy(color = Color(0xFF353336)),
+                .copy(color = TextBlack),
         )
 
         control()

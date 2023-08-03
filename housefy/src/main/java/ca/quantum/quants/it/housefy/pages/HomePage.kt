@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -25,6 +24,7 @@ import androidx.navigation.NavHostController
 import ca.quantum.quants.it.housefy.components.home.DevicesList
 import ca.quantum.quants.it.housefy.components.home.EnergyUsageCard
 import ca.quantum.quants.it.housefy.components.home.WeatherCard
+import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
 
 @Composable
 fun HomePage(navController: NavHostController, snackbarHostState: SnackbarHostState) {
@@ -42,7 +42,7 @@ fun HomePageLayout(navController: NavHostController, spacerSize: Dp, snackbarHos
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xFFF0F2F1))
+            .background(color = BackgroundGrey)
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
     ) {
         item {
