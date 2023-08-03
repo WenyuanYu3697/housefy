@@ -17,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -28,6 +29,10 @@ import ca.quantum.quants.it.housefy.components.air_quality.AQICategoryCard
 import ca.quantum.quants.it.housefy.components.common.IndicatorGraph
 import ca.quantum.quants.it.housefy.models.EnvironmentData
 import ca.quantum.quants.it.housefy.network.fetchEnvironmentData
+import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
+import ca.quantum.quants.it.housefy.ui.theme.Green
+import ca.quantum.quants.it.housefy.ui.theme.Orange
+import ca.quantum.quants.it.housefy.ui.theme.Yellow
 import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 

@@ -37,6 +37,8 @@ import kotlinx.coroutines.launch
 import ca.quantum.quants.it.housefy.network.postFeedback
 import ca.quantum.quants.it.housefy.models.User
 import ca.quantum.quants.it.housefy.models.Feedback
+import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
+import ca.quantum.quants.it.housefy.utils.validateInput
 import kotlinx.coroutines.withContext
 
 @Composable
