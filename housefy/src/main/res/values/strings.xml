@@ -76,10 +76,14 @@
     <string name="dismiss_label">dismiss</string>
     <string name="fullname_error">full name should not beyound 50 characters</string>
     <string name="fullname_error1">full name section should not contain digital numbers</string>
+    <string name="fullname_error2">Full name cannot be empty</string>
     <string name="email_error">email is beyond 100 characters</string>
     <string name="email_error1">email format is invalid</string>
+    <string name="email_error2">email cannot be empty</string>
     <string name="phoneNumber_error">phone number is too long</string>
     <string name="phoneNumber_error1">phone number should not contains letters other than digital numbers</string>
+    <string name="phoneNumber_error2">phone number cannot be empty</string>
     <string name="comment_error">Comment is too long. Must be less than or equal to 200 characters</string>
+    <string name="comment_error1">Comment should not be empty</string>
     <string name="feedback_url">https://housefybackend.azurewebsites.net/api/feedback</string>
 </resources>

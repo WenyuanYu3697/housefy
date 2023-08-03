@@ -9,10 +9,16 @@ package ca.quantum.quants.it.housefy.pages
 
 import android.os.Build
 import android.util.Patterns
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Comment
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.runtime.*
@@ -20,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ca.quantum.quants.it.housefy.R
@@ -32,7 +37,6 @@ import kotlinx.coroutines.launch
 import ca.quantum.quants.it.housefy.network.postFeedback
 import ca.quantum.quants.it.housefy.models.User
 import ca.quantum.quants.it.housefy.models.Feedback
-import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
 import kotlinx.coroutines.withContext
 
 @Composable
@@ -52,21 +56,15 @@ fun FeedbackPage() {
     val dismiss = stringResource(id = R.string.dismiss_label)
     val fullNameError = stringResource(id = R.string.fullname_error)
     val fullNameError1 = stringResource(id = R.string.fullname_error1)
+    val fullNameError2 = stringResource(id = R.string.fullname_error2)
     val emailError = stringResource(id = R.string.email_error)
     val emailError1 = stringResource(id = R.string.email_error1)
+    val emailError2 = stringResource(id = R.string.email_error2)
     val phoneNumebrError = stringResource(id = R.string.phoneNumber_error)
     val phoneNumberError1 = stringResource(id = R.string.phoneNumber_error1)
+    val phoneNumberError2 = stringResource(id = R.string.phoneNumber_error2)
     val commentError = stringResource(id = R.string.comment_error)
-
-    fun showSnackbarMessage(message: String, dismiss: String) {
-        coroutineScope.launch {
-            snackbarHostState.showSnackbar(
-                message = message,
-                actionLabel = dismiss,
-                duration = SnackbarDuration.Short
-             )
-        }
-    }
+    val commentError1 = stringResource(id = R.string.comment_error1)
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -81,19 +79,37 @@ fun FeedbackPage() {
             CustomOutlinedTextField(
                 value = fullName,
                 onValueChange = { fullName = it },
-                label = stringResource(R.string.full_name)
+                label = stringResource(R.string.full_name),
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Person,
+                        contentDescription = stringResource(R.string.full_name)
+                    )
+                }
             )
 
             CustomOutlinedTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
-                label = stringResource(R.string.phone_number)
+                label = stringResource(R.string.phone_number),
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Phone,
+                        contentDescription = stringResource(R.string.phone_number)
+                    )
+                }
             )
 
             CustomOutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = stringResource(R.string.email)
+                label = stringResource(R.string.email),
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Email,
+                        contentDescription = stringResource(R.string.email)
+                    )
+                }
             )
 
             CustomOutlinedTextField(
@@ -101,7 +117,13 @@ fun FeedbackPage() {
                 onValueChange = { comment = it },
                 label = stringResource(R.string.comment),
                 height = 150.dp,
-                maxLines = 10
+                maxLines = 5,
+                leadingIcon = {
+                    Icon(
+                        Icons.Default.Comment,
+                        contentDescription = stringResource(R.string.comment)
+                    )
+                }
             )
 
             Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -118,58 +140,77 @@ fun FeedbackPage() {
                 contentAlignment = Alignment.Center
             ) {
                 Button(onClick = {
-                    when {
-                        fullName.length > 50 -> {
-                            showSnackbarMessage(fullNameError, dismiss)
-                        }
-                        fullName.any { it.isDigit() } -> {
-                            showSnackbarMessage(fullNameError1, dismiss)
-                        }
-                        email.length > 100 -> {
-                            showSnackbarMessage(emailError, dismiss)
-                        }
-                        !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                            showSnackbarMessage(emailError1, dismiss)
-                        }
-                        phoneNumber.length > 30 -> {
-                            showSnackbarMessage(phoneNumebrError, dismiss)
-                        }
-                        phoneNumber.any { it !in '0'..'9' } -> {
-                            showSnackbarMessage(phoneNumberError1, dismiss)
-                        }
-                        comment.length > 200 -> {
-                            showSnackbarMessage(commentError, dismiss)
-                        }
-                        else -> {
-                            coroutineScope.launch(Dispatchers.IO) {
-                                try {
-                                    withContext(Dispatchers.Main) { loadingDialogVisible = true } // Show loading dialog
-                                    val user = User(fullName, email, phoneModel, phoneNumber)
-                                    val feedback = Feedback(rating, comment, user)
-                                    val result = postFeedback(feedback)
-                                    withContext(Dispatchers.Main) {
-                                        loadingDialogVisible = false
-                                        if(result.first){
-                                            fullName = ""
-                                            phoneNumber = ""
-                                            email = ""
-                                            comment = ""
-                                            rating = 1
-                                        }
-                                        dialogMessage = result.second
-                                        dialogVisible = true
+                    if (
+                        validateInput(
+                            fullName,
+                            listOf(
+                                { s: String -> s.isEmpty() } to fullNameError2,
+                                { s: String -> s.length > 50 } to fullNameError,
+                                { s: String -> s.any { char -> char.isDigit() } } to fullNameError1
+                            ),
+                            coroutineScope, snackbarHostState, dismiss
+                        ) &&
+                        validateInput(
+                            email,
+                            listOf(
+                                { s: String -> s.isEmpty() } to emailError2,
+                                { s: String -> s.length > 100 } to emailError,
+                                { s: String -> !Patterns.EMAIL_ADDRESS.matcher(s).matches() } to emailError1
+                            ),
+                            coroutineScope, snackbarHostState, dismiss
+                        ) &&
+                        validateInput(
+                            phoneNumber,
+                            listOf(
+                                { s: String -> s.isEmpty() } to phoneNumberError2,
+                                { s: String -> s.length > 30 } to phoneNumebrError,
+                                { s: String -> s.any { char -> char !in '0'..'9' } } to phoneNumberError1,
+                            ),
+                            coroutineScope, snackbarHostState, dismiss
+                        ) &&
+                        validateInput(
+                            comment,
+                            listOf(
+                                { s: String -> s.isEmpty() } to commentError1,
+                                { s: String -> s.length > 200 } to commentError
+                            ),
+                            coroutineScope, snackbarHostState, dismiss
+                        )
+
+
+                    ) {
+                        // All fields have been validated and passed.
+                        coroutineScope.launch(Dispatchers.IO) {
+                            try {
+                                withContext(Dispatchers.Main) { loadingDialogVisible = true } // Show loading dialog
+                                val user = User(fullName, email, phoneModel, phoneNumber)
+                                val feedback = Feedback(rating, comment, user)
+                                val result = postFeedback(feedback)
+                                withContext(Dispatchers.Main) {
+                                    loadingDialogVisible = false
+                                    if(result.first){
+                                        fullName = ""
+                                        phoneNumber = ""
+                                        email = ""
+                                        comment = ""
+                                        rating = 1
                                     }
-                                } catch (e: Exception) {
-                                    withContext(Dispatchers.Main) {
-                                        loadingDialogVisible = false
-                                        dialogMessage = "Error: ${e.localizedMessage}"
-                                        dialogVisible = true
-                                    }
+                                    dialogMessage = result.second
+                                    dialogVisible = true
+                                }
+                            } catch (e: Exception) {
+                                withContext(Dispatchers.Main) {
+                                    loadingDialogVisible = false
+                                    dialogMessage = "Error: ${e.localizedMessage}"
+                                    dialogVisible = true
                                 }
                             }
                         }
                     }
-                }) {
+                },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
                     Text(stringResource(R.string.submit_feedback))
                 }
             }
@@ -208,6 +249,7 @@ fun FeedbackPage() {
     }
 }
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomOutlinedTextField(
@@ -215,24 +257,26 @@ fun CustomOutlinedTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
-    singleLine: Boolean = false,  // set singleLine to false for multiline input
+    singleLine: Boolean = true,
     height: Dp = Dp.Unspecified,
-    maxLines: Int = 1
+    maxLines: Int = 1,
+    leadingIcon: @Composable (() -> Unit)? = null
 ) {
-    OutlinedTextField(
+    TextField(
         value = value,
         onValueChange = onValueChange,
         label = { Text(label) },
         singleLine = singleLine,
         modifier = modifier
             .fillMaxWidth()
-            .height(height),
+            .height(height)
+            .background(color = Color(0XCCCCCC), shape = RoundedCornerShape(4.dp)),
         maxLines = maxLines,
-        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Start)
+        leadingIcon = leadingIcon,
+        textStyle = LocalTextStyle.current.copy(color = Color.Black),
     )
-    Spacer(modifier = Modifier.height(32.dp))
+    Spacer(modifier = Modifier.height(16.dp))
 }
-
 
 @Composable
 fun RatingBar(current: Int, onValueChange: (Int) -> Unit) {
@@ -253,10 +297,8 @@ fun RatingBar(current: Int, onValueChange: (Int) -> Unit) {
                         rating = index + 1
                         onValueChange(rating)
                     },
-                tint = if (isFilled) Color(0xFF800080) else Color.Gray // Changed color to purple for filled stars using Hex code
+                tint = if (isFilled) Color(0xFF800080) else Color.Gray
             )
         }
     }
 }
-
-
