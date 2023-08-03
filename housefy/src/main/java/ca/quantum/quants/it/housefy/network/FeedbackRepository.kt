@@ -25,9 +25,9 @@ suspend fun postFeedback(feedback: Feedback): Pair<Boolean, String> {
             }
 
         if (response.status == HttpStatusCode.OK) {
-            Pair(true, "Feedback submitted successfully.")
+            Pair(true, "Thank you for your feedback.")
         } else {
-            Pair(false, "Failed to submit feedback: ${response.status.description}")
+            Pair(false, "Error: ${response.status.description}")
         }
     } catch (e: Exception) {
         Pair(false, "Exception in postFeedback: ${e.localizedMessage}")

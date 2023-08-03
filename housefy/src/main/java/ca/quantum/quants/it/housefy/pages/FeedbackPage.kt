@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ca.quantum.quants.it.housefy.R
@@ -53,6 +54,9 @@ fun FeedbackPage() {
     val fullNameError1 = stringResource(id = R.string.fullname_error1)
     val emailError = stringResource(id = R.string.email_error)
     val emailError1 = stringResource(id = R.string.email_error1)
+    val phoneNumebrError = stringResource(id = R.string.phoneNumber_error)
+    val phoneNumberError1 = stringResource(id = R.string.phoneNumber_error1)
+    val commentError = stringResource(id = R.string.comment_error)
 
     fun showSnackbarMessage(message: String, dismiss: String) {
         coroutineScope.launch {
@@ -106,7 +110,7 @@ fun FeedbackPage() {
                 })
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             Box(
                 modifier = Modifier
@@ -128,10 +132,13 @@ fun FeedbackPage() {
                             showSnackbarMessage(emailError1, dismiss)
                         }
                         phoneNumber.length > 30 -> {
-                            showSnackbarMessage("phone number is too long", dismiss)
+                            showSnackbarMessage(phoneNumebrError, dismiss)
                         }
                         phoneNumber.any { it !in '0'..'9' } -> {
-                            showSnackbarMessage("phone number should not contains letters other than digital numbers", dismiss)
+                            showSnackbarMessage(phoneNumberError1, dismiss)
+                        }
+                        comment.length > 200 -> {
+                            showSnackbarMessage(commentError, dismiss)
                         }
                         else -> {
                             coroutineScope.launch(Dispatchers.IO) {
@@ -141,9 +148,8 @@ fun FeedbackPage() {
                                     val feedback = Feedback(rating, comment, user)
                                     val result = postFeedback(feedback)
                                     withContext(Dispatchers.Main) {
-                                        loadingDialogVisible = false // Hide loading dialog
+                                        loadingDialogVisible = false
                                         if(result.first){
-                                            // Clear all fields on successful submission
                                             fullName = ""
                                             phoneNumber = ""
                                             email = ""
@@ -155,7 +161,7 @@ fun FeedbackPage() {
                                     }
                                 } catch (e: Exception) {
                                     withContext(Dispatchers.Main) {
-                                        loadingDialogVisible = false // Hide loading dialog
+                                        loadingDialogVisible = false
                                         dialogMessage = "Error: ${e.localizedMessage}"
                                         dialogVisible = true
                                     }
@@ -184,7 +190,7 @@ fun FeedbackPage() {
     ) {
         SnackbarHost(
             hostState = snackbarHostState,
-            modifier = Modifier.padding(bottom = 20.dp)
+            modifier = Modifier.padding(bottom = 10.dp)
         )
     }
 
@@ -209,7 +215,7 @@ fun CustomOutlinedTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
-    singleLine: Boolean = true,
+    singleLine: Boolean = false,  // set singleLine to false for multiline input
     height: Dp = Dp.Unspecified,
     maxLines: Int = 1
 ) {
@@ -221,10 +227,12 @@ fun CustomOutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
             .height(height),
-        maxLines = maxLines
+        maxLines = maxLines,
+        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Start)
     )
-    Spacer(modifier = Modifier.height(16.dp))
+    Spacer(modifier = Modifier.height(32.dp))
 }
+
 
 @Composable
 fun RatingBar(current: Int, onValueChange: (Int) -> Unit) {
@@ -244,8 +252,11 @@ fun RatingBar(current: Int, onValueChange: (Int) -> Unit) {
                     .clickable {
                         rating = index + 1
                         onValueChange(rating)
-                    }
+                    },
+                tint = if (isFilled) Color(0xFF800080) else Color.Gray // Changed color to purple for filled stars using Hex code
             )
         }
     }
 }
+
+

@@ -65,8 +65,8 @@
     <string name="energy_guide_line_five">Yearly: Over a year, the average U.S. home consumes about 10,800 kWh. Canadian homes, on the other hand, consume around 9,720 kWh on average.</string>
     <string name="energy_guide_line_six">Please note that these figures can vary widely based on factors such as the size of the home, the number of occupants, the efficiency of appliances, and more.</string>
     <string name="energy_guide_line_seven">The information and figures provided in this guide are given with the only purpose of helping you understand and interpret the information presented in our app, and can vary significantly depending on a number of factors.</string>
-    <string name="feedback_response">Feedback Response</string>
-    <string name="submit_feedback">Submit Feedback</string>
+    <string name="feedback_response">Feedback</string>
+    <string name="submit_feedback">Submit</string>
     <string name="comment">Comment</string>
     <string name="email">Email</string>
     <string name="phone_number">Phone Number</string>
@@ -78,4 +78,8 @@
     <string name="fullname_error1">full name section should not contain digital numbers</string>
     <string name="email_error">email is beyond 100 characters</string>
     <string name="email_error1">email format is invalid</string>
+    <string name="phoneNumber_error">phone number is too long</string>
+    <string name="phoneNumber_error1">phone number should not contains letters other than digital numbers</string>
+    <string name="comment_error">Comment is too long. Must be less than or equal to 200 characters</string>
+    <string name="feedback_url">https://housefybackend.azurewebsites.net/api/feedback</string>
 </resources>
