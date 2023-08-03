@@ -31,6 +31,11 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.res.stringResource
 import ca.quantum.quants.it.housefy.R
+import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
+import ca.quantum.quants.it.housefy.ui.theme.EnergyConsumptionAxis
+import ca.quantum.quants.it.housefy.ui.theme.Purple
+import ca.quantum.quants.it.housefy.ui.theme.TextBlack
+import ca.quantum.quants.it.housefy.ui.theme.TextGrey
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,7 +45,7 @@ fun EnergyConsumptionPage() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xFFF0F2F1)),
+            .background(color = BackgroundGrey),
         contentAlignment = Alignment.Center
     ) {
 
@@ -71,13 +76,13 @@ fun ThresholdSettings(threshold: Float, onThresholdChange: (Float) -> Unit) {
             .fillMaxWidth()
             .fillMaxHeight()
             .clip(RoundedCornerShape(5))
-            .background(color = Color(0xFFFFFFFF)),
+            .background(color = Color.White),
         contentAlignment = Alignment.Center
     ) {
         Column() {
             Text(
                 text = stringResource(R.string.set_threshold),
-                color = Color(0xFF7468E4),
+                color = TextBlack,
                 textAlign = TextAlign.Start,
             )
         }
@@ -88,7 +93,7 @@ fun ThresholdSettings(threshold: Float, onThresholdChange: (Float) -> Unit) {
                 onValueChange = { onThresholdChange(it.toFloatOrNull() ?: threshold) },
                 label = { Text(text = stringResource(R.string.set_threshold)) },
                 modifier = Modifier
-                    .background(color = Color(0xFFFFFFFF)),
+                    .background(color = Color.White),
             )
         }
     }
@@ -106,13 +111,13 @@ fun Chart(
         modifier = Modifier
             .padding(30.dp, 60.dp, 30.dp, 180.dp)
             .clip(RoundedCornerShape(5))
-            .background(Color(0xFFFFFFFF))
+            .background(Color.White)
     ) {
         Column() {
             Text(
                 text = "Usage, KWh",
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF7468E4),
+                color = Purple,
                 fontSize = 30.sp,
                 textAlign = TextAlign.Start,
                 modifier = Modifier
@@ -130,7 +135,7 @@ fun Chart(
                 Text(
                     text = "July 2023 - Week 1",
                     fontWeight = FontWeight.Normal,
-                    color = Color(0xFF858585),
+                    color = TextGrey,
                     fontSize = 20.sp,
                     textAlign = TextAlign.Start
                 )
@@ -143,7 +148,7 @@ fun Chart(
                     Icon(
                         imageVector = Icons.Filled.MoreVert,
                         contentDescription = "Options",
-                        tint = Color(0xFF919191),
+                        tint = TextGrey,
                     )
                 }
             }
@@ -185,7 +190,7 @@ fun Chart(
                     modifier = Modifier
                         .fillMaxHeight()
                         .height(2.dp)
-                        .background(Color(0xFFFFFFFF))
+                        .background(Color.White)
                 )
             }
 
@@ -200,7 +205,7 @@ fun Chart(
             Text(
                 text = "Total: 254 KWh",
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF6D6C6C),
+                color = TextBlack,
                 fontSize = 30.sp,
                 textAlign = TextAlign.Start,
             )
@@ -220,7 +225,7 @@ fun YAxis(maxValue: Int) {
             modifier = Modifier.fillMaxHeight(),
             verticalArrangement = Arrangement.Bottom
         ) {
-            Text(text = maxValue.toString(), color = Color(0xFF858585))
+            Text(text = maxValue.toString(), color = TextGrey)
             Spacer(modifier = Modifier.fillMaxHeight())
         }
 
@@ -230,7 +235,7 @@ fun YAxis(maxValue: Int) {
         ) {
             Text(
                 text = (maxValue / 4).toString(),
-                color = Color(0xFF858585),
+                color = TextGrey,
             )
             Spacer(modifier = Modifier.fillMaxHeight(0f))
         }
@@ -241,7 +246,7 @@ fun YAxis(maxValue: Int) {
         ) {
             Text(
                 text = (maxValue / 2).toString(),
-                color = Color(0xFF858585),
+                color = TextGrey,
             )
             Spacer(modifier = Modifier.fillMaxHeight(0.5f))
         }
@@ -250,7 +255,7 @@ fun YAxis(maxValue: Int) {
     Box(
         modifier = Modifier
             .width(2.dp)
-            .background(Color(0xFFFFFFFF)),
+            .background(Color.White),
     )
 }
 
@@ -268,8 +273,7 @@ fun Bar(height: Float, threshold: Float, maxValue: Float, onClick: () -> Unit) {
     val excessHeightInDp = maxOf(0f, heightInDp - thresholdInDp)
     val belowThresholdHeightInDp = minOf(heightInDp, thresholdInDp)
 
-    val aboveThresholdShape = RoundedCornerShape(topStartPercent = 50, topEndPercent = 50)
-    val belowThresholdShape = RoundedCornerShape(bottomStartPercent = 50, bottomEndPercent = 50)
+    val barShape = RoundedCornerShape(percent = 50) // Defined a single shape for the whole bar
 
     Column(
         Modifier
@@ -278,24 +282,26 @@ fun Bar(height: Float, threshold: Float, maxValue: Float, onClick: () -> Unit) {
             .clickable { onClick() },
         verticalArrangement = Arrangement.Bottom
     ) {
-        // Part of the bar above the threshold
-        Box(
-            modifier = Modifier
-                .height(excessHeightInDp.dp)
-                .fillMaxWidth()
-                .clip(aboveThresholdShape)
-                .background(Color.Red)
-        )
+        if (threshold != 0f) {
+            // Part of the bar above the threshold
+            Box(
+                modifier = Modifier
+                    .height(excessHeightInDp.dp)
+                    .fillMaxWidth()
+                    .clip(barShape) // Use the new shape
+                    .background(Color.Red)
+            )
 
-        Spacer(modifier = Modifier.height(1.dp))
+            Spacer(modifier = Modifier.height(1.dp))
+        }
 
         // Part of the bar below the threshold
         Box(
             modifier = Modifier
-                .height(belowThresholdHeightInDp.dp)
+                .height((belowThresholdHeightInDp + if (threshold == 0f) excessHeightInDp else 0f).dp)
                 .fillMaxWidth()
-                .clip(belowThresholdShape)
-                .background(Color(0xFF7468E4))
+                .clip(barShape) // Use the same shape
+                .background(Purple)
         )
     }
 }
@@ -313,7 +319,7 @@ fun XAxis(data: List<Pair<Float, Int>>) {
                 modifier = Modifier.width(20.dp),
                 text = it.second.toString(),
                 textAlign = TextAlign.Center,
-                color = Color(0xFF858585),
+                color = EnergyConsumptionAxis,
             )
         }
     }

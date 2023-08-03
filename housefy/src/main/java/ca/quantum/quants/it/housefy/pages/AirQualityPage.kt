@@ -38,22 +38,22 @@ fun AirQualityPage() {
             AQICategory(
                 stringResource(R.string.excellent),
                 stringResource(R.string.excellent_description),
-                Color(0xFF8CD456),
+                Green,
             ),
             AQICategory(
                 stringResource(R.string.good),
                 stringResource(R.string.good_description),
-                Color(0xFFFFE24C),
+                Yellow,
             ),
             AQICategory(
                 stringResource(R.string.moderate),
                 stringResource(R.string.moderate_description),
-                Color(0xFFFFA500),
+                Orange,
             ),
             AQICategory(
                 stringResource(R.string.poor),
                 stringResource(R.string.poor_description),
-                Color(0xFFFF0000),
+                Red,
             ),
         )
 
@@ -82,7 +82,7 @@ fun AirQualityPage() {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xFFF0F2F1))
+            .background(color = BackgroundGrey)
             .padding(bottom = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -90,6 +90,7 @@ fun AirQualityPage() {
             IndicatorGraph(
                 indicatorValue = value,
                 foregroundIndicatorColor = getAQIColor(value),
+                maxIndicatorValue = 100,
                 indicatorText = {
                     Text(
                         text = "$value",

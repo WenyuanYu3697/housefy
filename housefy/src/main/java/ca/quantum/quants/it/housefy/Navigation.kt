@@ -45,6 +45,7 @@ import ca.quantum.quants.it.housefy.pages.GuidePage
 import ca.quantum.quants.it.housefy.pages.HomePage
 import ca.quantum.quants.it.housefy.pages.SettingsPage
 import ca.quantum.quants.it.housefy.pages.SmartLightPage
+import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -75,7 +76,7 @@ fun Navigation() {
                     },
                     actions = { TopBarMenu(navController) },
                     colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                        containerColor = Color(0xFFF0F2F1)
+                        containerColor = BackgroundGrey
                     )
                 )
             }) {
