@@ -7,6 +7,7 @@ package ca.quantum.quants.it.housefy.pages
  * @course Software Project - CENG-322-0NA
  */
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -40,7 +41,11 @@ import ca.quantum.quants.it.housefy.ui.theme.TextGrey
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EnergyConsumptionPage() {
-    var threshold by remember { mutableStateOf(0.7f) } // Initializing threshold to 0
+    val context = LocalContext.current
+    val preferences = context.getSharedPreferences("housefy_preferences", Context.MODE_PRIVATE)
+    val threshold = remember {
+        mutableStateOf(preferences.getFloat("energyConsumptionThreshold", 0.7f))
+    }
 
     Box(
         modifier = Modifier
@@ -48,7 +53,6 @@ fun EnergyConsumptionPage() {
             .background(color = BackgroundGrey),
         contentAlignment = Alignment.Center
     ) {
-
         Chart(
             data = listOf(
                 Pair(0.9f, 1),
@@ -58,46 +62,11 @@ fun EnergyConsumptionPage() {
                 Pair(0.8f, 5),
                 Pair(0.7f, 6),
                 Pair(0.7f, 7),
-            ), max_value = 50, threshold = threshold
+            ), max_value = 50, threshold = threshold.value
         )
-        ThresholdSettings(threshold) { newThreshold ->
-            threshold = newThreshold
-        }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ThresholdSettings(threshold: Float, onThresholdChange: (Float) -> Unit) {
-    Box(
-        modifier = Modifier
-            .padding(30.dp, 70.dp, 30.dp, 500.dp)
-            .absoluteOffset(0.dp, 460.dp)
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .clip(RoundedCornerShape(5))
-            .background(color = Color.White),
-        contentAlignment = Alignment.Center
-    ) {
-        Column() {
-            Text(
-                text = stringResource(R.string.set_threshold),
-                color = TextBlack,
-                textAlign = TextAlign.Start,
-            )
-        }
-
-        Column() {
-            TextField(
-                value = threshold.toString(),
-                onValueChange = { onThresholdChange(it.toFloatOrNull() ?: threshold) },
-                label = { Text(text = stringResource(R.string.set_threshold)) },
-                modifier = Modifier
-                    .background(color = Color.White),
-            )
-        }
-    }
-}
 
 @Composable
 fun Chart(
