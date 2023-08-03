@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.quantum.quants.it.housefy.R
+import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,7 +35,7 @@ fun GuidePage() {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xFFF0F2F1))
+            .background(color = BackgroundGrey)
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
     ) {
         item {
