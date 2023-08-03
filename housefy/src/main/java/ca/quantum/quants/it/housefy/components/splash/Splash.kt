@@ -24,6 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ca.quantum.quants.it.housefy.R
+import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
+import ca.quantum.quants.it.housefy.ui.theme.TextBlack
 
 @Composable
 fun LogoAndDescription() {
@@ -31,7 +33,7 @@ fun LogoAndDescription() {
 
     Box(modifier = Modifier
         .fillMaxSize()
-        .background(color = Color(0xFFF0F2F1))) {
+        .background(color = BackgroundGrey)) {
 
         if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Row(
@@ -72,14 +74,14 @@ fun DescriptionText(modifier: Modifier = Modifier) {
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge
                 .copy(fontWeight = FontWeight.SemiBold)
-                .copy(color = Color(0xFF353336)),
+                .copy(color = TextBlack),
         )
         Text(
             text = stringResource(R.string.app_description),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyMedium
                 .copy(fontWeight = FontWeight.Normal)
-                .copy(color = Color(0xFF353336)),
+                .copy(color = TextBlack),
             modifier = Modifier.padding(top = 8.dp)
         )
     }

@@ -43,6 +43,9 @@ import androidx.navigation.navOptions
 import ca.quantum.quants.it.housefy.AirConditionerAmbient
 import ca.quantum.quants.it.housefy.LightOnAmbient
 import ca.quantum.quants.it.housefy.R
+import ca.quantum.quants.it.housefy.ui.theme.Purple
+import ca.quantum.quants.it.housefy.ui.theme.TextBlack
+import ca.quantum.quants.it.housefy.ui.theme.TextGrey
 
 @Composable
 fun DevicesList(navController: NavHostController) {
@@ -122,12 +125,12 @@ fun DeviceCard(
                 imageVector = icon,
                 contentDescription = null,
                 modifier = Modifier.size(36.dp),
-                tint = Color(0xFF7468E4)
+                tint = Purple
             )
             Switch(
                 checked = deviceState.value,
                 onCheckedChange = { isChecked -> deviceState.value = isChecked },
-                colors = SwitchDefaults.colors(checkedTrackColor = Color(0xFF7468E4)),
+                colors = SwitchDefaults.colors(checkedTrackColor = Purple),
             )
         }
 
@@ -137,7 +140,8 @@ fun DeviceCard(
             Text(
                 text = text,
                 style = MaterialTheme.typography.titleMedium
-                    .copy(fontWeight = FontWeight.Medium),
+                    .copy(fontWeight = FontWeight.Medium)
+                    .copy(color = TextBlack),
             )
         }
 
@@ -148,7 +152,7 @@ fun DeviceCard(
                 text = stringResource(R.string.one_device),
                 style = MaterialTheme.typography.bodySmall
                     .copy(fontWeight = FontWeight.Medium)
-                    .copy(color = Color(0xFFA3A3A5)),
+                    .copy(color = TextGrey),
             )
         }
     }

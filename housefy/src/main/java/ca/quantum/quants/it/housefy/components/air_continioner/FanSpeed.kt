@@ -25,8 +25,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ca.quantum.quants.it.housefy.ui.theme.Purple
+import ca.quantum.quants.it.housefy.ui.theme.TextGrey
 
 
 @Composable
@@ -49,14 +50,14 @@ fun FanSpeedCard(
             imageVector = icon,
             contentDescription = null,
             modifier = Modifier.size(36.dp),
-            tint = Color(0xFF7468E4)
+            tint = Purple
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = text,
             style = MaterialTheme.typography.labelSmall
                 .copy()
-                .copy(color = Color(0xFFA3A3A5)),
+                .copy(color = TextGrey),
         )
     }
 }
