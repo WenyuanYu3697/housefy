@@ -30,7 +30,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
 import ca.quantum.quants.it.housefy.ui.theme.EnergyConsumptionAxis
@@ -38,14 +42,19 @@ import ca.quantum.quants.it.housefy.ui.theme.Purple
 import ca.quantum.quants.it.housefy.ui.theme.TextBlack
 import ca.quantum.quants.it.housefy.ui.theme.TextGrey
 
+class ThresholdViewModel : ViewModel() {
+    private val _threshold = MutableLiveData(0.0f)
+    val threshold: LiveData<Float> get() = _threshold
+
+    fun updateThreshold(newThreshold: Float) {
+        _threshold.value = newThreshold
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EnergyConsumptionPage() {
-    val context = LocalContext.current
-    val preferences = context.getSharedPreferences("housefy_preferences", Context.MODE_PRIVATE)
-    val threshold = remember {
-        mutableStateOf(preferences.getFloat("energyConsumptionThreshold", 0.7f))
-    }
+fun EnergyConsumptionPage(thresholdViewModel: ThresholdViewModel) {
+    val threshold by thresholdViewModel.threshold.observeAsState(initial = 0.0f)
 
     Box(
         modifier = Modifier
@@ -62,11 +71,10 @@ fun EnergyConsumptionPage() {
                 Pair(0.8f, 5),
                 Pair(0.7f, 6),
                 Pair(0.7f, 7),
-            ), max_value = 50, threshold = threshold.value
+            ), max_value = 50, threshold = threshold
         )
     }
 }
-
 
 @Composable
 fun Chart(

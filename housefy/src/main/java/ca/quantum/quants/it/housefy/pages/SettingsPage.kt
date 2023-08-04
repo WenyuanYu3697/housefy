@@ -31,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -53,7 +54,9 @@ import ca.quantum.quants.it.housefy.ui.theme.TextBlack
 
 @SuppressLint("MissingPermission")
 @Composable
-fun SettingsPage() {
+fun SettingsPage(thresholdViewModel: ThresholdViewModel) {
+    val threshold by thresholdViewModel.threshold.observeAsState(initial = 0.7f)
+
     val context = LocalContext.current
     val activity = context as? Activity
 
@@ -208,16 +211,12 @@ fun SettingsPage() {
                 title = "Energy Consumption Threshold",
                 control = {
                     Slider(
-                        value = energyConsumptionThreshold,
+                        value = threshold,
                         onValueChange = { newValue ->
-                            energyConsumptionThreshold = newValue
-
-                            preferences.edit {
-                                putFloat("energyConsumptionThreshold", newValue)
-                            }
+                            thresholdViewModel.updateThreshold(newValue)
                         },
-                        steps = 5,
-                        valueRange = 0f..1000f, // Adjust this range based on your needs
+                        steps = 10,
+                        valueRange = 0f..1f,
                         modifier = Modifier.width(150.dp),
                         colors = SliderDefaults.colors(
                             thumbColor = Purple,
