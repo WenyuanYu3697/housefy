@@ -9,8 +9,6 @@ package ca.quantum.quants.it.housefy.pages
 
 import android.os.Build
 import android.util.Patterns
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -19,26 +17,20 @@ import androidx.compose.material.icons.filled.Comment
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ca.quantum.quants.it.housefy.R
-import io.ktor.client.*
-import io.ktor.client.request.*
-import io.ktor.http.*
+import ca.quantum.quants.it.housefy.components.feedback.CustomOutlinedTextField
+import ca.quantum.quants.it.housefy.components.feedback.RatingBar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ca.quantum.quants.it.housefy.network.postFeedback
 import ca.quantum.quants.it.housefy.models.User
 import ca.quantum.quants.it.housefy.models.Feedback
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
-import ca.quantum.quants.it.housefy.ui.theme.Purple
 import ca.quantum.quants.it.housefy.utils.validateInput
 import kotlinx.coroutines.withContext
 
@@ -254,60 +246,5 @@ fun FeedbackPage() {
                 }
             }
         )
-    }
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CustomOutlinedTextField(
-    modifier: Modifier = Modifier,
-    value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
-    singleLine: Boolean = true,
-    height: Dp = Dp.Unspecified,
-    maxLines: Int = 1,
-    leadingIcon: @Composable (() -> Unit)? = null
-) {
-    TextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(label) },
-        singleLine = singleLine,
-        modifier = modifier
-            .fillMaxWidth()
-            .height(height)
-            .background(color = Color.White, shape = RoundedCornerShape(4.dp)
-    ),
-    maxLines = maxLines,
-    leadingIcon = leadingIcon,
-    textStyle = LocalTextStyle.current.copy(color = Color.Black),
-    )
-    Spacer(modifier = Modifier.height(16.dp))
-}
-
-@Composable
-fun RatingBar(current: Int, onValueChange: (Int) -> Unit) {
-    var rating by remember { mutableStateOf(current) }
-
-    Row(
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        repeat(5) { index ->
-            val isFilled = index < rating
-
-            Icon(
-                imageVector = if (isFilled) Icons.Default.Star else Icons.Default.StarBorder,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(48.dp)  // increased size
-                    .clickable {
-                        rating = index + 1
-                        onValueChange(rating)
-                    },
-                tint = if (isFilled) Purple else Color.Gray
-            )
-        }
     }
 }
