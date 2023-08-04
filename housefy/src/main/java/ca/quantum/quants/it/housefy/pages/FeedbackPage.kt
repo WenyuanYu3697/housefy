@@ -38,6 +38,7 @@ import ca.quantum.quants.it.housefy.network.postFeedback
 import ca.quantum.quants.it.housefy.models.User
 import ca.quantum.quants.it.housefy.models.Feedback
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
+import ca.quantum.quants.it.housefy.ui.theme.Purple
 import ca.quantum.quants.it.housefy.utils.validateInput
 import kotlinx.coroutines.withContext
 
@@ -141,75 +142,80 @@ fun FeedbackPage() {
                     .fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                Button(onClick = {
-                    if (
-                        validateInput(
-                            fullName,
-                            listOf(
-                                { s: String -> s.isEmpty() } to fullNameError2,
-                                { s: String -> s.length > 50 } to fullNameError,
-                                { s: String -> s.any { char -> char.isDigit() } } to fullNameError1
-                            ),
-                            coroutineScope, snackbarHostState, dismiss
-                        ) &&
-                        validateInput(
-                            email,
-                            listOf(
-                                { s: String -> s.isEmpty() } to emailError2,
-                                { s: String -> s.length > 100 } to emailError,
-                                { s: String -> !Patterns.EMAIL_ADDRESS.matcher(s).matches() } to emailError1
-                            ),
-                            coroutineScope, snackbarHostState, dismiss
-                        ) &&
-                        validateInput(
-                            phoneNumber,
-                            listOf(
-                                { s: String -> s.isEmpty() } to phoneNumberError2,
-                                { s: String -> s.length > 30 } to phoneNumebrError,
-                                { s: String -> s.any { char -> char !in '0'..'9' } } to phoneNumberError1,
-                            ),
-                            coroutineScope, snackbarHostState, dismiss
-                        ) &&
-                        validateInput(
-                            comment,
-                            listOf(
-                                { s: String -> s.isEmpty() } to commentError1,
-                                { s: String -> s.length > 200 } to commentError
-                            ),
-                            coroutineScope, snackbarHostState, dismiss
-                        )
+                Button(
+                    onClick = {
+                        if (
+                            validateInput(
+                                fullName,
+                                listOf(
+                                    { s: String -> s.isEmpty() } to fullNameError2,
+                                    { s: String -> s.length > 50 } to fullNameError,
+                                    { s: String -> s.any { char -> char.isDigit() } } to fullNameError1
+                                ),
+                                coroutineScope, snackbarHostState, dismiss
+                            ) &&
+                            validateInput(
+                                email,
+                                listOf(
+                                    { s: String -> s.isEmpty() } to emailError2,
+                                    { s: String -> s.length > 100 } to emailError,
+                                    { s: String ->
+                                        !Patterns.EMAIL_ADDRESS.matcher(s).matches()
+                                    } to emailError1
+                                ),
+                                coroutineScope, snackbarHostState, dismiss
+                            ) &&
+                            validateInput(
+                                phoneNumber,
+                                listOf(
+                                    { s: String -> s.isEmpty() } to phoneNumberError2,
+                                    { s: String -> s.length > 30 } to phoneNumebrError,
+                                    { s: String -> s.any { char -> char !in '0'..'9' } } to phoneNumberError1,
+                                ),
+                                coroutineScope, snackbarHostState, dismiss
+                            ) &&
+                            validateInput(
+                                comment,
+                                listOf(
+                                    { s: String -> s.isEmpty() } to commentError1,
+                                    { s: String -> s.length > 200 } to commentError
+                                ),
+                                coroutineScope, snackbarHostState, dismiss
+                            )
 
 
-                    ) {
-                        // All fields have been validated and passed.
-                        coroutineScope.launch(Dispatchers.IO) {
-                            try {
-                                withContext(Dispatchers.Main) { loadingDialogVisible = true } // Show loading dialog
-                                val user = User(fullName, email, phoneModel, phoneNumber)
-                                val feedback = Feedback(rating, comment, user)
-                                val result = postFeedback(feedback)
-                                withContext(Dispatchers.Main) {
-                                    loadingDialogVisible = false
-                                    if(result.first){
-                                        fullName = ""
-                                        phoneNumber = ""
-                                        email = ""
-                                        comment = ""
-                                        rating = 1
+                        ) {
+                            // All fields have been validated and passed.
+                            coroutineScope.launch(Dispatchers.IO) {
+                                try {
+                                    withContext(Dispatchers.Main) {
+                                        loadingDialogVisible = true
+                                    } // Show loading dialog
+                                    val user = User(fullName, email, phoneModel, phoneNumber)
+                                    val feedback = Feedback(rating, comment, user)
+                                    val result = postFeedback(feedback)
+                                    withContext(Dispatchers.Main) {
+                                        loadingDialogVisible = false
+                                        if (result.first) {
+                                            fullName = ""
+                                            phoneNumber = ""
+                                            email = ""
+                                            comment = ""
+                                            rating = 1
+                                        }
+                                        dialogMessage = result.second
+                                        dialogVisible = true
                                     }
-                                    dialogMessage = result.second
-                                    dialogVisible = true
-                                }
-                            } catch (e: Exception) {
-                                withContext(Dispatchers.Main) {
-                                    loadingDialogVisible = false
-                                    dialogMessage = "Error: ${e.localizedMessage}"
-                                    dialogVisible = true
+                                } catch (e: Exception) {
+                                    withContext(Dispatchers.Main) {
+                                        loadingDialogVisible = false
+                                        dialogMessage = "Error: ${e.localizedMessage}"
+                                        dialogVisible = true
+                                    }
                                 }
                             }
                         }
-                    }
-                },
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp)
                 ) {
@@ -272,10 +278,11 @@ fun CustomOutlinedTextField(
         modifier = modifier
             .fillMaxWidth()
             .height(height)
-            .background(color = Color(0XCCCCCC), shape = RoundedCornerShape(4.dp)),
-        maxLines = maxLines,
-        leadingIcon = leadingIcon,
-        textStyle = LocalTextStyle.current.copy(color = Color.Black),
+            .background(color = Color.White, shape = RoundedCornerShape(4.dp)
+    ),
+    maxLines = maxLines,
+    leadingIcon = leadingIcon,
+    textStyle = LocalTextStyle.current.copy(color = Color.Black),
     )
     Spacer(modifier = Modifier.height(16.dp))
 }
@@ -299,7 +306,7 @@ fun RatingBar(current: Int, onValueChange: (Int) -> Unit) {
                         rating = index + 1
                         onValueChange(rating)
                     },
-                tint = if (isFilled) Color(0xFF800080) else Color.Gray
+                tint = if (isFilled) Purple else Color.Gray
             )
         }
     }
