@@ -177,12 +177,11 @@ fun FeedbackPage() {
 
 
                         ) {
-                            // All fields have been validated and passed.
                             coroutineScope.launch(Dispatchers.IO) {
                                 try {
                                     withContext(Dispatchers.Main) {
                                         loadingDialogVisible = true
-                                    } // Show loading dialog
+                                    }
                                     val user = User(fullName, email, phoneModel, phoneNumber)
                                     val feedback = Feedback(rating, comment, user)
                                     val result = postFeedback(feedback)

@@ -1,5 +1,11 @@
 package ca.quantum.quants.it.housefy.components.feedback
 
+/*
+ * @author Artem Tsurkan, n01414146
+ * @author Wenyuan Yu, n01403697
+ * @author Kyrylo Lvov, n01414058
+ * @course Software Project - CENG-322-0NA
+ */
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -15,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.Dp
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
