@@ -15,33 +15,22 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.absoluteOffset
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -50,7 +39,6 @@ import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.settings.SettingsRow
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
 import ca.quantum.quants.it.housefy.ui.theme.Purple
-import ca.quantum.quants.it.housefy.ui.theme.TextBlack
 
 @SuppressLint("MissingPermission")
 @Composable
@@ -88,9 +76,6 @@ fun SettingsPage(thresholdViewModel: ThresholdViewModel) {
             )
         )
     }
-
-    //var threshold by remember { mutableStateOf(preferences.getFloat("threshold", 0f)) }
-    var energyConsumptionThreshold by remember { mutableStateOf(preferences.getFloat("energyConsumptionThreshold", 0f)) }
 
 
     Box(
@@ -224,44 +209,6 @@ fun SettingsPage(thresholdViewModel: ThresholdViewModel) {
                     )
                 }
             )
-
-            //ThresholdSettings(threshold) { newThreshold ->
-                //threshold = newThreshold
-            //}
-
         }
     }
 }
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ThresholdSettings(threshold: Float, onThresholdChange: (Float) -> Unit) {
-    Box(
-        modifier = Modifier
-            .padding(30.dp, 70.dp, 30.dp, 500.dp)
-            .absoluteOffset(0.dp, 460.dp)
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .clip(RoundedCornerShape(5))
-            .background(color = Color.White),
-        contentAlignment = Alignment.Center
-    ) {
-        Column() {
-            Text(
-                text = stringResource(R.string.set_threshold),
-                color = TextBlack,
-                textAlign = TextAlign.Start,
-            )
-        }
-
-        Column() {
-            TextField(
-                value = threshold.toString(),
-                onValueChange = { onThresholdChange(it.toFloatOrNull() ?: threshold) },
-                label = { Text(text = stringResource(R.string.set_threshold)) },
-                modifier = Modifier
-                    .background(color = Color.White),
-            )
-        }
-    }
-}
-
