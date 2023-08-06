@@ -18,10 +18,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -43,7 +46,11 @@ import ca.quantum.quants.it.housefy.ui.theme.Purple
 @SuppressLint("MissingPermission")
 @Composable
 fun SettingsPage(thresholdViewModel: ThresholdViewModel) {
+
     val threshold by thresholdViewModel.threshold.observeAsState(initial = 0.7f)
+    val showDialog = remember { mutableStateOf(false) }
+    val formattedThreshold = String.format("%.2f", threshold)
+
 
     val context = LocalContext.current
     val activity = context as? Activity
@@ -200,6 +207,10 @@ fun SettingsPage(thresholdViewModel: ThresholdViewModel) {
                         onValueChange = { newValue ->
                             thresholdViewModel.updateThreshold(newValue)
                         },
+                        onValueChangeFinished = {
+                            // when the slider has been released
+                            showDialog.value = true
+                        },
                         steps = 10,
                         valueRange = 0f..1f,
                         modifier = Modifier.width(150.dp),
@@ -209,6 +220,29 @@ fun SettingsPage(thresholdViewModel: ThresholdViewModel) {
                     )
                 }
             )
+
         }
     }
+
+    if (showDialog.value) {
+        AlertDialog(
+            onDismissRequest = {
+                showDialog.value = false
+            },
+            title = {
+                Text(text = "Energy Consumption Threshold")
+            },
+            text = {
+                Text(text = "Your threshold is set to $formattedThreshold")
+            },
+            confirmButton = {
+                Button(onClick = {
+                    showDialog.value = false
+                }) {
+                    Text("Ok")
+                }
+            }
+        )
+    }
+
 }

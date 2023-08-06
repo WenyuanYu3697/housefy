@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -47,7 +46,6 @@ class ThresholdViewModel : ViewModel() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EnergyConsumptionPage(thresholdViewModel: ThresholdViewModel) {
     val threshold by thresholdViewModel.threshold.observeAsState(initial = 0.0f)
@@ -69,6 +67,7 @@ fun EnergyConsumptionPage(thresholdViewModel: ThresholdViewModel) {
                 Pair(0.7f, 7),
             ), max_value = 50, threshold = threshold
         )
+        CurrentThreshold(thresholdViewModel)
     }
 }
 
@@ -82,11 +81,11 @@ fun Chart(
 
     Box(
         modifier = Modifier
-            .padding(30.dp, 60.dp, 30.dp, 180.dp)
+            .padding(30.dp, 20.dp, 20.dp, 180.dp)
             .clip(RoundedCornerShape(5))
             .background(Color.White)
     ) {
-        Column() {
+        Column {
             Text(
                 text = "Usage, KWh",
                 fontWeight = FontWeight.Bold,
@@ -99,7 +98,7 @@ fun Chart(
             )
         }
 
-        Column() {
+        Column {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -234,7 +233,6 @@ fun YAxis(maxValue: Int) {
 
 @Composable
 fun Bar(height: Float, threshold: Float, maxValue: Float, onClick: () -> Unit) {
-    val context = LocalContext.current
 
     val totalHeightInDp = 10000.dp
     val heightPercentage = height / maxValue
@@ -297,3 +295,31 @@ fun XAxis(data: List<Pair<Float, Int>>) {
         }
     }
 }
+
+@Composable
+fun CurrentThreshold(thresholdViewModel: ThresholdViewModel) {
+    val threshold by thresholdViewModel.threshold.observeAsState(initial = 0.0f)
+    val formattedThreshold = String.format("%.2f", threshold)
+
+    Box(
+        modifier = Modifier
+            .padding(30.dp, 70.dp, 30.dp, 500.dp)
+            .absoluteOffset(0.dp, 460.dp)
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .clip(RoundedCornerShape(5))
+            .background(color = Color(0xFFFFFFFF)),
+        contentAlignment = Alignment.Center
+    ) {
+        Column {
+            Text(
+                text = "Current Threshold: $formattedThreshold",
+                color = Color(0xFF000000),
+                textAlign = TextAlign.Start,
+                fontWeight = FontWeight.Bold,
+                fontSize = 23.sp,
+            )
+        }
+    }
+}
+
