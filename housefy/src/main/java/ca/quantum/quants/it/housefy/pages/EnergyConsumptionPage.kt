@@ -304,11 +304,11 @@ fun CurrentThreshold(thresholdViewModel: ThresholdViewModel) {
 
     Box(
         modifier = Modifier
-            .padding(30.dp, 70.dp, 30.dp, 500.dp)
+            .padding(31.dp, 70.dp, 25.dp, 500.dp)
             .absoluteOffset(0.dp, 460.dp)
             .fillMaxWidth()
             .fillMaxHeight()
-            .clip(RoundedCornerShape(5))
+            .clip(RoundedCornerShape(10))
             .background(color = Color(0xFFFFFFFF)),
         contentAlignment = Alignment.Center
     ) {
