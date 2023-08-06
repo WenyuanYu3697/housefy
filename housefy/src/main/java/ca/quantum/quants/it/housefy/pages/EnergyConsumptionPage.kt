@@ -33,6 +33,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
 import ca.quantum.quants.it.housefy.ui.theme.EnergyConsumptionAxis
+import ca.quantum.quants.it.housefy.ui.theme.EnergyConsumptionDarkRed
 import ca.quantum.quants.it.housefy.ui.theme.Purple
 import ca.quantum.quants.it.housefy.ui.theme.TextBlack
 import ca.quantum.quants.it.housefy.ui.theme.TextGrey
@@ -260,7 +261,7 @@ fun Bar(height: Float, threshold: Float, maxValue: Float, onClick: () -> Unit) {
                     .height(excessHeightInDp.dp)
                     .fillMaxWidth()
                     .clip(barShape) // Use the new shape
-                    .background(Color.Red)
+                    .background(EnergyConsumptionDarkRed)
             )
 
             Spacer(modifier = Modifier.height(1.dp))
