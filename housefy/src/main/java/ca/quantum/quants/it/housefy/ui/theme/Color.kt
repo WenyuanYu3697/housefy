@@ -19,5 +19,5 @@ val TextBlack = Color(0xFF353336)
 val TextGrey = Color(0xFFA3A3A5)
 
 val BackgroundGrey = Color(0xFFF0F2F1)
-
+val EnergyConsumptionDarkRed = Color(0xFFB82F26)
 val EnergyConsumptionAxis = Color(0xFF858585)
