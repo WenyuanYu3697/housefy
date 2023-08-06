@@ -45,6 +45,7 @@ import ca.quantum.quants.it.housefy.pages.GuidePage
 import ca.quantum.quants.it.housefy.pages.HomePage
 import ca.quantum.quants.it.housefy.pages.SettingsPage
 import ca.quantum.quants.it.housefy.pages.SmartLightPage
+import ca.quantum.quants.it.housefy.pages.ThresholdViewModel
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -82,12 +83,13 @@ fun Navigation() {
             }) {
             Box(modifier = Modifier.padding(it)) {
                 NavHost(navController = navController, startDestination = "HomePage") {
+                    val thresholdViewModel = ThresholdViewModel()
                     composable("HomePage") { HomePage(navController, snackbarHostState) }
                     composable("AirConditionerPage") { AirConditionerPage() }
                     composable("AirQualityPage") { AirQualityPage() }
                     composable("SmartLightPage") { SmartLightPage() }
-                    composable("EnergyConsumptionPage") { EnergyConsumptionPage() }
-                    composable("SettingsPage") { SettingsPage() }
+                    composable("EnergyConsumptionPage") { EnergyConsumptionPage(thresholdViewModel) }
+                    composable("SettingsPage") { SettingsPage(thresholdViewModel) }
                     composable("FeedbackPage") { FeedbackPage() }
                     composable("GuidePage") { GuidePage() }
                     composable("AboutPage") { AboutPage() }

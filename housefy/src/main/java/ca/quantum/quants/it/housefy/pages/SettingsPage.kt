@@ -24,11 +24,11 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -42,7 +42,9 @@ import ca.quantum.quants.it.housefy.ui.theme.Purple
 
 @SuppressLint("MissingPermission")
 @Composable
-fun SettingsPage() {
+fun SettingsPage(thresholdViewModel: ThresholdViewModel) {
+    val threshold by thresholdViewModel.threshold.observeAsState(initial = 0.7f)
+
     val context = LocalContext.current
     val activity = context as? Activity
 
@@ -74,6 +76,7 @@ fun SettingsPage() {
             )
         )
     }
+
 
     Box(
         modifier = Modifier
@@ -181,6 +184,24 @@ fun SettingsPage() {
                         },
                         steps = 5,
                         valueRange = 0f..50f,
+                        modifier = Modifier.width(150.dp),
+                        colors = SliderDefaults.colors(
+                            thumbColor = Purple,
+                        )
+                    )
+                }
+            )
+
+            SettingsRow(
+                title = "Energy Consumption Threshold",
+                control = {
+                    Slider(
+                        value = threshold,
+                        onValueChange = { newValue ->
+                            thresholdViewModel.updateThreshold(newValue)
+                        },
+                        steps = 10,
+                        valueRange = 0f..1f,
                         modifier = Modifier.width(150.dp),
                         colors = SliderDefaults.colors(
                             thumbColor = Purple,

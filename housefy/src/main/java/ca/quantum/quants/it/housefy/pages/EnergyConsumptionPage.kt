@@ -15,7 +15,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,18 +28,29 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.ui.res.stringResource
-import ca.quantum.quants.it.housefy.R
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
 import ca.quantum.quants.it.housefy.ui.theme.EnergyConsumptionAxis
 import ca.quantum.quants.it.housefy.ui.theme.Purple
 import ca.quantum.quants.it.housefy.ui.theme.TextBlack
 import ca.quantum.quants.it.housefy.ui.theme.TextGrey
 
+class ThresholdViewModel : ViewModel() {
+    private val _threshold = MutableLiveData(0.0f)
+    val threshold: LiveData<Float> get() = _threshold
+
+    fun updateThreshold(newThreshold: Float) {
+        _threshold.value = newThreshold
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EnergyConsumptionPage() {
-    var threshold by remember { mutableStateOf(0.7f) } // Initializing threshold to 0
+fun EnergyConsumptionPage(thresholdViewModel: ThresholdViewModel) {
+    val threshold by thresholdViewModel.threshold.observeAsState(initial = 0.0f)
 
     Box(
         modifier = Modifier
@@ -48,7 +58,6 @@ fun EnergyConsumptionPage() {
             .background(color = BackgroundGrey),
         contentAlignment = Alignment.Center
     ) {
-
         Chart(
             data = listOf(
                 Pair(0.9f, 1),
@@ -60,42 +69,6 @@ fun EnergyConsumptionPage() {
                 Pair(0.7f, 7),
             ), max_value = 50, threshold = threshold
         )
-        ThresholdSettings(threshold) { newThreshold ->
-            threshold = newThreshold
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ThresholdSettings(threshold: Float, onThresholdChange: (Float) -> Unit) {
-    Box(
-        modifier = Modifier
-            .padding(30.dp, 70.dp, 30.dp, 500.dp)
-            .absoluteOffset(0.dp, 460.dp)
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .clip(RoundedCornerShape(5))
-            .background(color = Color.White),
-        contentAlignment = Alignment.Center
-    ) {
-        Column() {
-            Text(
-                text = stringResource(R.string.set_threshold),
-                color = TextBlack,
-                textAlign = TextAlign.Start,
-            )
-        }
-
-        Column() {
-            TextField(
-                value = threshold.toString(),
-                onValueChange = { onThresholdChange(it.toFloatOrNull() ?: threshold) },
-                label = { Text(text = stringResource(R.string.set_threshold)) },
-                modifier = Modifier
-                    .background(color = Color.White),
-            )
-        }
     }
 }
 
