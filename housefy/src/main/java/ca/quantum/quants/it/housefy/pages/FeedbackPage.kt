@@ -301,7 +301,7 @@ fun RatingBar(current: Int, onValueChange: (Int) -> Unit) {
                 imageVector = if (isFilled) Icons.Default.Star else Icons.Default.StarBorder,
                 contentDescription = null,
                 modifier = Modifier
-                    .size(48.dp)  // increased size
+                    .size(48.dp)
                     .clickable {
                         rating = index + 1
                         onValueChange(rating)
