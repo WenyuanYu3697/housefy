@@ -67,7 +67,7 @@ fun EnergyConsumptionPage(thresholdViewModel: ThresholdViewModel) {
                 Pair(0.7f, 7),
             ), max_value = 50, threshold = threshold
         )
-        CurrentThreshold()
+        CurrentThreshold(thresholdViewModel)
     }
 }
 
@@ -297,7 +297,10 @@ fun XAxis(data: List<Pair<Float, Int>>) {
 }
 
 @Composable
-fun CurrentThreshold() {
+fun CurrentThreshold(thresholdViewModel: ThresholdViewModel) {
+    val threshold by thresholdViewModel.threshold.observeAsState(initial = 0.0f)
+    val formattedThreshold = String.format("%.2f", threshold)
+
     Box(
         modifier = Modifier
             .padding(30.dp, 70.dp, 30.dp, 500.dp)
@@ -310,7 +313,7 @@ fun CurrentThreshold() {
     ) {
         Column {
             Text(
-                text = "Current Threshold:",
+                text = "Current Threshold: $formattedThreshold",
                 color = Color(0xFF000000),
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.Bold,
