@@ -7,13 +7,16 @@ package ca.quantum.quants.it.housefy
  * @course Software Project - CENG-322-0NA
  */
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.QuestionAnswer
+import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -22,15 +25,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navOptions
 import ca.quantum.quants.it.housefy.components.navigation.ActionMenuItem
 import ca.quantum.quants.it.housefy.components.navigation.ActionsMenu
 
@@ -47,6 +53,7 @@ import ca.quantum.quants.it.housefy.pages.SettingsPage
 import ca.quantum.quants.it.housefy.pages.SmartLightPage
 import ca.quantum.quants.it.housefy.pages.ThresholdViewModel
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
+import ca.quantum.quants.it.housefy.ui.theme.Purple
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -93,6 +100,22 @@ fun Navigation() {
                     composable("FeedbackPage") { FeedbackPage() }
                     composable("GuidePage") { GuidePage() }
                     composable("AboutPage") { AboutPage() }
+                }
+
+                FloatingActionButton(
+                    onClick = {
+                        navController.navigate("HomePage", navOptions {
+                            this.launchSingleTop = true
+                            this.restoreState = true
+                        })
+                    },
+                    containerColor = Purple,
+                    contentColor = Color.White,
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(16.dp)
+                ) {
+                    Icon(Icons.Rounded.Home, contentDescription = "Home")
                 }
             }
         }
