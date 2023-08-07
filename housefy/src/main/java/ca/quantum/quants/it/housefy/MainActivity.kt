@@ -35,17 +35,26 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import ca.quantum.quants.it.housefy.models.EnvironmentData
+import ca.quantum.quants.it.housefy.network.AirConditionerStatus
+import ca.quantum.quants.it.housefy.network.fetchAirConditionerStatus
+import ca.quantum.quants.it.housefy.network.fetchAirQualityStatus
 import ca.quantum.quants.it.housefy.network.fetchEnvironmentData
+import ca.quantum.quants.it.housefy.network.fetchLightStatus
+import ca.quantum.quants.it.housefy.network.updateLightStatus
 import ca.quantum.quants.it.housefy.ui.theme.HousefyTheme
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 val LightOnAmbient = compositionLocalOf<MutableState<Boolean>> { error("No light state provided") }
 val AirConditionerAmbient =
-    compositionLocalOf<MutableState<Boolean>> { error("No AirConditioner state provided") }
+    compositionLocalOf<MutableState<AirConditionerStatus>> { error("No AirConditioner state provided") }
+val AirQualityAmbient =
+    compositionLocalOf<MutableState<Boolean>> { error("No AirQuality state provided") }
 val EnvironmentDataListLocal = compositionLocalOf<List<EnvironmentData>> { emptyList() }
 val CurrentDataIndexLocal = compositionLocalOf { 0 }
 
@@ -96,12 +105,48 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val isLightOn = remember { mutableStateOf(false) }
-            val isAirConditionerOn = remember { mutableStateOf(false) }
+            val airConditionerStatus =
+                remember { mutableStateOf(AirConditionerStatus(isOn = false, speed = 1)) }
+            val isAirQualityOn = remember { mutableStateOf(false) }
+
+            LaunchedEffect(key1 = "fetchLight") {
+                try {
+                    val lightStatus = fetchLightStatus()
+                    isLightOn.value = lightStatus
+                } catch (e: Exception) {
+                    Log.e("Light Status", "Error fetching light status: ${e.localizedMessage}")
+                }
+            }
+
+            LaunchedEffect(key1 = "fetchAirQuality") {
+                try {
+                    val airQualityStatus = fetchAirQualityStatus()
+                    isAirQualityOn.value = airQualityStatus
+                } catch (e: Exception) {
+                    Log.e(
+                        "Air Quality Status",
+                        "Error fetching air quality status: ${e.localizedMessage}"
+                    )
+                }
+            }
+
+            LaunchedEffect(key1 = "fetchAirConditioner") {
+                try {
+                    val fetchedAirConditionerStatus = fetchAirConditionerStatus()
+                    airConditionerStatus.value = fetchedAirConditionerStatus
+                } catch (e: Exception) {
+                    Log.e(
+                        "Air Conditioner Status",
+                        "Error fetching air conditioner status: ${e.localizedMessage}"
+                    )
+                }
+            }
 
             HousefyTheme() {
                 CompositionLocalProvider(
                     LightOnAmbient provides isLightOn,
-                    AirConditionerAmbient provides isAirConditionerOn,
+                    AirConditionerAmbient provides airConditionerStatus,
+                    AirQualityAmbient provides isAirQualityOn,
                 ) {
                     EnvironmentDataProvider {
                         Surface(modifier = Modifier.fillMaxSize()) {

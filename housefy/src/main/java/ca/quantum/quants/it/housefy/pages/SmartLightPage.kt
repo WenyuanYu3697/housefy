@@ -7,10 +7,14 @@ package ca.quantum.quants.it.housefy.pages
  * @course Software Project - CENG-322-0NA
  */
 
+import android.util.Log
+import kotlinx.coroutines.launch
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -21,11 +25,15 @@ import ca.quantum.quants.it.housefy.LightOnAmbient
 import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.common.EnergyUsage
 import ca.quantum.quants.it.housefy.components.common.StateSwitcher
+import ca.quantum.quants.it.housefy.network.updateLightStatus
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
+import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun SmartLightPage() {
     val isLightOn = LightOnAmbient.current
+
+    val coroutineScope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -56,7 +64,7 @@ fun SmartLightPage() {
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             EnergyUsage(
-                text = "0.01kWh  ($0.13/h)",
+                text = if (isLightOn.value) "0.01kWh  ($0.13/h)" else "0kWh  ($0.00/h)",
                 modifier = Modifier.weight(1f)
             )
 
@@ -65,8 +73,16 @@ fun SmartLightPage() {
             StateSwitcher(
                 text = stringResource(R.string.toggle_on_off),
                 checked = isLightOn.value,
-                onCheckedChange = { isChecked -> isLightOn.value = isChecked },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                onCheckedChange = { isChecked ->
+                    coroutineScope.launch() {
+                        try {
+                            val result = updateLightStatus(isChecked)
+                            if (result) isLightOn.value = isChecked
+                        } catch (e: Exception) {
+                        }
+                    }
+                },
             )
         }
     }

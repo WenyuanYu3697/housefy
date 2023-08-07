@@ -31,6 +31,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,20 +42,45 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.navOptions
 import ca.quantum.quants.it.housefy.AirConditionerAmbient
+import ca.quantum.quants.it.housefy.AirQualityAmbient
 import ca.quantum.quants.it.housefy.LightOnAmbient
 import ca.quantum.quants.it.housefy.R
+import ca.quantum.quants.it.housefy.network.AirConditionerStatus
+import ca.quantum.quants.it.housefy.network.updateAirConditionerStatus
+import ca.quantum.quants.it.housefy.network.updateAirQualityStatus
+import ca.quantum.quants.it.housefy.network.updateLightStatus
 import ca.quantum.quants.it.housefy.ui.theme.Purple
 import ca.quantum.quants.it.housefy.ui.theme.TextBlack
 import ca.quantum.quants.it.housefy.ui.theme.TextGrey
+import kotlinx.coroutines.launch
 
 @Composable
 fun DevicesList(navController: NavHostController) {
+    val coroutineScope = rememberCoroutineScope()
+
+    val isLightOn = LightOnAmbient.current
+    val airConditionerStatus = AirConditionerAmbient.current
+    val isAirQualityOn = AirQualityAmbient.current
+
     Column() {
         Row(modifier = Modifier.fillMaxWidth()) {
             DeviceCard(
                 icon = Icons.Rounded.AcUnit,
                 text = stringResource(R.string.air_conditioner),
                 modifier = Modifier.weight(1f),
+                checked = airConditionerStatus.value.isOn,
+                onCheckedChange = { isChecked ->
+                    coroutineScope.launch() {
+                        try {
+                            val result = updateAirConditionerStatus(
+                                isChecked,
+                                airConditionerStatus.value.speed
+                            )
+                            if (result) airConditionerStatus.value = AirConditionerStatus(isChecked, airConditionerStatus.value.speed)
+                        } catch (e: Exception) {
+                        }
+                    }
+                },
                 onClick = {
                     navController.navigate("AirConditionerPage", navOptions {
                         launchSingleTop = true
@@ -67,6 +93,16 @@ fun DevicesList(navController: NavHostController) {
                 icon = Icons.Rounded.Air,
                 text = stringResource(R.string.air_quality),
                 modifier = Modifier.weight(1f),
+                checked = isAirQualityOn.value,
+                onCheckedChange = { isChecked ->
+                    coroutineScope.launch() {
+                        try {
+                            val result = updateAirQualityStatus(isChecked)
+                            if (result) isAirQualityOn.value = isChecked
+                        } catch (e: Exception) {
+                        }
+                    }
+                },
                 onClick = {
                     navController.navigate("AirQualityPage", navOptions {
                         launchSingleTop = true
@@ -81,6 +117,16 @@ fun DevicesList(navController: NavHostController) {
                 icon = Icons.Rounded.EmojiObjects,
                 text = stringResource(R.string.smart_light),
                 modifier = Modifier.weight(1f),
+                checked = isLightOn.value,
+                onCheckedChange = { isChecked ->
+                    coroutineScope.launch() {
+                        try {
+                            val result = updateLightStatus(isChecked)
+                            if (result) isLightOn.value = isChecked
+                        } catch (e: Exception) {
+                        }
+                    }
+                },
                 onClick = {
                     navController.navigate("SmartLightPage", navOptions {
                         launchSingleTop = true
@@ -99,13 +145,9 @@ fun DeviceCard(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    checked: Boolean,
+    onCheckedChange: ((Boolean) -> Unit)
 ) {
-    val deviceState = when (text) {
-        stringResource(R.string.smart_light) -> LightOnAmbient.current
-        stringResource(R.string.air_conditioner) -> AirConditionerAmbient.current
-        else -> remember { mutableStateOf(false) }
-    }
-
     Column(
         modifier = modifier
             .background(
@@ -128,8 +170,8 @@ fun DeviceCard(
                 tint = Purple
             )
             Switch(
-                checked = deviceState.value,
-                onCheckedChange = { isChecked -> deviceState.value = isChecked },
+                checked = checked,
+                onCheckedChange = onCheckedChange,
                 colors = SwitchDefaults.colors(checkedTrackColor = Purple),
             )
         }

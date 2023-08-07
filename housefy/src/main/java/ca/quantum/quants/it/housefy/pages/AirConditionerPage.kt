@@ -23,8 +23,7 @@ import androidx.compose.material.icons.rounded.SignalCellularAlt1Bar
 import androidx.compose.material.icons.rounded.SignalCellularAlt2Bar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -40,14 +39,17 @@ import ca.quantum.quants.it.housefy.components.air_continioner.FanSpeedCard
 import ca.quantum.quants.it.housefy.components.common.EnergyUsage
 import ca.quantum.quants.it.housefy.components.common.IndicatorGraph
 import ca.quantum.quants.it.housefy.components.common.StateSwitcher
-import ca.quantum.quants.it.housefy.models.EnvironmentData
+import ca.quantum.quants.it.housefy.network.AirConditionerStatus
+import ca.quantum.quants.it.housefy.network.updateAirConditionerStatus
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
 import ca.quantum.quants.it.housefy.ui.theme.TextBlack
+import kotlinx.coroutines.launch
 
 @Composable
 fun AirConditionerPage() {
-    val isAirConditionerOn = AirConditionerAmbient.current
-    val energyUsageText = remember { mutableStateOf("0.8 kWh  ($0.10/h)") }
+    val coroutineScope = rememberCoroutineScope()
+
+    val airConditionerStatus = AirConditionerAmbient.current
 
     val environmentDataList = EnvironmentDataListLocal.current
     val currentDataIndex = CurrentDataIndexLocal.current
@@ -89,7 +91,17 @@ fun AirConditionerPage() {
                 text = stringResource(R.string.low_speed),
                 modifier = Modifier.weight(1f),
                 onClick = {
-                    energyUsageText.value = "0.8 kWh  ($0.10/h)"
+                    coroutineScope.launch() {
+                        try {
+                            val result = updateAirConditionerStatus(
+                                airConditionerStatus.value.isOn,
+                                1
+                            )
+                            if (result) airConditionerStatus.value =
+                                AirConditionerStatus(airConditionerStatus.value.isOn, 1)
+                        } catch (e: Exception) {
+                        }
+                    }
                 }
             )
             Spacer(modifier = Modifier.width(16.dp))
@@ -98,7 +110,17 @@ fun AirConditionerPage() {
                 text = stringResource(R.string.medium_speed),
                 modifier = Modifier.weight(1f),
                 onClick = {
-                    energyUsageText.value = "1.2 kWh  ($0.14/h)"
+                    coroutineScope.launch() {
+                        try {
+                            val result = updateAirConditionerStatus(
+                                airConditionerStatus.value.isOn,
+                                2
+                            )
+                            if (result) airConditionerStatus.value =
+                                AirConditionerStatus(airConditionerStatus.value.isOn, 2)
+                        } catch (e: Exception) {
+                        }
+                    }
                 }
             )
             Spacer(modifier = Modifier.width(16.dp))
@@ -107,7 +129,17 @@ fun AirConditionerPage() {
                 text = stringResource(R.string.high_speed),
                 modifier = Modifier.weight(1f),
                 onClick = {
-                    energyUsageText.value = "1.5 kWh  ($0.18/h)"
+                    coroutineScope.launch() {
+                        try {
+                            val result = updateAirConditionerStatus(
+                                airConditionerStatus.value.isOn,
+                                3
+                            )
+                            if (result) airConditionerStatus.value =
+                                AirConditionerStatus(airConditionerStatus.value.isOn, 3)
+                        } catch (e: Exception) {
+                        }
+                    }
                 }
             )
         }
@@ -120,7 +152,7 @@ fun AirConditionerPage() {
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             EnergyUsage(
-                text = energyUsageText.value,
+                text = if (airConditionerStatus.value.isOn) getEnergyUsageText(airConditionerStatus.value.speed) else "0kWh  ($0.00/h)",
                 modifier = Modifier.weight(1f)
             )
 
@@ -128,8 +160,20 @@ fun AirConditionerPage() {
 
             StateSwitcher(
                 text = stringResource(R.string.toggle_on_off),
-                checked = isAirConditionerOn.value,
-                onCheckedChange = { isChecked -> isAirConditionerOn.value = isChecked },
+                checked = airConditionerStatus.value.isOn,
+                onCheckedChange = { isChecked ->
+                    coroutineScope.launch() {
+                        try {
+                            val result = updateAirConditionerStatus(
+                                isChecked,
+                                airConditionerStatus.value.speed
+                            )
+                            if (result) airConditionerStatus.value =
+                                AirConditionerStatus(isChecked, airConditionerStatus.value.speed)
+                        } catch (e: Exception) {
+                        }
+                    }
+                },
                 modifier = Modifier.weight(1f)
             )
         }
@@ -138,4 +182,13 @@ fun AirConditionerPage() {
 
 fun getTemperature(temperature: Float?): Int {
     return temperature?.toInt() ?: 0
+}
+
+fun getEnergyUsageText(fanSpeed: Int): String {
+    return when (fanSpeed) {
+        1 -> "0.8 kWh  ($0.10/h)"
+        2 -> "1.2 kWh  ($0.14/h)"
+        3 -> "1.5 kWh  ($0.18/h)"
+        else -> "0.8 kWh  ($0.10/h)" // Default value (can be adjusted as needed)
+    }
 }
