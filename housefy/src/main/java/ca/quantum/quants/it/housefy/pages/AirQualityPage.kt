@@ -23,6 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ca.quantum.quants.it.housefy.CurrentDataIndexLocal
+import ca.quantum.quants.it.housefy.EnvironmentDataListLocal
 import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.air_quality.AQICategory
 import ca.quantum.quants.it.housefy.components.air_quality.AQICategoryCard
@@ -38,6 +40,10 @@ import kotlin.math.roundToInt
 
 @Composable
 fun AirQualityPage() {
+    val environmentDataList = EnvironmentDataListLocal.current
+    val currentDataIndex = CurrentDataIndexLocal.current
+    val currentData = environmentDataList.getOrNull(currentDataIndex)
+
     val aqiCategories =
         listOf(
             AQICategory(
@@ -62,27 +68,10 @@ fun AirQualityPage() {
             ),
         )
 
-    var environmentDataList by remember { mutableStateOf(emptyList<EnvironmentData>()) }
-    var currentDataIndex by remember { mutableStateOf(0) }
-
-    LaunchedEffect(Unit) {
-        while (true) {
-            try {
-                val newData = fetchEnvironmentData()
-                if (!newData.isNullOrEmpty()) {
-                    environmentDataList = newData
-                    currentDataIndex = (currentDataIndex + 1) % environmentDataList.size
-                }
-            } catch (e: Exception) {
-                Log.e("Air Quality", "Error during fetching air quality")
-            }
-            delay(3000)
-        }
-    }
-
-    val value = environmentDataList.getOrNull(currentDataIndex)?.let {
+    val value = currentData?.let {
         calculateAQI(it.co2).coerceAtMost(100)
     } ?: 0
+
 
     LazyColumn(
         modifier = Modifier

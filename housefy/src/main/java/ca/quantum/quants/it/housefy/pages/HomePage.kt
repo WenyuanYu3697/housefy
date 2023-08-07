@@ -52,7 +52,7 @@ fun HomePageLayout(navController: NavHostController, spacerSize: Dp, snackbarHos
         item { Spacer(modifier = Modifier.height(spacerSize)) }
 
         item {
-            EnergyUsageCard()
+            EnergyUsageCard(navController)
         }
 
         item { Spacer(modifier = Modifier.height(spacerSize)) }

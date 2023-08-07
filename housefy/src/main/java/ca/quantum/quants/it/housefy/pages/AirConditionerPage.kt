@@ -33,6 +33,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.quantum.quants.it.housefy.AirConditionerAmbient
+import ca.quantum.quants.it.housefy.CurrentDataIndexLocal
+import ca.quantum.quants.it.housefy.EnvironmentDataListLocal
 import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.air_continioner.FanSpeedCard
 import ca.quantum.quants.it.housefy.components.common.EnergyUsage
@@ -46,6 +48,12 @@ fun AirConditionerPage() {
     val isAirConditionerOn = AirConditionerAmbient.current
     val energyUsageText = remember { mutableStateOf("0.8 kWh  ($0.10/h)") }
 
+    val environmentDataList = EnvironmentDataListLocal.current
+    val currentDataIndex = CurrentDataIndexLocal.current
+    val currentData = environmentDataList.getOrNull(currentDataIndex)
+
+    val value = currentData?.temperature?.toInt() ?: 0
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,11 +62,11 @@ fun AirConditionerPage() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         IndicatorGraph(
-            indicatorValue = 25,
+            indicatorValue = value,
             maxIndicatorValue = 50,
             indicatorText = {
                 Text(
-                    text = "25°C",
+                    text = "$value°C",
                     color = TextBlack,
                     fontSize = 64.sp,
                     textAlign = TextAlign.Center,

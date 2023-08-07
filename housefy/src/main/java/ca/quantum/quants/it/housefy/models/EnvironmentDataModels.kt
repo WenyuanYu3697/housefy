@@ -8,4 +8,5 @@ data class EnvironmentData(
     val co2: Float,
     val voc: Float,
     val lightLevel: Float,
+    val kwh: Float,
 )
