@@ -82,7 +82,7 @@ fun EnergyConsumptionPage(thresholdViewModel: ThresholdViewModel) {
             AlertDialog(
                 onDismissRequest = { isDialogShown = false },
                 title = { Text(text = "Notice") },
-                text = { Text("TBD") },
+                text = { Text("This is a prototype/ experimental feature that will be implemented in further updates depending on the readiness of the hardware component") },
                 confirmButton = {
                     Button(onClick = { isDialogShown = false }) {
                         Text("Close")
