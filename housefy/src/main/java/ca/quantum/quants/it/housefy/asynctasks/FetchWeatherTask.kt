@@ -7,6 +7,9 @@ package ca.quantum.quants.it.housefy.asynctasks
  * @course Software Project - CENG-322-0NA
  */
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.AsyncTask
 import android.util.Log
 import androidx.compose.runtime.MutableState
@@ -18,6 +21,7 @@ import java.net.URL
 import kotlin.math.roundToInt
 
 class FetchWeatherTask(
+    private val context: Context,
     private val temperature: MutableState<String>,
     private val feelsLike: MutableState<String>,
     private val icon: MutableState<String>
@@ -72,6 +76,8 @@ class FetchWeatherTask(
                 temperature.value = (temp - 273.15).roundToInt().toString()
                 feelsLike.value = (feelsLikeTemp - 273.15).roundToInt().toString()
                 icon.value = weatherIcon
+
+                saveWeatherData(context, temperature.value, feelsLike.value, icon.value)
             } catch (e: Exception) {
                 Log.e("FetchWeatherTask", "Error in parsing JSON")
             }
@@ -80,6 +86,7 @@ class FetchWeatherTask(
 }
 
 fun getWeatherData(
+    context: Context,
     lat: String,
     lon: String,
     apiKey: String,
@@ -87,5 +94,31 @@ fun getWeatherData(
     feelsLike: MutableState<String>,
     icon: MutableState<String>
 ) {
-    FetchWeatherTask(temperature, feelsLike, icon).execute(lat, lon, apiKey)
+    FetchWeatherTask(context, temperature, feelsLike, icon).execute(lat, lon, apiKey)
+}
+
+fun saveWeatherData(context: Context, temp: String, feelsLike: String, icon: String) {
+    val sharedPreferences = context.getSharedPreferences("weather_data", Context.MODE_PRIVATE)
+    with(sharedPreferences.edit()) {
+        putString("temp", temp)
+        putString("feelsLike", feelsLike)
+        putString("icon", icon)
+        apply()
+    }
+}
+
+fun getSavedWeatherData(context: Context): Map<String, String?> {
+    val sharedPreferences = context.getSharedPreferences("weather_data", Context.MODE_PRIVATE)
+    return mapOf(
+        "temp" to sharedPreferences.getString("temp", "N/A"),
+        "feelsLike" to sharedPreferences.getString("feelsLike", "N/A"),
+        "icon" to sharedPreferences.getString("icon", "N/A")
+    )
+}
+
+@SuppressLint("ServiceCast")
+fun isOnline(context: Context): Boolean {
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val networkInfo = connectivityManager.activeNetworkInfo
+    return networkInfo != null && networkInfo.isConnected
 }

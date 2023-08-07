@@ -37,7 +37,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ca.quantum.quants.it.housefy.R
+import ca.quantum.quants.it.housefy.asynctasks.getSavedWeatherData
 import ca.quantum.quants.it.housefy.asynctasks.getWeatherData
+import ca.quantum.quants.it.housefy.asynctasks.isOnline
 import ca.quantum.quants.it.housefy.ui.theme.Purple
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -64,41 +66,53 @@ fun WeatherCard(snackbarHostState: SnackbarHostState) {
             }
         }
 
-    if (fineLocationPermissionState.status.isGranted) {
-        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-        val locationGPS = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+    if (isOnline(context)) {
+        if (fineLocationPermissionState.status.isGranted) {
+            val locationManager =
+                context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+            val locationGPS = locationManager?.getLastKnownLocation(LocationManager.GPS_PROVIDER)
 
-        if (locationGPS != null) {
-            val lat = locationGPS.latitude.toString()
-            val lon = locationGPS.longitude.toString()
-            getWeatherData(
-                lat,
-                lon,
-                "e5d0aeca41a181bf5eda281dd41ff4af",
-                temperature,
-                feelsLike,
-                icon
+            if (locationGPS != null) {
+                val lat = locationGPS.latitude.toString()
+                val lon = locationGPS.longitude.toString()
+                getWeatherData(
+                    context,
+                    lat,
+                    lon,
+                    "e5d0aeca41a181bf5eda281dd41ff4af",
+                    temperature,
+                    feelsLike,
+                    icon
+                )
+            } else {
+                getWeatherData(
+                    context,
+                    "43.728275",
+                    "-79.606124",
+                    "e5d0aeca41a181bf5eda281dd41ff4af",
+                    temperature,
+                    feelsLike,
+                    icon
+                )
+            }
+
+            PermissionGranted(
+                temp = temperature.value,
+                feelsLike = feelsLike.value,
+                icon = icon.value
             )
         } else {
-            getWeatherData(
-                "43.728275",
-                "-79.606124",
-                "e5d0aeca41a181bf5eda281dd41ff4af",
-                temperature,
-                feelsLike,
-                icon
-            )
+            PermissionNotGranted(onClick = {
+                fineLocationPermissionState.launchPermissionRequest()
+            })
         }
-
-        PermissionGranted(
-            temp = temperature.value,
-            feelsLike = feelsLike.value,
-            icon = icon.value
-        )
     } else {
-        PermissionNotGranted(onClick = {
-            fineLocationPermissionState.launchPermissionRequest()
-        })
+        val savedData = getSavedWeatherData(context)
+        PermissionGranted(
+            temp = savedData["temp"] ?: "N/A",
+            feelsLike = savedData["feelsLike"] ?: "N/A",
+            icon = savedData["icon"] ?: "01d"
+        )
     }
 }
 
