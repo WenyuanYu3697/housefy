@@ -71,13 +71,11 @@ fun EnergyConsumptionPage(thresholdViewModel: ThresholdViewModel) {
                 Pair(0.7f, 6),
                 Pair(0.7f, 7),
             ), max_value = 50, threshold = threshold, onEllipsisClick = {
-                // Change the state variable when the button is clicked
                 isDialogShown = true
             }
         )
         CurrentThreshold(thresholdViewModel)
 
-        // This is the dialog
         if (isDialogShown) {
             AlertDialog(
                 onDismissRequest = { isDialogShown = false },
@@ -97,14 +95,14 @@ fun EnergyConsumptionPage(thresholdViewModel: ThresholdViewModel) {
 fun Chart(
     data: List<Pair<Float, Int>>,
     max_value: Int,
-    threshold: Float, // Adding threshold as a parameter
+    threshold: Float,
     onEllipsisClick: () -> Unit
 ) {
     val context = LocalContext.current
 
     Box(
         modifier = Modifier
-            .padding(30.dp, 20.dp, 20.dp, 180.dp)
+            .padding(30.dp, 20.dp, 20.dp, 190.dp)
             .clip(RoundedCornerShape(5))
             .background(Color.White)
     ) {
@@ -137,8 +135,6 @@ fun Chart(
                 Spacer(modifier = Modifier.weight(1f))  // This will take up remaining space
                 IconButton(
                     onClick = {
-                        // Toast as a placeholder, will be replaced with logic for pop up menu
-                        //Toast.makeText(context, "Button clicked", Toast.LENGTH_SHORT).show()
                         onEllipsisClick()
                     }) {
                     Icon(
@@ -196,7 +192,7 @@ fun Chart(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .absoluteOffset(28.dp, 370.dp)
+                .absoluteOffset(28.dp, 387.dp)
         ) {
             Text(
                 text = "Total: 254 KWh",
@@ -283,7 +279,7 @@ fun Bar(height: Float, threshold: Float, maxValue: Float, onClick: () -> Unit) {
                 modifier = Modifier
                     .height(excessHeightInDp.dp)
                     .fillMaxWidth()
-                    .clip(barShape) // Use the new shape
+                    .clip(barShape)
                     .background(EnergyConsumptionDarkRed)
             )
 
@@ -295,7 +291,7 @@ fun Bar(height: Float, threshold: Float, maxValue: Float, onClick: () -> Unit) {
             modifier = Modifier
                 .height((belowThresholdHeightInDp + if (threshold == 0f) excessHeightInDp else 0f).dp)
                 .fillMaxWidth()
-                .clip(barShape) // Use the same shape
+                .clip(barShape)
                 .background(Purple)
         )
     }
