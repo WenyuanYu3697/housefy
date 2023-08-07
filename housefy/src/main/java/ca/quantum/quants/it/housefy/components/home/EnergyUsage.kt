@@ -8,6 +8,7 @@ package ca.quantum.quants.it.housefy.components.home
  */
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +26,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import ca.quantum.quants.it.housefy.EnvironmentDataListLocal
 import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.ui.theme.TextBlack
 import ca.quantum.quants.it.housefy.ui.theme.TextGrey
@@ -32,10 +35,15 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun EnergyUsageCard() {
+fun EnergyUsageCard(navController: NavHostController) {
     val today = LocalDate.now()
     val formatter = DateTimeFormatter.ofPattern("MMM d, yyyy")
     val formattedDate = today.format(formatter)
+
+    val environmentDataList = EnvironmentDataListLocal.current
+    val currentData = environmentDataList.getOrNull(1)
+
+    val value = currentData?.kwh ?: 0
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
@@ -54,6 +62,12 @@ fun EnergyUsageCard() {
                 style = MaterialTheme.typography.bodySmall
                     .copy(fontWeight = FontWeight.Medium)
                     .copy(color = TextBlack),
+                modifier = Modifier.clickable {
+                    navController.navigate("EnergyConsumptionPage") {
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
             )
         }
 
@@ -103,13 +117,13 @@ fun EnergyUsageCard() {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = "0.0 kWh",
+                    text = "$value kWh",
                     style = MaterialTheme.typography.bodyMedium
                         .copy(fontWeight = FontWeight.Medium)
                         .copy(color = TextBlack),
                 )
                 Text(
-                    text = "0.0 kWh",
+                    text = "$value kWh",
                     style = MaterialTheme.typography.bodyMedium
                         .copy(fontWeight = FontWeight.Medium)
                         .copy(color = TextBlack),
