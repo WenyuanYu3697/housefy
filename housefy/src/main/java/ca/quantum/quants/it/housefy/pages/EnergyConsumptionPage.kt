@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -49,6 +51,8 @@ class ThresholdViewModel : ViewModel() {
 
 @Composable
 fun EnergyConsumptionPage(thresholdViewModel: ThresholdViewModel) {
+    var isDialogShown by remember { mutableStateOf(false) }
+
     val threshold by thresholdViewModel.threshold.observeAsState(initial = 0.0f)
 
     Box(
@@ -66,9 +70,26 @@ fun EnergyConsumptionPage(thresholdViewModel: ThresholdViewModel) {
                 Pair(0.8f, 5),
                 Pair(0.7f, 6),
                 Pair(0.7f, 7),
-            ), max_value = 50, threshold = threshold
+            ), max_value = 50, threshold = threshold, onEllipsisClick = {
+                // Change the state variable when the button is clicked
+                isDialogShown = true
+            }
         )
         CurrentThreshold(thresholdViewModel)
+
+        // This is the dialog
+        if (isDialogShown) {
+            AlertDialog(
+                onDismissRequest = { isDialogShown = false },
+                title = { Text(text = "Notice") },
+                text = { Text("TBD") },
+                confirmButton = {
+                    Button(onClick = { isDialogShown = false }) {
+                        Text("Close")
+                    }
+                }
+            )
+        }
     }
 }
 
@@ -76,7 +97,8 @@ fun EnergyConsumptionPage(thresholdViewModel: ThresholdViewModel) {
 fun Chart(
     data: List<Pair<Float, Int>>,
     max_value: Int,
-    threshold: Float // Adding threshold as a parameter
+    threshold: Float, // Adding threshold as a parameter
+    onEllipsisClick: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -116,7 +138,8 @@ fun Chart(
                 IconButton(
                     onClick = {
                         // Toast as a placeholder, will be replaced with logic for pop up menu
-                        Toast.makeText(context, "Button clicked", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(context, "Button clicked", Toast.LENGTH_SHORT).show()
+                        onEllipsisClick()
                     }) {
                     Icon(
                         imageVector = Icons.Filled.MoreVert,
