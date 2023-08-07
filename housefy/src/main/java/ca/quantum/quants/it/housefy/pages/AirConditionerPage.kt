@@ -40,6 +40,7 @@ import ca.quantum.quants.it.housefy.components.air_continioner.FanSpeedCard
 import ca.quantum.quants.it.housefy.components.common.EnergyUsage
 import ca.quantum.quants.it.housefy.components.common.IndicatorGraph
 import ca.quantum.quants.it.housefy.components.common.StateSwitcher
+import ca.quantum.quants.it.housefy.models.EnvironmentData
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
 import ca.quantum.quants.it.housefy.ui.theme.TextBlack
 
@@ -52,7 +53,7 @@ fun AirConditionerPage() {
     val currentDataIndex = CurrentDataIndexLocal.current
     val currentData = environmentDataList.getOrNull(currentDataIndex)
 
-    val value = currentData?.temperature?.toInt() ?: 0
+    val value = getTemperature(currentData?.temperature)
 
     Column(
         modifier = Modifier
@@ -133,4 +134,8 @@ fun AirConditionerPage() {
             )
         }
     }
+}
+
+fun getTemperature(temperature: Float?): Int {
+    return temperature?.toInt() ?: 0
 }

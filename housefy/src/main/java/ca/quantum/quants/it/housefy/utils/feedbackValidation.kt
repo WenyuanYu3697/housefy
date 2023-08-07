@@ -6,6 +6,7 @@ package ca.quantum.quants.it.housefy.utils
  * @author Kyrylo Lvov, n01414058
  * @course Software Project - CENG-322-0NA
  */
+
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import kotlinx.coroutines.CoroutineScope
