@@ -32,13 +32,15 @@ class HomePageTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            val airConditionerState =
+            val isLightOn = remember { mutableStateOf(false) }
+            val airConditionerStatus =
                 remember { mutableStateOf(AirConditionerStatus(isOn = false, speed = 1)) }
-            val lightState = remember { mutableStateOf(false) }
+            val isAirQualityOn = remember { mutableStateOf(false) }
 
             CompositionLocalProvider(
-                AirConditionerAmbient provides airConditionerState,
-                LightOnAmbient provides lightState
+                LightOnAmbient provides isLightOn,
+                AirConditionerAmbient provides airConditionerStatus,
+                AirQualityAmbient provides isAirQualityOn,
             ) {
                 val navController = rememberNavController()
                 val snackbarHostState = remember { SnackbarHostState() }
@@ -62,7 +64,7 @@ class HomePageTest {
     @Test
     fun testNavigationToAirQualityPage() {
         composeTestRule.onNodeWithText("Air Quality").performClick()
-        composeTestRule.onNodeWithText("Smart Light").assertExists()
+        composeTestRule.onNodeWithText("Excellent").assertExists()
     }
 
     @Test
@@ -79,7 +81,7 @@ class HomePageTest {
 
     @Test
     fun testEnergyConsumptionTextExists() {
-        val textNode = composeTestRule.onNodeWithText("Energy Consumption")
+        val textNode = composeTestRule.onNodeWithText("See All")
         textNode.assertExists()
     }
 
