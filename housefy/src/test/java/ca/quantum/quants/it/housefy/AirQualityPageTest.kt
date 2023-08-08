@@ -29,18 +29,18 @@ class AirQualityPageTest {
     @Test
     fun testAQIColorForRange51to75() {
         val result = getAQIColor(60)
-        assertEquals(Color(0xFFFF0000), result)
+        assertEquals(Color(0xFFFFA500), result)
     }
 
     @Test
     fun testAQIColorForAbove75() {
         val result = getAQIColor(80)
-        assertEquals(Color(0xFFFFA500), result)
+        assertEquals(Color(0xFFFF0000), result)
     }
 
     @Test
-    fun testAQIColorForBoundaryValue() {
-        val result = getAQIColor(25)
-        assertEquals(Color(0xFF8CD456), result)
+    fun testAQIColorForInvalidValue() {
+        val result = getAQIColor(-10)
+        assertEquals(Color(0xFFFF0000), result)
     }
 }

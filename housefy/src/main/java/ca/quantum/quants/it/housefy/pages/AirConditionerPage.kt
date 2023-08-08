@@ -181,9 +181,13 @@ fun AirConditionerPage() {
 }
 
 fun getTemperature(temperature: Float?): Int {
-    return temperature?.toInt() ?: 0
+    val tempInt = temperature?.toInt() ?: 0
+    return when {
+        tempInt < 0 -> 0
+        tempInt > 50 -> 50
+        else -> tempInt
+    }
 }
-
 fun getEnergyUsageText(fanSpeed: Int): String {
     return when (fanSpeed) {
         1 -> "0.8 kWh  ($0.10/h)"
