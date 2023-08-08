@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import ca.quantum.quants.it.housefy.network.AirConditionerStatus
 import ca.quantum.quants.it.housefy.pages.AirConditionerPage
 import ca.quantum.quants.it.housefy.pages.AirQualityPage
 import ca.quantum.quants.it.housefy.pages.HomePage
@@ -31,7 +32,8 @@ class HomePageTest {
     @Before
     fun setUp() {
         composeTestRule.setContent {
-            val airConditionerState = remember { mutableStateOf(false) }
+            val airConditionerState =
+                remember { mutableStateOf(AirConditionerStatus(isOn = false, speed = 1)) }
             val lightState = remember { mutableStateOf(false) }
 
             CompositionLocalProvider(
