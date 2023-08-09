@@ -2,7 +2,7 @@
 
 An innovative smart home IoT, which allows to view and manage environment in your house
 
-![Group 2](https://github.com/kyrylolvov/housefy/assets/70720713/357a2751-e30e-4c56-8aca-e5d991457ac1)
+![Housefy Screenshots](https://github.com/kyrylolvov/housefy/assets/70720713/357a2751-e30e-4c56-8aca-e5d991457ac1)
 
 ### Description
 
