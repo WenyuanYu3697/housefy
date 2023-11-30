@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import ca.quantum.quants.it.housefy.components.home.DevicesList
+import ca.quantum.quants.it.housefy.components.home.OverviewCard
 import ca.quantum.quants.it.housefy.components.home.WeatherCard
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
 
@@ -37,7 +38,11 @@ fun HomePage(navController: NavHostController, snackbarHostState: SnackbarHostSt
 }
 
 @Composable
-fun HomePageLayout(navController: NavHostController, spacerSize: Dp, snackbarHostState: SnackbarHostState) {
+fun HomePageLayout(
+    navController: NavHostController,
+    spacerSize: Dp,
+    snackbarHostState: SnackbarHostState
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -49,6 +54,8 @@ fun HomePageLayout(navController: NavHostController, spacerSize: Dp, snackbarHos
         }
 
         item { Spacer(modifier = Modifier.height(spacerSize)) }
+
+        item { OverviewCard() }
 
         item { Spacer(modifier = Modifier.height(spacerSize)) }
 
