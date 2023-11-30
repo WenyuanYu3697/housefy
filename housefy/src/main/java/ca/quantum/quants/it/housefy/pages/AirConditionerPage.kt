@@ -35,8 +35,6 @@ import ca.quantum.quants.it.housefy.AirConditionerAmbient
 import ca.quantum.quants.it.housefy.CurrentDataIndexLocal
 import ca.quantum.quants.it.housefy.EnvironmentDataListLocal
 import ca.quantum.quants.it.housefy.R
-import ca.quantum.quants.it.housefy.components.air_continioner.FanSpeedCard
-import ca.quantum.quants.it.housefy.components.common.EnergyUsage
 import ca.quantum.quants.it.housefy.components.common.IndicatorGraph
 import ca.quantum.quants.it.housefy.components.common.StateSwitcher
 import ca.quantum.quants.it.housefy.network.AirConditionerStatus
@@ -82,82 +80,10 @@ fun AirConditionerPage() {
         Row(
             modifier = Modifier
                 .padding(horizontal = 24.dp)
-                .padding(bottom = 24.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-        ) {
-            FanSpeedCard(
-                icon = Icons.Rounded.SignalCellularAlt1Bar,
-                text = stringResource(R.string.low_speed),
-                modifier = Modifier.weight(1f),
-                onClick = {
-                    coroutineScope.launch() {
-                        try {
-                            val result = updateAirConditionerStatus(
-                                airConditionerStatus.value.isOn,
-                                1
-                            )
-                            if (result) airConditionerStatus.value =
-                                AirConditionerStatus(airConditionerStatus.value.isOn, 1)
-                        } catch (e: Exception) {
-                        }
-                    }
-                }
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            FanSpeedCard(
-                icon = Icons.Rounded.SignalCellularAlt2Bar,
-                text = stringResource(R.string.medium_speed),
-                modifier = Modifier.weight(1f),
-                onClick = {
-                    coroutineScope.launch() {
-                        try {
-                            val result = updateAirConditionerStatus(
-                                airConditionerStatus.value.isOn,
-                                2
-                            )
-                            if (result) airConditionerStatus.value =
-                                AirConditionerStatus(airConditionerStatus.value.isOn, 2)
-                        } catch (e: Exception) {
-                        }
-                    }
-                }
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            FanSpeedCard(
-                icon = Icons.Rounded.SignalCellularAlt,
-                text = stringResource(R.string.high_speed),
-                modifier = Modifier.weight(1f),
-                onClick = {
-                    coroutineScope.launch() {
-                        try {
-                            val result = updateAirConditionerStatus(
-                                airConditionerStatus.value.isOn,
-                                3
-                            )
-                            if (result) airConditionerStatus.value =
-                                AirConditionerStatus(airConditionerStatus.value.isOn, 3)
-                        } catch (e: Exception) {
-                        }
-                    }
-                }
-            )
-        }
-
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 24.dp)
                 .padding(bottom = 100.dp)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
-            EnergyUsage(
-                text = if (airConditionerStatus.value.isOn) getEnergyUsageText(airConditionerStatus.value.speed) else "0kWh  ($0.00/h)",
-                modifier = Modifier.weight(1f)
-            )
-
-            Spacer(modifier = Modifier.width(24.dp))
-
             StateSwitcher(
                 text = stringResource(R.string.toggle_on_off),
                 checked = airConditionerStatus.value.isOn,

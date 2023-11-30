@@ -45,11 +45,9 @@ import ca.quantum.quants.it.housefy.ui.theme.Purple
 
 @SuppressLint("MissingPermission")
 @Composable
-fun SettingsPage(thresholdViewModel: ThresholdViewModel) {
+fun SettingsPage() {
 
-    val threshold by thresholdViewModel.threshold.observeAsState(initial = 0.7f)
     val showDialog = remember { mutableStateOf(false) }
-    val formattedThreshold = String.format("%.2f", threshold)
 
 
     val context = LocalContext.current
@@ -199,50 +197,6 @@ fun SettingsPage(thresholdViewModel: ThresholdViewModel) {
                 }
             )
 
-            SettingsRow(
-                title = "Energy Consumption Threshold",
-                control = {
-                    Slider(
-                        value = threshold,
-                        onValueChange = { newValue ->
-                            thresholdViewModel.updateThreshold(newValue)
-                        },
-                        onValueChangeFinished = {
-                            // when the slider has been released
-                            showDialog.value = true
-                        },
-                        steps = 10,
-                        valueRange = 0f..1f,
-                        modifier = Modifier.width(150.dp),
-                        colors = SliderDefaults.colors(
-                            thumbColor = Purple,
-                        )
-                    )
-                }
-            )
-
         }
     }
-
-    if (showDialog.value) {
-        AlertDialog(
-            onDismissRequest = {
-                showDialog.value = false
-            },
-            title = {
-                Text(text = "Energy Consumption Threshold")
-            },
-            text = {
-                Text(text = "Your threshold is set to $formattedThreshold")
-            },
-            confirmButton = {
-                Button(onClick = {
-                    showDialog.value = false
-                }) {
-                    Text("Ok")
-                }
-            }
-        )
-    }
-
 }

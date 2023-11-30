@@ -23,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ca.quantum.quants.it.housefy.LightOnAmbient
 import ca.quantum.quants.it.housefy.R
-import ca.quantum.quants.it.housefy.components.common.EnergyUsage
 import ca.quantum.quants.it.housefy.components.common.StateSwitcher
 import ca.quantum.quants.it.housefy.network.updateLightStatus
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
@@ -63,13 +62,6 @@ fun SmartLightPage() {
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
-            EnergyUsage(
-                text = if (isLightOn.value) "0.01kWh  ($0.13/h)" else "0kWh  ($0.00/h)",
-                modifier = Modifier.weight(1f)
-            )
-
-            Spacer(modifier = Modifier.width(24.dp))
-
             StateSwitcher(
                 text = stringResource(R.string.toggle_on_off),
                 checked = isLightOn.value,

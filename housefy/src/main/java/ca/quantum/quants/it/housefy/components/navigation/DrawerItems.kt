@@ -115,24 +115,4 @@ fun DrawerItems(navController: NavHostController, drawerState: DrawerState) {
         },
         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
     )
-
-    Spacer(modifier = Modifier.height(12.dp))
-
-    NavigationDrawerItem(
-        icon = { Icon(Icons.Rounded.Bolt, null) },
-        label = { Text(text = stringResource(R.string.energy_consumption)) },
-        selected = destination?.route == "EnergyConsumptionPage",
-
-        onClick = {
-            navController.navigate("EnergyConsumptionPage", navOptions {
-                this.launchSingleTop = true
-                this.restoreState = true
-
-            })
-            scope.launch {
-                drawerState.close()
-            }
-        },
-        modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-    )
 }

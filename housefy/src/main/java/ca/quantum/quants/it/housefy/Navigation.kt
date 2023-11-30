@@ -44,14 +44,11 @@ import ca.quantum.quants.it.housefy.components.navigation.DrawerContent
 import ca.quantum.quants.it.housefy.pages.AboutPage
 import ca.quantum.quants.it.housefy.pages.AirConditionerPage
 import ca.quantum.quants.it.housefy.pages.AirQualityPage
-import ca.quantum.quants.it.housefy.pages.EnergyConsumptionPage
-import ca.quantum.quants.it.housefy.pages.FeedbackPage
 import ca.quantum.quants.it.housefy.pages.GuidePage
 //import ca.quantum.quants.it.housefy.pages.FeedbackPage
 import ca.quantum.quants.it.housefy.pages.HomePage
 import ca.quantum.quants.it.housefy.pages.SettingsPage
 import ca.quantum.quants.it.housefy.pages.SmartLightPage
-import ca.quantum.quants.it.housefy.pages.ThresholdViewModel
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
 import ca.quantum.quants.it.housefy.ui.theme.Purple
 import kotlinx.coroutines.CoroutineScope
@@ -90,14 +87,11 @@ fun Navigation() {
             }) {
             Box(modifier = Modifier.padding(it)) {
                 NavHost(navController = navController, startDestination = "HomePage") {
-                    val thresholdViewModel = ThresholdViewModel()
                     composable("HomePage") { HomePage(navController, snackbarHostState) }
                     composable("AirConditionerPage") { AirConditionerPage() }
                     composable("AirQualityPage") { AirQualityPage() }
                     composable("SmartLightPage") { SmartLightPage() }
-                    composable("EnergyConsumptionPage") { EnergyConsumptionPage(thresholdViewModel) }
-                    composable("SettingsPage") { SettingsPage(thresholdViewModel) }
-                    composable("FeedbackPage") { FeedbackPage() }
+                    composable("SettingsPage") { SettingsPage() }
                     composable("GuidePage") { GuidePage() }
                     composable("AboutPage") { AboutPage() }
                 }
@@ -128,9 +122,7 @@ fun TopBarTitle(navController: NavController, textColor: Color) {
         "AirConditionerPage" -> stringResource(R.string.air_conditioner)
         "AirQualityPage" -> stringResource(R.string.air_quality)
         "SmartLightPage" -> stringResource(R.string.smart_light)
-        "EnergyConsumptionPage" -> stringResource(R.string.energy_consumption)
         "SettingsPage" -> stringResource(R.string.settings)
-        "FeedbackPage" -> stringResource(R.string.feedback)
         "GuidePage" -> stringResource(R.string.guide)
         "AboutPage" -> stringResource(R.string.about)
         else -> stringResource(R.string.home)
@@ -181,13 +173,6 @@ fun TopBarMenu(navController: NavController) {
                 navController.navigate("GuidePage")
             },
             icon = Icons.Filled.QuestionAnswer,
-        ),
-        ActionMenuItem.NeverShown(
-            title = stringResource(R.string.feedback),
-            onClick = {
-                isOpen = false;
-                navController.navigate("FeedbackPage")
-            },
         ),
         ActionMenuItem.NeverShown(
             title = stringResource(R.string.about),
