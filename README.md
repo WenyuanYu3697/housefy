@@ -1,15 +1,12 @@
-# Housefy
+## 🏠 Housefy
 
-### Housefy is an innovative smart home Internet of Things (IoT) application that seamlessly integrates technology into every corner of your home, elevating your everyday living experience.
+An innovative smart home IoT, which allows to view and manage environment in your house
 
-<img width="300" alt="Housefy Logo" src="https://github.com/WenyuanYu3697/housefy/assets/105210694/21682564-ecba-47d3-b5c7-ed600d96d68b">
+![Housefy Screenshots](https://github.com/kyrylolvov/housefy/assets/70720713/357a2751-e30e-4c56-8aca-e5d991457ac1)
 
-https://github.com/WenyuanYu3697/housefy
+### Description
 
-## Contributors
+Housefy, a brainchild of our Software Project course in college, stands at the forefront of the IoT-driven smart home revolution. Integrating with the OpenWeatherMap API, it grants homeowners real-time insights into their domestic environment. 
 
-Artem Tsurkan, 01414146
-
-Wenyuan Yu, N01403697
-
-Kyrylo Lvov, n01414058
+### Technolgies Used
+Kotlin, Jetpack Compose, OpenWeatherMap API, Material 3
