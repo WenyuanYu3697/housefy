@@ -96,11 +96,7 @@ fun OverviewCard() {
 
                 OverviewSection(
                     label = "Air Quality",
-                    value = "${
-                        environmentData?.let {
-                            calculateAQI(it.co2).coerceAtMost(100)
-                        } ?: 0
-                    }"
+                    value = "${environmentData?.aqi ?: 0}"
                 )
             }
         }

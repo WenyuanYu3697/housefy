@@ -36,7 +36,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun AirQualityPage() {
-    val currentData = LocalEnvironmentData.current
+    val environmentData = LocalEnvironmentData.current
 
     val aqiCategories =
         listOf(
@@ -62,11 +62,6 @@ fun AirQualityPage() {
             ),
         )
 
-    val value = currentData?.let {
-        calculateAQI(it.co2).coerceAtMost(100)
-    } ?: 0
-
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -76,13 +71,13 @@ fun AirQualityPage() {
     ) {
         item {
             IndicatorGraph(
-                indicatorValue = value,
-                foregroundIndicatorColor = getAQIColor(value),
+                indicatorValue = environmentData?.aqi ?: 0,
+                foregroundIndicatorColor = getAQIColor(environmentData?.aqi ?: 0),
                 maxIndicatorValue = 100,
                 indicatorText = {
                     Text(
-                        text = "$value",
-                        color = getAQIColor(value),
+                        text = "${environmentData?.aqi ?: 0}",
+                        color = getAQIColor(environmentData?.aqi ?: 0),
                         fontSize = 84.sp,
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.Bold,

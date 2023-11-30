@@ -9,4 +9,5 @@ data class EnvironmentData(
     val voc: Float,
     val lux: Float,
     val humidity: Float,
+    val aqi: Int
 )
