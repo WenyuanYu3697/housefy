@@ -18,7 +18,7 @@ data class AirConditionerStatus(
 )
 
 suspend fun fetchAirConditionerStatus(): AirConditionerStatus {
-    return client.get("https://housefybackend.azurewebsites.net/api/ac-fan")
+    return client.get("https://housefy-backend-app.azurewebsites.net/api/ac-fan")
 }
 
 suspend fun updateAirConditionerStatus(
@@ -33,7 +33,7 @@ suspend fun updateAirConditionerStatus(
         Log.d("AirConditioner Update", "Sending payload: $jsonPayload")
 
         val response: HttpResponse =
-            client.post("https://housefybackend.azurewebsites.net/api/ac-fan") {
+            client.post("https://housefy-backend-app.azurewebsites.net/api/ac-fan") {
                 contentType(ContentType.Application.Json)
                 body = requestBody
             }

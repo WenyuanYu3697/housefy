@@ -12,13 +12,13 @@ import kotlinx.serialization.json.Json
 
 
 suspend fun fetchLightStatus(): Boolean {
-    return client.get("https://housefybackend.azurewebsites.net/api/light")
+    return client.get("https://housefy-backend-app.azurewebsites.net/api/light")
 }
 
 suspend fun updateLightStatus(isLightOn: Boolean): Boolean {
     return try {
         val response: HttpResponse =
-            client.post("https://housefybackend.azurewebsites.net/api/light") {
+            client.post("https://housefy-backend-app.azurewebsites.net/api/light") {
                 contentType(ContentType.Application.Json)
                 body = isLightOn
             }

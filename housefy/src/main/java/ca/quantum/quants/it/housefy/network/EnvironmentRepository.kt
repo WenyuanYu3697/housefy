@@ -23,9 +23,9 @@ val client = HttpClient {
     }
 }
 
-suspend fun fetchEnvironmentData(): List<EnvironmentData>? = try {
+suspend fun fetchEnvironmentData(): EnvironmentData? = try {
     withContext(Dispatchers.IO) {
-        client.get("https://housefybackend.azurewebsites.net/api/environment")
+        client.get("https://housefy-backend-app.azurewebsites.net/api/environment")
     }
 } catch (e: Exception) {
     null

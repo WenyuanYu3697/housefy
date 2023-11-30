@@ -11,16 +11,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.SignalCellularAlt
-import androidx.compose.material.icons.rounded.SignalCellularAlt1Bar
-import androidx.compose.material.icons.rounded.SignalCellularAlt2Bar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -31,9 +26,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ca.quantum.quants.it.housefy.AirConditionerAmbient
-import ca.quantum.quants.it.housefy.CurrentDataIndexLocal
-import ca.quantum.quants.it.housefy.EnvironmentDataListLocal
+import ca.quantum.quants.it.housefy.LocalAirConditionerAmbient
+import ca.quantum.quants.it.housefy.LocalEnvironmentData
 import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.common.IndicatorGraph
 import ca.quantum.quants.it.housefy.components.common.StateSwitcher
@@ -47,13 +41,11 @@ import kotlinx.coroutines.launch
 fun AirConditionerPage() {
     val coroutineScope = rememberCoroutineScope()
 
-    val airConditionerStatus = AirConditionerAmbient.current
+    val airConditionerStatus = LocalAirConditionerAmbient.current
 
-    val environmentDataList = EnvironmentDataListLocal.current
-    val currentDataIndex = CurrentDataIndexLocal.current
-    val currentData = environmentDataList.getOrNull(currentDataIndex)
+    val environmentData = LocalEnvironmentData.current
 
-    val value = getTemperature(currentData?.temperature)
+    val value = getTemperature(environmentData?.temperature)
 
     Column(
         modifier = Modifier
@@ -100,7 +92,7 @@ fun AirConditionerPage() {
                         }
                     }
                 },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.width(150.dp)
             )
         }
     }

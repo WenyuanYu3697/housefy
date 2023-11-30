@@ -23,26 +23,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ca.quantum.quants.it.housefy.CurrentDataIndexLocal
-import ca.quantum.quants.it.housefy.EnvironmentDataListLocal
+import ca.quantum.quants.it.housefy.LocalEnvironmentData
 import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.air_quality.AQICategory
 import ca.quantum.quants.it.housefy.components.air_quality.AQICategoryCard
 import ca.quantum.quants.it.housefy.components.common.IndicatorGraph
-import ca.quantum.quants.it.housefy.models.EnvironmentData
-import ca.quantum.quants.it.housefy.network.fetchEnvironmentData
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
 import ca.quantum.quants.it.housefy.ui.theme.Green
 import ca.quantum.quants.it.housefy.ui.theme.Orange
 import ca.quantum.quants.it.housefy.ui.theme.Yellow
-import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
 @Composable
 fun AirQualityPage() {
-    val environmentDataList = EnvironmentDataListLocal.current
-    val currentDataIndex = CurrentDataIndexLocal.current
-    val currentData = environmentDataList.getOrNull(currentDataIndex)
+    val currentData = LocalEnvironmentData.current
 
     val aqiCategories =
         listOf(

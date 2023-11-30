@@ -7,13 +7,11 @@ package ca.quantum.quants.it.housefy.pages
  * @course Software Project - CENG-322-0NA
  */
 
-import android.util.Log
 import kotlinx.coroutines.launch
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,16 +19,15 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import ca.quantum.quants.it.housefy.LightOnAmbient
+import ca.quantum.quants.it.housefy.LocalLightOnAmbient
 import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.common.StateSwitcher
 import ca.quantum.quants.it.housefy.network.updateLightStatus
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
-import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun SmartLightPage() {
-    val isLightOn = LightOnAmbient.current
+    val isLightOn = LocalLightOnAmbient.current
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -65,7 +62,7 @@ fun SmartLightPage() {
             StateSwitcher(
                 text = stringResource(R.string.toggle_on_off),
                 checked = isLightOn.value,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.width(150.dp),
                 onCheckedChange = { isChecked ->
                     coroutineScope.launch() {
                         try {

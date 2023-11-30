@@ -41,9 +41,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.navOptions
-import ca.quantum.quants.it.housefy.AirConditionerAmbient
-import ca.quantum.quants.it.housefy.AirQualityAmbient
-import ca.quantum.quants.it.housefy.LightOnAmbient
+import ca.quantum.quants.it.housefy.LocalAirConditionerAmbient
+import ca.quantum.quants.it.housefy.LocalAirQualityAmbient
+import ca.quantum.quants.it.housefy.LocalLightOnAmbient
 import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.network.AirConditionerStatus
 import ca.quantum.quants.it.housefy.network.updateAirConditionerStatus
@@ -58,9 +58,9 @@ import kotlinx.coroutines.launch
 fun DevicesList(navController: NavHostController) {
     val coroutineScope = rememberCoroutineScope()
 
-    val isLightOn = LightOnAmbient.current
-    val airConditionerStatus = AirConditionerAmbient.current
-    val isAirQualityOn = AirQualityAmbient.current
+    val isLightOn = LocalLightOnAmbient.current
+    val airConditionerStatus = LocalAirConditionerAmbient.current
+    val isAirQualityOn = LocalAirQualityAmbient.current
 
     Column() {
         Row(modifier = Modifier.fillMaxWidth()) {

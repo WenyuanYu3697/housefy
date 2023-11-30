@@ -50,40 +50,33 @@ import ca.quantum.quants.it.housefy.ui.theme.HousefyTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-val LightOnAmbient = compositionLocalOf<MutableState<Boolean>> { error("No light state provided") }
-val AirConditionerAmbient =
-    compositionLocalOf<MutableState<AirConditionerStatus>> { error("No AirConditioner state provided") }
-val AirQualityAmbient =
-    compositionLocalOf<MutableState<Boolean>> { error("No AirQuality state provided") }
-val EnvironmentDataListLocal = compositionLocalOf<List<EnvironmentData>> { emptyList() }
-val CurrentDataIndexLocal = compositionLocalOf { 0 }
+val LocalLightOnAmbient = compositionLocalOf<MutableState<Boolean>> { error("No light state provided") }
+val LocalAirConditionerAmbient = compositionLocalOf<MutableState<AirConditionerStatus>> { error("No AirConditioner state provided") }
+val LocalAirQualityAmbient = compositionLocalOf<MutableState<Boolean>> { error("No AirQuality state provided") }
+val LocalEnvironmentData = compositionLocalOf<EnvironmentData?> { null }
 
 @Composable
 fun EnvironmentDataProvider(content: @Composable () -> Unit) {
-    var environmentDataList by remember { mutableStateOf(emptyList<EnvironmentData>()) }
-    var currentDataIndex by remember { mutableStateOf(0) }
+    var environmentData by remember { mutableStateOf<EnvironmentData?>(null) }
 
     LaunchedEffect(key1 = "fetchData") {
-        try {
-            val newData = fetchEnvironmentData()
-            if (!newData.isNullOrEmpty()) {
-                environmentDataList = newData
-            }
-        } catch (e: Exception) {
-            Log.e("Environment Data", "Error during fetching environment data")
-        }
-    }
+        while (true) {
+            try {
+                val newData = fetchEnvironmentData()
 
-    LaunchedEffect(key1 = environmentDataList) {
-        while (environmentDataList.isNotEmpty()) {
-            currentDataIndex = (currentDataIndex + 1) % environmentDataList.size
-            delay(3000)
+                if (newData !== null) {
+                    environmentData = newData
+                }
+
+            } catch (e: Exception) {
+                Log.e("Environment Data", "Error during fetching environment data", e)
+            }
+            delay(4000)
         }
     }
 
     CompositionLocalProvider(
-        EnvironmentDataListLocal provides environmentDataList,
-        CurrentDataIndexLocal provides currentDataIndex,
+        LocalEnvironmentData provides environmentData
     ) {
         content()
     }
@@ -144,9 +137,9 @@ class MainActivity : ComponentActivity() {
 
             HousefyTheme() {
                 CompositionLocalProvider(
-                    LightOnAmbient provides isLightOn,
-                    AirConditionerAmbient provides airConditionerStatus,
-                    AirQualityAmbient provides isAirQualityOn,
+                    LocalLightOnAmbient provides isLightOn,
+                    LocalAirConditionerAmbient provides airConditionerStatus,
+                    LocalAirQualityAmbient provides isAirQualityOn,
                 ) {
                     EnvironmentDataProvider {
                         Surface(modifier = Modifier.fillMaxSize()) {

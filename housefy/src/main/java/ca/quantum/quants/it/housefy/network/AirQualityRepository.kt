@@ -9,13 +9,13 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 
 suspend fun fetchAirQualityStatus(): Boolean {
-    return client.get("https://housefybackend.azurewebsites.net/api/air-quality-fan")
+    return client.get("https://housefy-backend-app.azurewebsites.net/api/air-quality-fan")
 }
 
 suspend fun updateAirQualityStatus(isAirQualityOn: Boolean): Boolean {
     return try {
         val response: HttpResponse =
-            client.post("https://housefybackend.azurewebsites.net/api/air-quality-fan") {
+            client.post("https://housefy-backend-app.azurewebsites.net/api/air-quality-fan") {
                 contentType(ContentType.Application.Json)
                 body = isAirQualityOn
             }
