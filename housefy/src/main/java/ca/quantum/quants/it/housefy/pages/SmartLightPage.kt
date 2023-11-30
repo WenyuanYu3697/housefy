@@ -19,8 +19,10 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import ca.quantum.quants.it.housefy.LocalEnvironmentData
 import ca.quantum.quants.it.housefy.LocalLightOnAmbient
 import ca.quantum.quants.it.housefy.R
+import ca.quantum.quants.it.housefy.components.common.SensorValue
 import ca.quantum.quants.it.housefy.components.common.StateSwitcher
 import ca.quantum.quants.it.housefy.network.updateLightStatus
 import ca.quantum.quants.it.housefy.ui.theme.BackgroundGrey
@@ -30,6 +32,8 @@ fun SmartLightPage() {
     val isLightOn = LocalLightOnAmbient.current
 
     val coroutineScope = rememberCoroutineScope()
+
+    val environmentData = LocalEnvironmentData.current
 
     Column(
         modifier = Modifier
@@ -59,10 +63,18 @@ fun SmartLightPage() {
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
+            SensorValue(
+                value = "${environmentData?.lux?.toInt() ?: 0} Lux",
+                description = "Luminosity",
+                modifier = Modifier.weight(1f)
+            )
+
+            Spacer(modifier = Modifier.width(24.dp))
+
             StateSwitcher(
                 text = stringResource(R.string.toggle_on_off),
                 checked = isLightOn.value,
-                modifier = Modifier.width(150.dp),
+                modifier = Modifier.weight(1f),
                 onCheckedChange = { isChecked ->
                     coroutineScope.launch() {
                         try {

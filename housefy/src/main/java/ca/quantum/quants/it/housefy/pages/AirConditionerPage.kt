@@ -11,6 +11,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
@@ -30,6 +31,7 @@ import ca.quantum.quants.it.housefy.LocalAirConditionerAmbient
 import ca.quantum.quants.it.housefy.LocalEnvironmentData
 import ca.quantum.quants.it.housefy.R
 import ca.quantum.quants.it.housefy.components.common.IndicatorGraph
+import ca.quantum.quants.it.housefy.components.common.SensorValue
 import ca.quantum.quants.it.housefy.components.common.StateSwitcher
 import ca.quantum.quants.it.housefy.network.AirConditionerStatus
 import ca.quantum.quants.it.housefy.network.updateAirConditionerStatus
@@ -76,6 +78,14 @@ fun AirConditionerPage() {
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
+            SensorValue(
+                value = "${environmentData?.humidity?.toInt() ?: 0} %",
+                description = "Humidity",
+                modifier = Modifier.weight(1f)
+            )
+
+            Spacer(modifier = Modifier.width(24.dp))
+
             StateSwitcher(
                 text = stringResource(R.string.toggle_on_off),
                 checked = airConditionerStatus.value.isOn,
