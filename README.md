@@ -10,3 +10,9 @@ Housefy, a brainchild of our Software Project course in college, stands at the f
 
 ### Technolgies Used
 Kotlin, Jetpack Compose, OpenWeatherMap API, Material 3
+
+### Backend
+https://github.com/WenyuanYu3697/housefy-asp.net-core-web-app
+
+### IoT firmware
+https://github.com/WenyuanYu3697/housefy-iot-firmware
